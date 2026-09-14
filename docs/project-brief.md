@@ -23,6 +23,8 @@ Reverse engineering is the means of learning from a reference. Applying what was
 
 A reference can contribute a visual direction, interaction pattern, product capability, implementation mechanism, or evaluation example. Establish its job before transferring it. A user-supplied reference has stronger evidence of the user's intent than an independently discovered one, but that does not imply the user likes every property of it.
 
+Understand choices in context well enough to support a design debate: identify the user problem, conditions, alternatives, tradeoffs and what would change the recommendation. Keep observed behavior, documented rationale, inferred mechanisms and evaluated effects distinct. See the [design reasoning standard](design-reasoning.md).
+
 For substantive product decisions, look for relevant existing evidence and expose unsupported choices. Reuse already approved project patterns when they answer the question. Scale new discovery to the uncertainty and consequence of a decision; a fresh search for every line of code would not serve the product outcome.
 
 Resolve multiple references into one system: a consistent navigation model, vocabulary, hierarchy, type and spacing relationships, motion behavior, and state conventions. Retain intentional variation when it serves a different task or mode. The agent should be able to explain both the adopted property and its adaptation.

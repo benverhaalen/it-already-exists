@@ -18,6 +18,8 @@ The inspiration is the Virgil Abloh-style 3% rule: preserve the strength of some
 
 Combine references by the jobs they do: one might establish visual direction, another a navigation pattern, another recovery from an error. Resolve those choices into one product language, then inspect whether the implementation actually carries them through.
 
+Study each choice in context: who it serves, what problem it addresses, which alternatives it competes with, and what would make it wrong for this project. Distinguish what the product demonstrates from documented design rationale and our own hypotheses.
+
 ## Intended experience
 
 From your existing project, tell your coding agent something like:
@@ -47,6 +49,7 @@ References can reveal good solutions, but they do not establish that those solut
 
 - [Product brief](docs/project-brief.md)
 - [Architecture and application mechanism](docs/architecture.md)
+- [Understanding design choices in context](docs/design-reasoning.md)
 - [Supported surface ambitions and evidence limits](docs/surfaces.md)
 - [Worked example: preserving a draft through failure](examples/reference-to-implementation.md)
 - [Worked example: transferring visual taste](examples/visual-direction.md)

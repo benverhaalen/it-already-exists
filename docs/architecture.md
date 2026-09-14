@@ -60,6 +60,8 @@ For each adopted property, retain:
 
 These records should support concise human-readable views and machine-readable structure. Their schema should be validated against a real complete experiment before being treated as a stable API.
 
+Apply the [design reasoning standard](design-reasoning.md): distinguish description and behavior from contextual mechanism, alternatives, tradeoffs and transfer. For consequential choices, capture the assumptions and evidence that could overturn the recommendation. Track analytical depth separately from evidence status; a detailed explanation must not be mistaken for verified intent or a measured effect.
+
 The 3% principle guides deliberate variation. For example, retain a successful interaction's continuity and recovery behavior while changing its information model for a different audience. Do not substitute a percentage of changed pixels or code for a useful design judgment.
 
 ### 5. Compose one product direction
