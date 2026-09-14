@@ -65,4 +65,6 @@ Maintain four distinct evidence classes: observed original behavior, data-suppor
 
 For each property adopted into another product, connect the source episode to its context, the decision to preserve/adapt it, the changed implementation, and the observed result. Test complete transitions, persistence, interruption, and recovery alongside appearance. Passing isolated component tests does not establish an integrated or faithful experience.
 
+Make a reference handoff portable by collecting the files actually reachable from the selected scene or journey, preserving their bytes and provenance, and recording relative paths and hashes. Check filename case, missing dependencies, and path escapes before packaging. Validate the relocated built artifact after removing its dependency on the extraction workspace; checking the source directory alone can hide host-only paths. Keep resource completeness, successful compilation, actual device playback, and original-reference fidelity as separate results.
+
 If acquisition remains blocked, deliver the reproducible failure and preserved state, label the reconstruction limits, and name the smallest new evidence that would unlock the next step. Keep that target-specific report in the target workspace.

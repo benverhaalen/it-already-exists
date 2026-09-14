@@ -15,6 +15,8 @@ At the stalled step, state the assumption in plain language. Examples:
 
 Distinguish those explanations from facts. A repeated sleeping stack can locate a wait without proving why it persists. A black capture might contain no app frame, a frame hidden by a system dialog, or a capture failure. These possibilities require different tests.
 
+Check whether a suspected failure signal also occurs during normal operation. A rendering thread can legitimately sleep between requested frames. Compare successive presentation timestamps, current surface/context validity, the visible view hierarchy, and actual captured pixels before changing the renderer. Advancing timestamps establish presentation activity, not meaningful image content; a large view does not establish occlusion without its visibility, background, alpha, and contents. Retire an explanation when the new evidence contradicts it, and update the next experiment accordingly.
+
 When a launcher wraps another engine, compare the requested setting, the wrapper's effective configuration, and the final engine arguments. An override passed directly to the engine can leave the wrapper's resource bookkeeping unchanged. Reconcile the values at the layer that owns them, then inspect the generated configuration before interpreting the next run.
 
 For a crash, match the process and timestamp to its faulting thread and call stack. Compare nearby warnings with a run that progressed further: a warning shared by both runs may be incidental. Test the explanation supported by the failing call, rather than treating the last printed line as its cause.
@@ -53,6 +55,8 @@ Build a small compatibility map: host instruction set, translator or emulator en
 Inspect actual shipped artifacts and supported options alongside documentation. A distribution may include lower-level engines that its default launcher does not expose. Conversely, a familiar product name or open-source repository does not prove the required CPU, graphics, or native-bridge capability. Verify provenance, architecture, dependencies, and an actual bounded execution before relying on an alternative.
 
 Probe structurally similar mechanisms when direct options converge: compatibility shims, virtual peripherals, protocol fixtures, software CPU translation, alternate graphics implementations, and controlled clocks. Choose by the missing capability, not by novelty. Measure host resource costs and stop a branch when another repetition is unlikely to change the next decision.
+
+Validate an observation tool in its actual execution environment. A probe that parses in the host's current language runtime can fail in an older embedded interpreter before collecting anything. Distinguish tool compilation, attachment, completed observation, and detachment. Repair the probe's compatibility first; its parser error says nothing about the target's behavior.
 
 ## Record the lesson so it changes the next attempt
 
