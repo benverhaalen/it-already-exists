@@ -38,10 +38,12 @@ For each experiment record:
 
 - The observed failure and a falsifiable explanation to test.
 - Exact changed variables: engine, guest image, renderer, CPU configuration, clock, storage, network, framework hook, and warmed state.
-- Versions, provenance, command, resource limits, target serial/session, evidence locations, and stop condition.
+- Versions, provenance, command, resource limits, target serial/session, evidence locations, and stop condition. For a probe or adapter, include the hash of the exact revision executed and its effective inputs; the current source file alone is insufficient.
 - The result, residual uncertainty, and whether that result changes the next decision.
 
 Change one important variable where practical. If warm caches, CPU count, and clock behavior also changed, report the combination's feasibility; do not attribute the result to one cause. A matching error message alone does not establish the same failure mechanism. Stop unchanged retries when they cease producing useful evidence.
+
+When a basic control passes but the reference fails, choose the next test from the observed boundary operations: reproduce their order with owned inputs, compare an equivalent operation path, and retain a positive control. A failure isolated to one path is a reason to narrow the investigation, not to restart broad environment changes. Follow the [control and adapter checks](compatibility-recovery.md#build-the-smallest-discriminating-experiment) before applying a compatibility change; local correction and usable reference behavior remain separate results.
 
 Prefer bounded, process-scoped experiments and preserve resettable state. Separate runtime dependencies and analysis tools from the reconstructed application. Keep source packages immutable and record every intervention in the observation environment. Archive relevant licenses and pin downloaded tool provenance; the presence of binaries on GitHub does not establish that they are open source.
 
