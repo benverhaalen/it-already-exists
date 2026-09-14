@@ -1,0 +1,8 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Target binaries and captured sessions are local experiment data.
+/inputs/
+/runs/
