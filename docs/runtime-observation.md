@@ -55,6 +55,10 @@ If a mutation times out, its outcome is unknown until state is inspected. If inp
 
 Keep host monotonic timestamps, guest/application timestamps when available, and the timing basis distinct. Software emulation, instrumentation, and instruction-based virtual clocks can distort elapsed time. Use such runs for state and ordering only until timing is validated on a suitable baseline. Never normalize slow playback into claimed original timing without evidence.
 
+## Preserve state across different filesystems
+
+When moving a reference between operating systems, compare source names and file types before trusting the copy. A case-sensitive source can contain both `Config.json` and `config.json`; copying it onto a case-insensitive volume can merge them even when the transfer reports success. Preserve such state in an archive or a filesystem with matching name semantics, and inspect archive members without extracting them onto the incompatible volume. Check the source inventory against the saved members and read the saved payloads before depending on the backup. A readable archive header or an exit code alone does not establish a complete snapshot.
+
 ## Transfer only supported properties
 
 Maintain four distinct evidence classes: observed original behavior, data-supported structure, candidate reconstruction, and explanation/hypothesis. A useful resource table can constrain layout while leaving its runtime interpretation unknown. An independently tested renderer can be correct for its input without reproducing the original.
