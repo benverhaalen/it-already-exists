@@ -36,6 +36,10 @@ Prefer a supported setting or compatible guest image when it supplies the prereq
 
 Test the measuring instrument and the target separately. If a state query returns impossible values, first establish that the query works in that environment; it is not reliable evidence that the target set impossible state. A tiny independently authored control can test the disputed capability with known inputs and predicted outputs. For graphics, an isolated, unshared offscreen context can test clear, drawing and texturing without reading or modifying the target's resources. Require actual output checks and acknowledged cleanup. A passing simple control narrows the diagnosis; it does not validate the target's full rendering history or window surface.
 
+Match the control to the disputed operation. Successfully setting a value or drawing an image does not establish that querying the state back works: setters, rendering and queries can follow different compatibility paths. Set independently chosen values, query them into owned sentinel buffers, compare with predicted results, and inspect errors only in the control's owned context. Include a nearby operation expected to work so a local defect can be distinguished from a broken test setup.
+
+Trace the phase where a dependency is consumed. A steady rendering loop can repeatedly use values calculated during initialization without querying them again. If a short steady-state trace cannot explain the failure, preserve the current state and observe one prepared startup before the suspected initialization calls. Record the actual covered interval. Reaching an event cap before the desired boundary is a partial observation, not a failed launch and not authorization to launch again. Keep repeated-call counts separately from representative argument samples when repetition would exhaust the useful trace budget.
+
 Keep the source package unchanged, preserve initial state, and record interventions separately. The selected clean-room access profile still applies: a runtime problem does not authorize implementation agents to inspect original application code. If deeper analysis is necessary, keep its access and exports separately constrained.
 
 If an intervention changes networking or device access, identify how commands, captures, and rollback reach the target first. Preserve that observer/control channel while changing the application-facing capability. Afterward, read the actual interface, route, or service state relevant to the hypothesis; a saved setting or accepted console command does not prove the intended network effect. If observation disappears, record the result as unknown until the channel is recovered.
@@ -43,6 +47,8 @@ If an intervention changes networking or device access, identify how commands, c
 ## Verify the repair at two levels
 
 First verify the local mechanism: the adapter was installed, the real target called it, and the observed wait or downstream state changed. Then verify the actual goal: the original target becomes visible, accepts input, and completes the selected journey.
+
+For an adapter, test both the corrected case and the untouched fallback with owned inputs before applying it to the target. Unknown state must remain unknown: invalidate inferred state after unsupported operations instead of fabricating an answer. Bind an intervention to its declared process, context and interval, stop substitutions at the chosen boundary, and separately acknowledge removal of hooks. A successful isolated correction is still not proof that it repairs the target's visible failure.
 
 Report these independently. Removing one startup dependency can reveal the next missing dependency. A later wait or newly submitted buffer is evidence of progress, not proof that the application now works. Keep failed and partial results; they prevent another agent from repeating the same uninformative attempt.
 
