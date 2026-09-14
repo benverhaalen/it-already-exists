@@ -69,3 +69,5 @@ python3 tools/capture_android_reference.py \
 ```
 
 Use `--capture-method pull` for older ADB implementations and `--timeout 60` for a slower runtime. The JSON-lines journal distinguishes a completed input from a completed capture; failed operations record the last attempted step. Host elapsed time is not original-device animation timing.
+
+If Android capture stalls, `--capture-method console` uses the emulator's own screenshot command. This requires a native emulator on the same host; it does not support containers or remote emulator hosts. The recorder verifies both the console acknowledgment and a fresh PNG, records the observer and hash, and retains failed attempts. Inspect the image before deciding whether another input is needed.

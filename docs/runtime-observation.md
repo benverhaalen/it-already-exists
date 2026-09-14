@@ -53,6 +53,10 @@ If a mutation times out, its outcome is unknown until state is inspected. If inp
 
 `tools/capture_android_reference.py` journals these stages and records an external-command timeout or failure with the current step. It accepts a per-command timeout, a host ADB executable or task-owned container, and an older-ADB pull path. Its PNG header check establishes a capture payload, not screenshot correctness or UI success. Inspect the image and link the resulting observation separately.
 
+When Android's capture service stalls but the emulator is responsive, try the separate host capture path with `--capture-method console`. This opt-in method requires a native emulator running on the same host as the recorder; container and remote-host capture are unsupported. It asks the emulator console to write into a fresh host directory, checks the console's semantic acknowledgment, requires one new regular PNG, and records the output hash and observer location. Failed attempts remain available for inspection. A cleanup problem after the final image is saved produces a warning rather than falsely reporting a failed input. The default remains Android `exec-out` capture.
+
+Changing the observation path tests a different layer without replaying the action. An emulator-host image can expose system dialogs even when guest capture hangs; a valid image that remains black still does not identify the application's failure. Record which observer produced each capture before comparing images or latency.
+
 Keep host monotonic timestamps, guest/application timestamps when available, and the timing basis distinct. Software emulation, instrumentation, and instruction-based virtual clocks can distort elapsed time. Use such runs for state and ordering only until timing is validated on a suitable baseline. Never normalize slow playback into claimed original timing without evidence.
 
 ## Preserve state across different filesystems

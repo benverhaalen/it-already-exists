@@ -3,6 +3,9 @@
 
 Every action carries an emulator serial. Captures preserve raw pixels, monotonic
 host times and an action trace; no timing normalization is silently applied.
+Console capture is opt-in for a native emulator on this same host. Its screenshot
+directory is a host path, not a guest path; remote ADB/emulator hosts and Docker
+are unsupported for this method. Failed console attempts are retained for inspection.
 """
 import argparse
 import hashlib
@@ -28,8 +31,8 @@ def main():
     p.add_argument('--serial',required=True)
     p.add_argument('--container',help='Optional task-local Docker container holding the emulator')
     p.add_argument('--adb',default='adb',help='ADB executable on the selected host/container')
-    p.add_argument('--capture-method',choices=['exec-out','pull'],default='exec-out',
-                   help='Use pull with old Android images that do not support exec-out')
+    p.add_argument('--capture-method',choices=['exec-out','pull','console'],default='exec-out',
+                   help='exec-out (default), pull for old images, or console for a native emulator on this same host only')
     p.add_argument('--output',required=True,type=Path)
     p.add_argument('--label',required=True)
     p.add_argument('--timeout',type=float,default=30,
@@ -45,6 +48,8 @@ def main():
         p.error('timeout must be a finite positive number')
     if args.action=='swipe' and args.duration_ms<=0:
         p.error('duration must be positive')
+    if args.capture_method=='console' and args.container:
+        p.error('console capture requires a native emulator on this host; --container is unsupported')
     def device(*values,**kwargs):
         return adb(args.serial,*values,container=args.container,executable=args.adb,
                    timeout=args.timeout,**kwargs)
@@ -53,7 +58,10 @@ def main():
     args.output.mkdir(parents=True,exist_ok=True)
     event=dict(version=1,event_id=time.time_ns(),serial=args.serial,container=args.container,label=args.label,action=args.action,
                utc=datetime.now(timezone.utc).isoformat(),started_monotonic=time.monotonic(),
-               command_timeout_seconds=args.timeout)
+               command_timeout_seconds=args.timeout,capture_method=args.capture_method,
+               capture_observer=dict(platform='native-emulator-host' if args.capture_method=='console' else 'android-guest',
+                                     transport='adb emulator console' if args.capture_method=='console' else args.capture_method,
+                                     recorder_host_platform=sys.platform))
     def record(stage):
         with (args.output/'events.jsonl').open('a') as f:
             f.write(json.dumps(dict(event,stage=stage))+'\n')
@@ -90,9 +98,35 @@ def perform_action(args,device,event,record):
         record('input_completed')
     event['capture_started_monotonic']=time.monotonic()
     record('capture_started')
+    console_folder=None
+    console_file=None
     if args.capture_method=='exec-out':
         pending('screencap')
         png=device('exec-out','screencap','-p',binary=True)
+    elif args.capture_method=='console':
+        # A new empty directory makes output attributable to this single request.
+        # Do not use TemporaryDirectory: a timed-out console command may finish later.
+        console_folder=Path(tempfile.mkdtemp(prefix=f'.console-capture-{event["event_id"]}-',
+                                             dir=args.output.resolve()))
+        request=['emu','screenrecord','screenshot',str(console_folder)]
+        event['console_capture']=dict(host_directory=str(console_folder),request=request,
+                                      requested_monotonic=time.monotonic())
+        pending('console_screenshot')
+        record('console_capture_requested')
+        response=device(*request)
+        event['console_capture'].update(response=response,completed_monotonic=time.monotonic())
+        record('console_capture_completed')
+        pending('validate_console_response')
+        lines=[line.strip() for line in response.splitlines()]
+        if 'OK' not in lines or any(line=='KO' or line.startswith(('KO:', 'KO ')) for line in lines):
+            raise RuntimeError('Emulator console did not report successful OK: '+response[-1500:])
+        pending('locate_console_capture')
+        entries=list(console_folder.iterdir())
+        if len(entries)!=1 or entries[0].is_symlink() or not entries[0].is_file() or entries[0].suffix.lower()!='.png':
+            raise RuntimeError('Emulator console must produce exactly one fresh regular PNG in its attempt directory')
+        console_file=entries[0]
+        event['console_capture']['produced_filename']=console_file.name
+        png=console_file.read_bytes()
     else:
         capture_id=f'it-already-exists-{time.time_ns()}.png'
         remote=f'/data/local/tmp/{capture_id}'
@@ -124,6 +158,18 @@ def perform_action(args,device,event,record):
     event.update(capture_finished_monotonic=time.monotonic(),screenshot=name,
                  screenshot_sha256=hashlib.sha256(png).hexdigest(),
                  timing_scope='host elapsed times; software emulation may run slower than original intended playback')
+    if console_file is not None:
+        pending('remove_console_copy')
+        try:
+            console_file.unlink()
+            console_folder.rmdir()
+            event['console_capture']['intermediates_removed']=True
+        except OSError as error:
+            # The final PNG is already saved and hashed. A cleanup problem must
+            # not report input/capture failure or suggest repeating the input.
+            event['console_capture'].update(intermediates_removed=False,
+                cleanup_warning=f'{type(error).__name__}: {error}')
+            record('console_cleanup_warning')
     event.pop('pending_step',None)
     record('complete')
     print(json.dumps(event,indent=2))
