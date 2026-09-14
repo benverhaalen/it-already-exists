@@ -1,6 +1,10 @@
 """Exercise the recorder's evidence boundary through its real command interface."""
 import base64
+import contextlib
+import errno
 import hashlib
+import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -8,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 RECORDER = Path(__file__).resolve().parents[1] / 'tools/capture_android_reference.py'
 PNG = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a5ZkAAAAASUVORK5CYII=')
@@ -134,6 +139,61 @@ elif args[0]=='pull':
         self.assertTrue(attempt.is_dir())
         self.assertEqual(list(attempt.iterdir()), [])
         self.assertNotIn('screenshot', final)
+
+    def test_console_directory_failure_preserves_input_acknowledgment_even_if_failure_journal_fails(self):
+        spec = importlib.util.spec_from_file_location('recorder_directory_failure', RECORDER)
+        recorder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(recorder)
+        for journal_fails in (False, True):
+            with self.subTest(journal_fails=journal_fails), tempfile.TemporaryDirectory() as folder:
+                output = Path(folder) / 'evidence'
+                journal = output / 'events.jsonl'
+                calls = []
+                capture_setup_failed = False
+                original_open = Path.open
+
+                def device(serial, *args, **kwargs):
+                    calls.append(args)
+                    if args == ('shell', 'getprop', 'ro.kernel.qemu'):
+                        return '1'
+                    if args == ('shell', 'input', 'tap', '10', '20'):
+                        return 'input acknowledged'
+                    self.fail('No screenshot request should follow directory creation failure')
+
+                def fail_capture_directory(*args, **kwargs):
+                    nonlocal capture_setup_failed
+                    capture_setup_failed = True
+                    raise OSError(errno.ENOSPC, 'Synthetic directory allocation failure')
+
+                def open_journal(path, *args, **kwargs):
+                    if journal_fails and capture_setup_failed and path == journal:
+                        raise OSError(errno.ENOSPC, 'Synthetic failure journal allocation failure')
+                    return original_open(path, *args, **kwargs)
+
+                argv = [str(RECORDER), '--serial', 'emulator-5554', '--capture-method', 'console',
+                        '--output', str(output), '--label', 'synthetic-fixture', 'tap', '10', '20']
+                stderr = io.StringIO()
+                with mock.patch.object(sys, 'argv', argv), mock.patch.object(recorder, 'adb', side_effect=device), \
+                     mock.patch.object(recorder.tempfile, 'mkdtemp', side_effect=fail_capture_directory), \
+                     mock.patch.object(Path, 'open', open_journal), contextlib.redirect_stderr(stderr):
+                    code = recorder.main()
+                self.assertEqual(code, 1)
+                final = json.loads(stderr.getvalue())
+                self.assertEqual(final['failed_step'], 'prepare_console_capture')
+                self.assertEqual(final['pending_step'], 'prepare_console_capture')
+                self.assertEqual(final['response'], 'input acknowledged')
+                self.assertIn('input_completed_monotonic', final)
+                self.assertNotIn('screenshot', final)
+                self.assertEqual(calls.count(('shell', 'input', 'tap', '10', '20')), 1)
+                events = [json.loads(line) for line in journal.read_text().splitlines()]
+                acknowledgment = next(event for event in events if event['stage'] == 'input_completed')
+                self.assertEqual(final['input_completed_monotonic'], acknowledgment['input_completed_monotonic'])
+                if journal_fails:
+                    self.assertIn('failure_record_error', final)
+                else:
+                    self.assertEqual(events[-1]['stage'], 'failed')
+                    self.assertEqual(events[-1]['failed_step'], 'prepare_console_capture')
+                    self.assertEqual(events[-1]['input_completed_monotonic'], final['input_completed_monotonic'])
 
     def test_console_timeout_preserves_attempt_and_uncertain_request(self):
         result, events, calls, _ = self.run_recording('console-timeout', method='console')

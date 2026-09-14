@@ -64,7 +64,7 @@ Inspect actual shipped artifacts and supported options alongside documentation. 
 
 Probe structurally similar mechanisms when direct options converge: compatibility shims, virtual peripherals, protocol fixtures, software CPU translation, alternate graphics implementations, and controlled clocks. Choose by the missing capability, not by novelty. Measure host resource costs and stop a branch when another repetition is unlikely to change the next decision.
 
-Validate an observation tool in its actual execution environment. A probe that parses in the host's current language runtime can fail in an older embedded interpreter before collecting anything. Distinguish tool compilation, attachment, completed observation, and detachment. Repair the probe's compatibility first; its parser error says nothing about the target's behavior.
+Validate an observation tool in its actual execution environment. A probe that parses in the host's current language runtime can fail in an older embedded interpreter before collecting anything. Distinguish tool compilation, attachment, completed observation, and detachment. If a probe waits for an application context while observing only public platform APIs, check whether that readiness dependency is necessary. A version-supported platform-only entry point may remove the wait, but verify actual hook readiness and coverage before interpreting an absence of events. Repair the probe's compatibility first; its parser error says nothing about the target's behavior.
 
 ## Record the lesson so it changes the next attempt
 

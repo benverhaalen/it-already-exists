@@ -74,7 +74,13 @@ def main():
     except (OSError,RuntimeError,subprocess.SubprocessError) as error:
         event.update(failed_monotonic=time.monotonic(),failed_step=event.get('pending_step',step),
                      error_type=type(error).__name__,error=str(error)[-1500:])
-        record('failed')
+        try:
+            record('failed')
+        except OSError as record_error:
+            # Preserve the input acknowledgment in the error output even when
+            # the same storage failure also prevents updating the journal.
+            event['failure_record_error']=dict(error_type=type(record_error).__name__,
+                                                error=str(record_error)[-1500:])
         print(json.dumps(event,indent=2),file=sys.stderr)
         return 1
     return 0
@@ -95,7 +101,9 @@ def perform_action(args,device,event,record):
         pending('input')
         event['response']=device('shell',*command)
         event['input_completed_monotonic']=time.monotonic()
+        event['pending_step']='record_input_completion'
         record('input_completed')
+    event['pending_step']='capture_setup'
     event['capture_started_monotonic']=time.monotonic()
     record('capture_started')
     console_folder=None
@@ -106,6 +114,7 @@ def perform_action(args,device,event,record):
     elif args.capture_method=='console':
         # A new empty directory makes output attributable to this single request.
         # Do not use TemporaryDirectory: a timed-out console command may finish later.
+        pending('prepare_console_capture')
         console_folder=Path(tempfile.mkdtemp(prefix=f'.console-capture-{event["event_id"]}-',
                                              dir=args.output.resolve()))
         request=['emu','screenrecord','screenshot',str(console_folder)]
@@ -132,6 +141,7 @@ def perform_action(args,device,event,record):
         remote=f'/data/local/tmp/{capture_id}'
         pending('screencap')
         device('shell','screencap','-p',remote)
+        pending('prepare_pull_capture')
         with tempfile.TemporaryDirectory(prefix='reference-capture-') as folder:
             local=Path(folder)/capture_id
             pending('pull_capture')
