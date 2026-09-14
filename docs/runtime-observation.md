@@ -26,6 +26,8 @@ Treat readiness as separate observations:
 
 These stages are a diagnostic ladder, not a universal mandatory startup sequence. Web, desktop, and packaged apps have different prerequisites. Record the furthest evidenced stage and the exact missing evidence. A submitted graphics buffer, successful build, or reconstructed composition is not a substitute for inspecting the original image.
 
+When readiness is intermittent, take a small, bounded series of read-only samples from the same explicit session. Record each result and time separately; one successful response can occur between service restarts. Choose the next action from the relevant stable state, and stop sampling when the evidence is sufficient or the stated observation window ends. Keep host elapsed time separate from guest uptime when deciding whether progress has stopped.
+
 ## Diagnose the failing layer
 
 Use [compatibility recovery](compatibility-recovery.md) when a target stalls: locate the unmet environmental assumption, make a minimal discriminating intervention, and verify prerequisite repair separately from usable behavior.
@@ -45,7 +47,9 @@ Prefer bounded, process-scoped experiments and preserve resettable state. Separa
 
 ## Preserve failed observations
 
-Use an explicit target for every input. Record input requested, input completed, capture started, and capture completed separately. If input succeeds and capture fails, do not silently repeat the input: it may have changed the target state. Inspect or recover the capture first.
+Use an explicit target for every input. Record input requested, input completed, capture started, and capture completed separately. Distinguish the external process exit status, the protocol's acknowledgment, and the observed target effect. A console client can return exit status `0` while its response says `KO`; even a positive acknowledgment does not establish a visible change.
+
+If a mutation times out, its outcome is unknown until state is inspected. If input succeeds and capture fails, recover observation before sending it again. In either case, use a read-only state check or a known reset path to decide whether retrying would duplicate an action. Readiness polling should not repeatedly trigger the operation whose completion is uncertain.
 
 `tools/capture_android_reference.py` journals these stages and records an external-command timeout or failure with the current step. It accepts a per-command timeout, a host ADB executable or task-owned container, and an older-ADB pull path. Its PNG header check establishes a capture payload, not screenshot correctness or UI success. Inspect the image and link the resulting observation separately.
 

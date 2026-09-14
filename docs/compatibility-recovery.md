@@ -15,6 +15,10 @@ At the stalled step, state the assumption in plain language. Examples:
 
 Distinguish those explanations from facts. A repeated sleeping stack can locate a wait without proving why it persists. A black capture might contain no app frame, a frame hidden by a system dialog, or a capture failure. These possibilities require different tests.
 
+When a launcher wraps another engine, compare the requested setting, the wrapper's effective configuration, and the final engine arguments. An override passed directly to the engine can leave the wrapper's resource bookkeeping unchanged. Reconcile the values at the layer that owns them, then inspect the generated configuration before interpreting the next run.
+
+For a crash, match the process and timestamp to its faulting thread and call stack. Compare nearby warnings with a run that progressed further: a warning shared by both runs may be incidental. Test the explanation supported by the failing call, rather than treating the last printed line as its cause.
+
 ## Build the smallest discriminating experiment
 
 Write down four things before changing the environment:
@@ -29,6 +33,8 @@ For a missing metadata value, a narrow adapter at a public framework boundary ca
 Prefer a supported setting or compatible guest image when it supplies the prerequisite. Instrumentation is useful when it creates a more discriminating experiment. Do not substitute for application decisions such as reward outcomes or navigation merely to make a screenshot appear. That would change the behavior being measured.
 
 Keep the source package unchanged, preserve initial state, and record interventions separately. The selected clean-room access profile still applies: a runtime problem does not authorize implementation agents to inspect original application code. If deeper analysis is necessary, keep its access and exports separately constrained.
+
+If an intervention changes networking or device access, identify how commands, captures, and rollback reach the target first. Preserve that observer/control channel while changing the application-facing capability. Afterward, read the actual interface, route, or service state relevant to the hypothesis; a saved setting or accepted console command does not prove the intended network effect. If observation disappears, record the result as unknown until the channel is recovered.
 
 ## Verify the repair at two levels
 
