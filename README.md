@@ -39,11 +39,13 @@ Default: adapt useful properties into a coherent original product. Faithful reco
 
 ## Status
 
-Early design stage. This repository currently contains the product brief, proposed architecture, surface map, and an illustrative worked example. There is no installable integration or working analysis pipeline yet.
+Early development. This repository contains the product design, a generic Android observation recorder, and a runtime-observation workflow. The general analysis pipeline and installable agent integration remain unfinished.
 
 The recommended starting shape is a command-line core with small Claude Code and Codex skill integrations. The existing coding agent is the main interface; a dedicated frontend is not part of the initial plan. Packaging and implementation details remain proposals until tested.
 
 References can reveal good solutions, but they do not establish that those solutions fit a different audience or guarantee bug-free software. That is why application and verification are part of the product.
+
+Target-specific experiments live outside this repository. Only reusable tools, abstracted process lessons, and synthetic examples belong here. See the [runtime-observation workflow](docs/runtime-observation.md) for acquisition readiness, evidence limits, and failure recovery.
 
 ## Design documents
 
@@ -51,5 +53,19 @@ References can reveal good solutions, but they do not establish that those solut
 - [Architecture and application mechanism](docs/architecture.md)
 - [Understanding design choices in context](docs/design-reasoning.md)
 - [Supported surface ambitions and evidence limits](docs/surfaces.md)
+- [Runtime observation and evidence](docs/runtime-observation.md)
+- [Compatibility recovery and testing constraints](docs/compatibility-recovery.md)
 - [Worked example: preserving a draft through failure](examples/reference-to-implementation.md)
 - [Worked example: transferring visual taste](examples/visual-direction.md)
+
+## Android observation recorder
+
+With an already running, task-owned emulator and ADB installed:
+
+```sh
+python3 tools/capture_android_reference.py \
+  --serial emulator-5554 --output /path/to/private-evidence \
+  --label initial-state capture
+```
+
+Use `--capture-method pull` for older ADB implementations and `--timeout 60` for a slower runtime. The JSON-lines journal distinguishes a completed input from a completed capture; failed operations record the last attempted step. Host elapsed time is not original-device animation timing.

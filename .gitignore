@@ -6,3 +6,10 @@
 # Target binaries and captured sessions are local experiment data.
 /inputs/
 /runs/
+
+# Local compilation artifacts.
+__pycache__/
+*.pyc
+.build/
+*.xcuserstate
+xcuserdata/

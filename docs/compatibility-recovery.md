@@ -1,0 +1,57 @@
+# Recover an observable runtime by testing its assumptions
+
+When a reference will not run, treat the failure as a question about a particular layer. A black screen is an outcome; it is not a diagnosis. The purpose of recovery is to obtain trustworthy behavior to study, with every environmental change attached to that evidence.
+
+## Find the unmet assumption
+
+Map the path from launch to the missing result. Determine whether the process starts, required libraries load, initialization advances, a surface exists, a frame is submitted, and the visible target responds. Use the least invasive evidence available: bounded commands, service state, logs, timestamps, captures, and operational thread snapshots within the selected access profile.
+
+At the stalled step, state the assumption in plain language. Examples:
+
+- An old SDK expects a device-metadata call to return a nonempty value.
+- A startup flow assumes a retired endpoint will respond before it can show its UI.
+- A rendering client assumes its graphics-service request will complete.
+- An emulator launcher assumes the default guest architecture is suitable for the supplied native library.
+
+Distinguish those explanations from facts. A repeated sleeping stack can locate a wait without proving why it persists. A black capture might contain no app frame, a frame hidden by a system dialog, or a capture failure. These possibilities require different tests.
+
+## Build the smallest discriminating experiment
+
+Write down four things before changing the environment:
+
+1. **Evidence:** what was actually observed, and where it is recorded.
+2. **Hypothesis:** the missing assumption that could explain it.
+3. **Intervention:** the smallest permitted change that tests that assumption.
+4. **Prediction:** the specific execution or visible change expected if the hypothesis is useful.
+
+For a missing metadata value, a narrow adapter at a public framework boundary can supply a documented placeholder and log whether the target actually requests it. For a retired service, an authorized offline fixture could supply an independently specified response. For a graphics wait, test another renderer while preserving the guest and input. These are candidate mechanisms; each needs its own observed result.
+
+Prefer a supported setting or compatible guest image when it supplies the prerequisite. Instrumentation is useful when it creates a more discriminating experiment. Do not substitute for application decisions such as reward outcomes or navigation merely to make a screenshot appear. That would change the behavior being measured.
+
+Keep the source package unchanged, preserve initial state, and record interventions separately. The selected clean-room access profile still applies: a runtime problem does not authorize implementation agents to inspect original application code. If deeper analysis is necessary, keep its access and exports separately constrained.
+
+## Verify the repair at two levels
+
+First verify the local mechanism: the adapter was installed, the real target called it, and the observed wait or downstream state changed. Then verify the actual goal: the original target becomes visible, accepts input, and completes the selected journey.
+
+Report these independently. Removing one startup dependency can reveal the next missing dependency. A later wait or newly submitted buffer is evidence of progress, not proof that the application now works. Keep failed and partial results; they prevent another agent from repeating the same uninformative attempt.
+
+Do not automatically turn a successful compatibility intervention into a fidelity baseline. A synthetic identifier can alter identity-dependent behavior. Disabled networking can alter default content. Virtual-clock changes invalidate ordinary wall-clock timing comparisons. Mark the affected properties and obtain a suitable baseline before making claims about them.
+
+## Recheck the constraint when the standard route fails
+
+Separate the user's requirement from the chosen method. “Run this binary” does not necessarily require a standard emulator UI, hardware virtualization, a particular guest image, or a particular host-process architecture.
+
+Build a small compatibility map: host instruction set, translator or emulator engine, guest board and OS, app native ABI, graphics backend, and external prerequisites. Identify which link actually lacks support. A negative result for one combination does not rule out all combinations.
+
+Inspect actual shipped artifacts and supported options alongside documentation. A distribution may include lower-level engines that its default launcher does not expose. Conversely, a familiar product name or open-source repository does not prove the required CPU, graphics, or native-bridge capability. Verify provenance, architecture, dependencies, and an actual bounded execution before relying on an alternative.
+
+Probe structurally similar mechanisms when direct options converge: compatibility shims, virtual peripherals, protocol fixtures, software CPU translation, alternate graphics implementations, and controlled clocks. Choose by the missing capability, not by novelty. Measure host resource costs and stop a branch when another repetition is unlikely to change the next decision.
+
+## Record the lesson so it changes the next attempt
+
+A useful lesson is conditional and executable as a workflow:
+
+> When an app's startup repeatedly waits at a platform boundary, identify the expected input, test a minimal documented substitute within the access scope, and require both a changed execution trace and a usable interaction before calling recovery complete.
+
+“Try more emulators” or “use instrumentation” is too broad. Save the triggering symptom, evidence, tested intervention, prediction, observed limit, rollback, and next discriminating test in the target's private workspace. Transfer only the general method here. Use the [runtime-observation workflow](runtime-observation.md) to keep readiness and fidelity claims aligned with the evidence.
