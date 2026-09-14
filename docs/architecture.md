@@ -1,6 +1,6 @@
 # Architecture and application mechanism
 
-Design proposal, September 13, 2026. The components and operations below are conceptual; they are not implemented interfaces.
+Design proposal, September 14, 2026. The components and operations below are conceptual; they are not implemented interfaces.
 
 ## Recommended delivery model
 
@@ -26,13 +26,21 @@ Avoid making a separately hosted model service mandatory at the start. Let the h
 
 Read the user's goal, target audience, platform, constraints, current architecture and existing experience. Inspect a representative journey before deciding what is missing. Translate adjectives such as "polished" or "calm" into provisional, audience-specific criteria with examples.
 
+The normal entry point requires no supplied references. Start with the goal and available project evidence. A new product can need discovery before there is an interface to inspect; use its intended journey and realistic content as the starting point.
+
+When uncertainty would materially change the search or design, elicit feedback through a concrete situation or a small comparison. Explain what each alternative lets the user do and its relevant tradeoff; avoid generic adjective pairs such as "compact or spacious." For visual decisions, show comparable previews with the same task and content when practical. Keep unrelated properties constant so feedback is interpretable. Do not require knowledge of the reference products.
+
+Every comparison must allow ordinary-language rejection, a combination of properties, or a different proposal. Treat "neither" as evidence that the framing may be wrong. Preserve what the response actually supports, revise the provisional criteria, and reconsider affected reference selections and implementation decisions. Clarify a consequential ambiguous correction before dependent work; do not map it silently to the nearest offered option. Questions are optional and selective, not a fixed quiz. Validate the interpretation in the resulting product.
+
 Create a decision map: which areas already have an established project pattern, which have a user reference, which need discovery, and which remain design hypotheses. Prioritize consequential uncertainty: information hierarchy, navigation, content density, state transitions, form behavior, recovery, accessibility, responsiveness and continuity across screens.
 
 The reference-first discipline applies to meaningful product decisions. It should not incentivize collecting more sources or mechanically referencing every implementation detail. Reuse inspected evidence, stop convergent searches when they stop changing a decision, and make the discovery budget visible.
 
 ### 2. Find references with a specific job
 
-Use the user's references first, preserving why they were given. Discover additional references for uncovered questions, including structurally similar problems outside the product's immediate category.
+Seek references for the goal and consequential design decisions, including structurally similar problems outside the product's immediate category. Discovery is part of forming the direction, even when no references were supplied. If the user supplies a reference, preserve why they gave it and inspect the relevant property; do not assume it defines the entire direction or limits the search.
+
+Carry provisional criteria and preference corrections into the actual selection: record which user need a candidate serves, the supporting observed property, and reasons to retain or reject it. A changed preference should trigger reconsideration of affected candidates, not just an update to a note. Keep the user-facing conversation about their product while retaining traceable references and reasons for inspection on request.
 
 Select by fit to the task, audience and interaction conditions; strength of the relevant property; inspectability; and complementarity with other selected evidence. Popularity is a discovery signal, not proof of UX quality or suitability. A famous product's visible interface does not reveal its private research or prove a causal business outcome.
 

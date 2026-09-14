@@ -1,12 +1,12 @@
 # it-already-exists
 
-**Give your coding agent a reference for what good looks like.**
+**Build from the best of what already exists.**
 
 You want to build a production app with Claude Code or Codex. Someone has already built the interaction you need: a thoughtful onboarding flow, a useful empty state, a search experience that remembers where you were, an editor that handles mistakes gracefully.
 
 There is a lot to learn from the details of existing products. Your agent needs a way to inspect those details, understand which ones matter for your users, and carry them into what it builds.
 
-`it-already-exists` is being designed to do that inside the project you are already working on. Give your agent a website, an APK, a recording, or an app on your computer. It should study your references, find others where the product needs more depth, and turn the useful parts into precise guidance for design, implementation, and verification.
+`it-already-exists` is being designed to do that inside the project you are already working on. Describe what you want to build and who it is for. Your agent should seek out strong references for that goal, understand the useful details, and carry them into design, implementation, and verification. You can also supply a website, an APK, a recording, or an app on your computer; references are optional inputs, not homework.
 
 The goal is a product with coherent taste, considered interactions, and fewer overlooked details—with less handholding.
 
@@ -24,16 +24,18 @@ Study each choice in context: who it serves, what problem it addresses, which al
 
 From your existing project, tell your coding agent something like:
 
-> Use this app's editor as a reference. I like how it feels complete without being crowded. Find useful references for the parts we are missing and apply them to our product.
+> Help me build a place for designers to save inspiration and find it again when they start a project. Make the whole experience feel considered, including the little details I haven't thought of.
 
 The proposed workflow is:
 
-1. Understand your audience, product, constraints, and what each reference means to you.
-2. Inspect supplied references and discover additional ones for specific gaps.
+1. Understand your goal, audience, project and constraints. When an important choice is unclear, use concrete scenarios or small previews to make it easy to react. You can reject both options, combine parts, or explain a different direction.
+2. Actively discover references for the product's important decisions, whether or not you supplied any. Use your feedback to guide what to seek and which properties to adopt.
 3. Extract evidence: appearance, interaction, state, timing, data, and edge cases.
 4. Explain what to retain, what to adapt, and why it fits this project.
 5. Give the coding agent focused implementation guidance and relevant evidence as it works.
 6. Exercise the finished experience, find missing details, and repair them.
+
+The conversation should stay about your product. You should not have to know reference apps or choose between vague style labels. Comparisons are provisional ways to learn what you mean; feedback can change the question itself. The agent retains the underlying references and reasoning so you can inspect them when useful.
 
 Default: adapt useful properties into a coherent original product. Faithful reconstruction is available as a separate intended mode, with strict clean-room and source-assisted workflows kept distinct.
 
