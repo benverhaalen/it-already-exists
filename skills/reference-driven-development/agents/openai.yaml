@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reference-Driven Development"
+  short_description: "Build from references without losing their strengths"
+  default_prompt: "Use $reference-driven-development to research, combine, build, and verify the strongest relevant reference mechanisms for this project."

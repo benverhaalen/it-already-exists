@@ -1,0 +1,54 @@
+{
+  "package": "@hugeicons/core-free-icons",
+  "version": "4.3.5",
+  "license": "MIT",
+  "source": "https://github.com/hugeicons/hugeicons/tree/main/packages/core-free-icons",
+  "adaptation": "Selected official icon tuples with a 1.35 stroke width. No path geometry changes.",
+  "files": [
+    {
+      "role": "Interface",
+      "file": "dist/esm/GridViewIcon.js",
+      "sha256": "5e1c735257308180ca23d77106b7fc32c5bb07b04224adb9d63c2787e5e0087f"
+    },
+    {
+      "role": "Interaction",
+      "file": "dist/esm/Cursor01Icon.js",
+      "sha256": "43bf96b6e8bf11d34b05ec8f0a3e74c290926f77496c93eb34035a92906bbc6c"
+    },
+    {
+      "role": "Research",
+      "file": "dist/esm/BookOpen01Icon.js",
+      "sha256": "fb0db84f17132847646be1f242e80d24d79aa1f95919c6da3d80f9b3e760087b"
+    },
+    {
+      "role": "All references",
+      "file": "dist/esm/File02Icon.js",
+      "sha256": "0eb638bbe4171e3f0472e38c35191eaadc1a176a5fca60efeb08a2aaf79724a8"
+    },
+    {
+      "role": "menu",
+      "file": "dist/esm/Menu01Icon.js",
+      "sha256": "306e817219250decafade976ae2a42635dbc7a2d42c2c633fc4c1e78c8ff4f44"
+    },
+    {
+      "role": "back",
+      "file": "dist/esm/ArrowLeft01Icon.js",
+      "sha256": "7fe0f420f68e9d8b94753a3a917f5cc4286281fe5f2ae7d7fc1b9c3bb7e9206e"
+    },
+    {
+      "role": "close",
+      "file": "dist/esm/Cancel01Icon.js",
+      "sha256": "b370872edae0e589754be184c5a039f7f9b0eed78d53e0d91bbfdf3948bb9e7d"
+    },
+    {
+      "role": "add",
+      "file": "dist/esm/Add01Icon.js",
+      "sha256": "a47e07280ec7b20f458dca2d1aa8790c46bc52b65fe522b5df4c71f5f6b135f3"
+    },
+    {
+      "role": "search",
+      "file": "dist/esm/Search01Icon.js",
+      "sha256": "5eb73819dbcc1b824c71da70ecfe45620ead6a442a265b41195960bb4e0748f8"
+    }
+  ]
+}

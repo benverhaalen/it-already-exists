@@ -1,0 +1,2 @@
+# Optional image-comparison dependency. State/trajectory/timing need stdlib only.
+Pillow>=12.1.0,<13

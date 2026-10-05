@@ -1,0 +1,2 @@
+# Preserve exact third-party license bytes, including upstream whitespace.
+examples/ui-reference-mesh/design/fonts/*-OFL.txt -whitespace

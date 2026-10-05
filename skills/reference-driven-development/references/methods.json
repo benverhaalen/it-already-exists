@@ -1,0 +1,1170 @@
+{
+  "schema_version": 1,
+  "status": "Conditional candidates distilled from inspected research; not installed integrations or proven optimal combinations.",
+  "source_detail": "reverse-engineering-catalog.md, ui-continuity.md, expert-integration.md, formal-methods.md and surface-methods.md; preserve nuance and refresh sources before adoption.",
+  "methods": [
+    {
+      "id": "framework-triage",
+      "surfaces": [
+        "android",
+        "binary"
+      ],
+      "properties": [
+        "structure"
+      ],
+      "requires": [
+        "package-inspection"
+      ],
+      "mechanism": "Identify payload frameworks before choosing analysis tools.",
+      "invariant": "Inspect all relevant package components.",
+      "delta": "Mixed frameworks and SDKs can defeat a single framework label.",
+      "probe": "Compare detected payload with native libraries, assets and entry components.",
+      "limit": "Detection and recovered names remain hypotheses.",
+      "source": "https://github.com/SimoneAvogadro/android-reverse-engineering-skill/tree/04fe39c7dcc8efa0ce39a331862fb76407d2d9dd",
+      "license": "Apache-2.0",
+      "conditions": "Packaged input is accessible; analyst-side in strict mode."
+    },
+    {
+      "id": "dex-recovery",
+      "surfaces": [
+        "android"
+      ],
+      "properties": [
+        "structure",
+        "hidden-state"
+      ],
+      "requires": [
+        "dex-analysis"
+      ],
+      "mechanism": "Use selective decompilation, resources and xrefs with raw bytecode retained.",
+      "invariant": "Unresolved logic remains explicit.",
+      "delta": "Alternative representations can distinguish decompiler artifacts.",
+      "probe": "Inspect disputed operation in bytecode and another decompilation mode.",
+      "limit": "Decompilation is partial and does not prove reachable behavior.",
+      "source": "https://github.com/skylot/jadx/tree/2270f9d24d41ddf21e7b9673c9ae0625b8c66db7",
+      "license": "Apache-2.0",
+      "conditions": "Relevant logic resides in DEX, not solely native or Dart code."
+    },
+    {
+      "id": "dart-aot",
+      "surfaces": [
+        "android",
+        "binary"
+      ],
+      "properties": [
+        "structure",
+        "hidden-state"
+      ],
+      "requires": [
+        "dart-analysis"
+      ],
+      "mechanism": "Recover version-matched AOT structure and narrow runtime hooks.",
+      "invariant": "Keep original build and patched observation separate.",
+      "delta": "Blutter static recovery and reFlutter instrumentation answer different questions.",
+      "probe": "Map one relevant call and compare patched/unmodified behavior.",
+      "limit": "Version-specific setup and hooks do not recover all states.",
+      "source": "https://github.com/worawit/blutter/tree/4a60ac648bf448c5a7596437243bcd0b9376fdf0",
+      "license": "MIT; reFlutter GPL-3.0 separately",
+      "conditions": "Dart AOT version is identifiable; runtime instrumentation is authorized."
+    },
+    {
+      "id": "cross-language-boundary",
+      "surfaces": [
+        "android"
+      ],
+      "properties": [
+        "hidden-state",
+        "structure"
+      ],
+      "requires": [
+        "cross-language-analysis"
+      ],
+      "mechanism": "Map Dart/native platform-channel relationships.",
+      "invariant": "Carry uncertainty across unresolved bridge edges.",
+      "delta": "Whole-language graphs miss behavior crossing platform channels.",
+      "probe": "Correlate a channel call with both endpoint evidence.",
+      "limit": "GlassWing security metrics are not fidelity metrics; full rebuild unverified.",
+      "source": "https://github.com/glasswing-ase25/GlassWing/tree/59b91b8b66339324655a04a147002f354929d1b8",
+      "license": "Apache-2.0 declared; bundled components need review",
+      "conditions": "Flutter behavior crosses Java/Kotlin/native boundaries."
+    },
+    {
+      "id": "unity-layer-recovery",
+      "surfaces": [
+        "binary",
+        "android"
+      ],
+      "properties": [
+        "structure",
+        "assets"
+      ],
+      "requires": [
+        "unity-analysis"
+      ],
+      "mechanism": "Recover resources/schema before critical method behavior.",
+      "invariant": "Track metadata-only/stubbed/failed/recovered-unvalidated/differential-tested separately.",
+      "delta": "Cpp2IL recovery differs from default empty-method AssetRipper/Dumper outputs.",
+      "probe": "Inspect critical generated method bodies before accepting restoration.",
+      "limit": "Importable projects and method counts do not establish executable equivalence.",
+      "source": "https://github.com/SamboyCoding/Cpp2IL/tree/b5ad444b82267cb1e4b88b8b373c008105bdea52",
+      "license": "Cpp2IL/Il2CppDumper MIT; AssetRipper GPL-3.0",
+      "conditions": "Unity format/version matches actual tool support."
+    },
+    {
+      "id": "hermes-tables",
+      "surfaces": [
+        "android",
+        "binary"
+      ],
+      "properties": [
+        "structure"
+      ],
+      "requires": [
+        "hermes-analysis"
+      ],
+      "mechanism": "Inspect HBC version and retrieve function/string tables before broad model context.",
+      "invariant": "Distinguish pseudocode from runnable JavaScript.",
+      "delta": "hermes_rs and hermes-dec support different formats and recovery layers.",
+      "probe": "Check header compatibility and correlate an async/native bridge with observation.",
+      "limit": "No general functional decompiler established.",
+      "source": "https://github.com/Pilfer/hermes_rs/tree/c65ba858905411fa35a7d92ddd728ad2d71fa6e6",
+      "license": "MIT declared; hermes-dec AGPL-3.0",
+      "conditions": "React Native payload actually contains supported Hermes bytecode."
+    },
+    {
+      "id": "bounded-binary-query",
+      "surfaces": [
+        "binary",
+        "desktop"
+      ],
+      "properties": [
+        "structure",
+        "hidden-state"
+      ],
+      "requires": [
+        "binary-analysis"
+      ],
+      "mechanism": "Request relevant xrefs, ranged decompilation and data-flow slices.",
+      "invariant": "Return caps and unresolved IR explicitly.",
+      "delta": "ReVa bounds context while ghidra-rpc avoids repeated project loading.",
+      "probe": "Find writers of a relevant value; inspect truncation and missing indirect edges.",
+      "limit": "Recovered IR, caps and cache identity constrain evidence.",
+      "source": "https://github.com/cyberkaida/reverse-engineering-assistant/tree/01a154a8edf233b02a0e7707e2ff5933893c6d53",
+      "license": "Apache-2.0; ghidra-rpc MIT declared",
+      "conditions": "Binary is supported; query answers a consequential uncertainty."
+    },
+    {
+      "id": "source-structure-first",
+      "surfaces": [
+        "source"
+      ],
+      "properties": [
+        "structure",
+        "hidden-state"
+      ],
+      "requires": [
+        "source-analysis"
+      ],
+      "mechanism": "Extract deterministic symbols/graphs before demand-driven summaries.",
+      "invariant": "Keep raw evidence and relevant non-security findings.",
+      "delta": "GhidrAssist full-text retrieval differs from Serena LSP and Joern code-property queries.",
+      "probe": "Check a bounded control/data-flow query against actual source and unresolved calls.",
+      "limit": "Parseability, reflection and source/tool/config cache identity matter.",
+      "source": "https://github.com/epi13/joern-agent-bridge/tree/291fac3cbe7d529066e4f98a02696da71af6575d",
+      "license": "Apache-2.0; GhidrAssist MIT; Serena mixed MIT/GPL",
+      "conditions": "Source or reconstructed code parses reliably; strict mode analyst-side only."
+    },
+    {
+      "id": "durable-evidence",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "structure",
+        "hidden-state",
+        "expert-process"
+      ],
+      "requires": [
+        "journal"
+      ],
+      "mechanism": "Retain immutable evidence dependencies and contradictions.",
+      "invariant": "Rehash actual artifacts rather than certify by field presence.",
+      "delta": "Cerberus graph integrity does not establish semantic truth.",
+      "probe": "Change a declared dependency and inspect affected claims.",
+      "limit": "Undeclared dependencies and wrong claims survive structural checks.",
+      "source": "https://github.com/OwenPawl/cerberus-re-skill/tree/3116c94de17386d18367ed14e55dd2c7d1c7fe14",
+      "license": "Apache-2.0",
+      "conditions": "Long investigation or consequential handoff benefits from durable provenance."
+    },
+    {
+      "id": "transition-exploration",
+      "surfaces": [
+        "android"
+      ],
+      "properties": [
+        "interaction",
+        "hidden-state"
+      ],
+      "requires": [
+        "android-control",
+        "capture"
+      ],
+      "mechanism": "Explore unexplored actions and reuse navigation paths.",
+      "invariant": "Retain raw observations and split states when future outcomes differ.",
+      "delta": "DroidBot structural hashes omit position/multiplicity/text detail.",
+      "probe": "Use a future action suffix to distinguish visually similar states.",
+      "limit": "State clustering is not behavioral equivalence.",
+      "source": "https://github.com/honeynet/droidbot/tree/cc4cc93cc539",
+      "license": "MIT",
+      "conditions": "Safe reset and task-owned device exist; deterministic breadth is useful."
+    },
+    {
+      "id": "guarded-route-replay",
+      "surfaces": [
+        "android"
+      ],
+      "properties": [
+        "interaction"
+      ],
+      "requires": [
+        "android-control",
+        "capture"
+      ],
+      "mechanism": "Reuse successful action routes with guarded pre/postconditions.",
+      "invariant": "Missing observations must never mean unchanged; reacquire targets.",
+      "delta": "Mobilerun macros and MobiAgent task caches differ in retrieval and target checks.",
+      "probe": "Check package/activity, nonempty state, geometry and actual postcondition.",
+      "limit": "Cold start, fuzzy misses and stale coordinates can outweigh savings.",
+      "source": "https://github.com/droidrun/mobilerun/tree/8944aa1dd118",
+      "license": "MIT; MobiAgent Apache-2.0",
+      "conditions": "Repeated routes are stable and current target identity is observable."
+    },
+    {
+      "id": "gui-grounding",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop"
+      ],
+      "properties": [
+        "interaction"
+      ],
+      "requires": [
+        "vision",
+        "control",
+        "capture"
+      ],
+      "mechanism": "Use semantic/visual grounding for custom controls and deep workflows.",
+      "invariant": "Treat boxes and action predictions as hypotheses confirmed by resulting state.",
+      "delta": "GUI-Owl/UI-TARS/Agent S differ in deployment and role costs; OmniParser supplies perception.",
+      "probe": "Ground a decisive control and inspect result, including observer quality.",
+      "limit": "Model terms, deployment support, inference and repeated rollouts need separate review.",
+      "source": "https://github.com/simular-ai/Agent-S/tree/3aa272d23d29",
+      "license": "Apache-2.0; other code/weights have separate terms",
+      "conditions": "Cheap semantic navigation is insufficient and authorized control is available."
+    },
+    {
+      "id": "conditional-exploration",
+      "surfaces": [
+        "android"
+      ],
+      "properties": [
+        "interaction",
+        "hidden-state"
+      ],
+      "requires": [
+        "android-control",
+        "capture"
+      ],
+      "mechanism": "Use preconditions, guided scenarios and assertions to reach deep states.",
+      "invariant": "Preserve action history and noncrashing failure evidence.",
+      "delta": "Kea rules supply guidance without an LLM per action.",
+      "probe": "Specify a deep-state precondition and meaningful observable postcondition.",
+      "limit": "Kea2/Fastbot restrictive licenses are not inherited from original Kea.",
+      "source": "https://github.com/ecnusse/Kea/tree/28b0b41249c5",
+      "license": "MIT for original Kea",
+      "conditions": "A bounded feature has observable preconditions and assertions."
+    },
+    {
+      "id": "active-state-learning",
+      "surfaces": [
+        "api",
+        "cli",
+        "web",
+        "android"
+      ],
+      "properties": [
+        "hidden-state",
+        "persistence",
+        "interaction"
+      ],
+      "requires": [
+        "reset",
+        "control",
+        "capture"
+      ],
+      "mechanism": "Learn small state models from sequences and counterexamples.",
+      "invariant": "Similar current output does not imply identical future behavior.",
+      "delta": "AALpy query caches and LearnLib reuse reduce reset work differently.",
+      "probe": "Find a distinguishing action suffix; investigate conflicting outputs.",
+      "limit": "W-method growth, stochasticity and bad resets can invalidate models.",
+      "source": "https://github.com/DES-Lab/AALpy/tree/655032ca46ad0ea43a7854fb4d55eda4cfbb10e0",
+      "license": "MIT declared; LearnLib Apache-2.0",
+      "conditions": "Behavior can be scoped to a finite model and reset meaningfully."
+    },
+    {
+      "id": "shrunk-differential-sequences",
+      "surfaces": [
+        "api",
+        "cli",
+        "web",
+        "android"
+      ],
+      "properties": [
+        "interaction",
+        "persistence",
+        "hidden-state"
+      ],
+      "requires": [
+        "original-and-rebuild",
+        "reset"
+      ],
+      "mechanism": "Drive both systems through semantic action sequences and shrink discrepancies.",
+      "invariant": "Both adapters implement the same action semantics and normalizers preserve relevant differences.",
+      "delta": "Hypothesis shrinking gives compact counterexamples instead of long failure sessions.",
+      "probe": "Minimize a failing sequence without losing the observed discrepancy.",
+      "limit": "Loose normalization and flaky reset can falsely accept or reject.",
+      "source": "https://github.com/HypothesisWorks/hypothesis/tree/44b82b24cb40c72afd1f6e10c2af7a5d82c6539a",
+      "license": "MPL-2.0 with exceptions",
+      "conditions": "Original and candidate exist; future evaluation, not current development scenario testing."
+    },
+    {
+      "id": "protocol-sequences",
+      "surfaces": [
+        "api",
+        "web",
+        "android"
+      ],
+      "properties": [
+        "data",
+        "hidden-state"
+      ],
+      "requires": [
+        "network-capture"
+      ],
+      "mechanism": "Capture traffic, infer provisional schema and explore producer/consumer chains.",
+      "invariant": "Captured samples do not define the whole server contract.",
+      "delta": "mitmproxy replay, schema extraction and Schemathesis stateful checks are distinct layers.",
+      "probe": "Inspect an unseen stateful sequence with business assertions.",
+      "limit": "WebSockets, pinning and missing links/seeds require another path.",
+      "source": "https://github.com/schemathesis/schemathesis/tree/92c85309625bfde86ed13aed9a05c9be389d3e01",
+      "license": "MIT or MIT declared per component",
+      "conditions": "Authorized traffic observation and valid test state are available."
+    },
+    {
+      "id": "function-feedback",
+      "surfaces": [
+        "binary"
+      ],
+      "properties": [
+        "hidden-state",
+        "data"
+      ],
+      "requires": [
+        "function-oracle"
+      ],
+      "mechanism": "Use compile/fuzz feedback, discrepancy memory and best-candidate retention.",
+      "invariant": "Compilation and finite agreement do not establish equivalence.",
+      "delta": "CHISEL source-based reference harness differs from an arbitrary-binary oracle.",
+      "probe": "Locate a counterexample, preserve it, and inspect a bounded critical function.",
+      "limit": "Research source licensing unresolved; benchmark scope narrow; specialist models have separate terms.",
+      "source": "https://github.com/VarunKohli18/chisel/tree/76c87a7216409963085f04b059affab00e6453d2",
+      "license": "No license found; mechanism study only",
+      "conditions": "Trusted function oracle exists; source implementation must not cross strict boundary."
+    },
+    {
+      "id": "symbolic-difference",
+      "surfaces": [
+        "binary"
+      ],
+      "properties": [
+        "data",
+        "hidden-state"
+      ],
+      "requires": [
+        "symbolic-analysis"
+      ],
+      "mechanism": "Search for bounded function discrepancies beyond finite fuzzing.",
+      "invariant": "Preserve solver assumptions and unsupported operations.",
+      "delta": "D-Helix is a targeted counterexample route, not a whole-app oracle.",
+      "probe": "Compare one important numerical/protocol function under explicit bounds.",
+      "limit": "Path explosion and pinned research environment can dominate cost.",
+      "source": "https://github.com/purseclab/D-helix",
+      "license": "BSD-3-Clause; refresh unpinned source",
+      "conditions": "Function is tractable and important enough to justify solver cost."
+    },
+    {
+      "id": "record-replay",
+      "surfaces": [
+        "binary",
+        "desktop"
+      ],
+      "properties": [
+        "hidden-state",
+        "timing"
+      ],
+      "requires": [
+        "record-replay"
+      ],
+      "mechanism": "Record difficult execution once, then perform several analyses.",
+      "invariant": "Separate state/order evidence from perturbed timing.",
+      "delta": "PANDA guest replay and rr process replay have different architecture/environment constraints.",
+      "probe": "Verify replay determinism and required observation channel on the actual platform.",
+      "limit": "Neither universally records mobile GPU interfaces.",
+      "source": "https://github.com/rr-debugger/rr/tree/179bbce14f483bf3978d00695c1f6ee5827acb67",
+      "license": "MIT-style core with exceptions; PANDA GPLv2",
+      "conditions": "Supported environment and reproducible execution are available."
+    },
+    {
+      "id": "continuous-identification",
+      "surfaces": [
+        "physical",
+        "game",
+        "audio"
+      ],
+      "properties": [
+        "dynamics",
+        "timing"
+      ],
+      "requires": [
+        "trajectory-capture"
+      ],
+      "mechanism": "Fit parsimonious dynamics to controlled trajectories.",
+      "invariant": "Validate separate inputs and distinguish discrete events from smooth motion.",
+      "delta": "Weak/integral formulations can reduce derivative noise.",
+      "probe": "Contrast competing models on a trajectory not used for fitting.",
+      "limit": "Hidden state, RNG, projection and mode switches can defeat smooth equations.",
+      "source": "https://github.com/dynamicslab/pysindy/tree/c4421fcec275c8f4cc5c1e93bebb961b212067ae",
+      "license": "MIT",
+      "conditions": "Observable trajectories and controlled inputs exist; model assumptions are explicit."
+    },
+    {
+      "id": "baseline-comparison",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "recording"
+      ],
+      "properties": [
+        "appearance"
+      ],
+      "requires": [
+        "capture"
+      ],
+      "mechanism": "Compare eligible state-matched captures with decomposed visual signals.",
+      "invariant": "Record build/state/fixture/viewport/environment/decision identity.",
+      "delta": "Argos eligibility, Playwright stabilization and pixelmatch localized difference solve separate problems.",
+      "probe": "Compare against original-original variation; inspect localized differences.",
+      "limit": "Masks, stale baselines and image metrics can hide intended behavior or punish valid adaptation.",
+      "source": "https://github.com/argos-ci/argos/tree/be8f2ad78a79ae97101337fb0d658f69ae4b23f5",
+      "license": "MIT; pixelmatch ISC; Playwright Apache-2.0",
+      "conditions": "Reference and candidate captures correspond to the same approved comparison contract."
+    },
+    {
+      "id": "chat-competence",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop"
+      ],
+      "properties": [
+        "interaction",
+        "competence"
+      ],
+      "requires": [
+        "ui-inspection"
+      ],
+      "mechanism": "Recover conventional chat behaviors separately from visual direction.",
+      "invariant": "Reader position, composition, failures, cancellation and tool states need explicit contracts.",
+      "delta": "assistant-ui scroll anchors and AI Elements native composition/failure handling are complementary.",
+      "probe": "Inspect relevant actual primitives and specify pending/error/return behavior before visual synthesis.",
+      "limit": "Components do not supply backend integration or prove audience fit.",
+      "source": "https://github.com/assistant-ui/assistant-ui/tree/0bdf05066fcb83a64a07d542dde4fea0e8f99b76",
+      "license": "MIT; AI Elements Apache-2.0",
+      "conditions": "Product is conversational; select applicable conventions rather than copy an entire layout."
+    },
+    {
+      "id": "context-continuity",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "expert-process",
+        "character"
+      ],
+      "requires": [
+        "project-inspection",
+        "journal"
+      ],
+      "mechanism": "Recover selected direction and refresh changed dependencies selectively.",
+      "invariant": "Missing design documentation does not imply greenfield.",
+      "delta": "Superdesign exact context lineage and Impeccable operation routing preserve different forms of continuity.",
+      "probe": "Inspect changed dependencies and classify refinement versus redesign before generating.",
+      "limit": "Hashes cannot prove quality; newly added dependencies require discovery.",
+      "source": "https://github.com/superdesigndev/superdesign-skill/tree/f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b",
+      "license": "MIT; hosted engine separate",
+      "conditions": "An existing project or selected direction has reusable context."
+    },
+    {
+      "id": "conditional-knowledge-retrieval",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "expert-process"
+      ],
+      "requires": [
+        "knowledge-index"
+      ],
+      "mechanism": "Retrieve cues, exceptions and examples with an abstention path.",
+      "invariant": "Weak retrieval must not become authority over explicit project decisions.",
+      "delta": "UI UX Pro Max adds score/coverage/margin diagnostics; lexical relevance is not semantic fit.",
+      "probe": "Inspect a retrieved exception and check whether it changes the actual decision.",
+      "limit": "Corpus gaps and uncalibrated confidence cannot be solved by thresholds alone.",
+      "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/477bcb28c9812b385cb51a4605ddf30d7b2266e2",
+      "license": "MIT",
+      "conditions": "Knowledge is recurring and retrieval saves context without erasing originals."
+    },
+    {
+      "id": "independent-critique",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "document"
+      ],
+      "properties": [
+        "character",
+        "competence",
+        "expert-process"
+      ],
+      "requires": [
+        "artifact-inspection"
+      ],
+      "mechanism": "Judge artifact against task and reference authority before detector suggestions.",
+      "invariant": "Withhold builder persuasion while retaining audience, goal and constraints.",
+      "delta": "Impeccable judgment ordering and UICrit task-conditioned localized examples supply complementary cues.",
+      "probe": "Localize a concern in actual artifact and propose a discriminating check.",
+      "limit": "Critic agreement is not correctness; bounded study evidence does not prove universal quality.",
+      "source": "https://github.com/pbakaus/impeccable/tree/6e802bd0ed99f53180e2359fddab6da8d97970d9",
+      "license": "Apache-2.0; UICrit dataset CC BY 4.0 with separate image rights",
+      "conditions": "Actual artifact exists; critique is consequential and references are inspectable."
+    },
+    {
+      "id": "purposeful-motion",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop"
+      ],
+      "properties": [
+        "timing",
+        "character",
+        "expert-process"
+      ],
+      "requires": [
+        "ui-inspection"
+      ],
+      "mechanism": "Decide whether motion serves the task before choosing animation.",
+      "invariant": "Preserve frequency, purpose, perceived speed and functional feedback cues.",
+      "delta": "Emil separates opportunity diagnosis from implementation recipes.",
+      "probe": "Inspect an actual repeated interaction; reject animation with no useful role.",
+      "limit": "Universal timing numbers and marketing defaults need task-specific qualification.",
+      "source": "https://github.com/emilkowalski/skills/tree/e8a175de22ae1e49370fc144c1f3bb9aeedf988d",
+      "license": "MIT",
+      "conditions": "Motion choice is unresolved; cue-based expertise is more useful than decorative generation."
+    },
+    {
+      "id": "shared-state-examples",
+      "surfaces": [
+        "web"
+      ],
+      "properties": [
+        "competence",
+        "character",
+        "interaction"
+      ],
+      "requires": [
+        "ui-fixtures"
+      ],
+      "mechanism": "Use the same state fixture in design examples and interaction checks.",
+      "invariant": "Keep actual integration checks separate from mocked stories.",
+      "delta": "Storybook portable stories carry args/decorators/play; tokens carry values but not composition.",
+      "probe": "Connect a chosen example to its state, contract and intended check.",
+      "limit": "Fixtures can omit backend and persistence failures.",
+      "source": "https://storybook.js.org/docs/writing-tests/integrations/stories-in-unit-tests",
+      "license": "Official docs; recheck library/assets terms",
+      "conditions": "Rendered components have reusable states; avoid treating tokens as a full design grammar."
+    },
+    {
+      "id": "strict-specification-transfer",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "expert-process",
+        "structure"
+      ],
+      "requires": [
+        "behavioral-spec-review"
+      ],
+      "mechanism": "Transfer implementation-independent observed behavior through reviewed exports.",
+      "invariant": "Keep source-bearing evidence and implementer access separate.",
+      "delta": "Clean-room skill path hooks are not kernel isolation; compatibility projects have differing access histories.",
+      "probe": "Review spec independence then inspect actual denied file/tool/network/retrieval access.",
+      "limit": "Review declarations and fresh sessions do not establish enforced isolation.",
+      "source": "https://github.com/whit3rabbit/clean-room-skill/tree/1c6a6b7cf7a7596ea58ae807567f8a8dcf09e4ff",
+      "license": "MIT; exact upstream terms still apply",
+      "conditions": "Strict independent implementation requested; analyst and implementer roles are separated."
+    },
+    {
+      "id": "fast-judgment-hints",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "expert-process"
+      ],
+      "requires": [
+        "qualified-fast-model"
+      ],
+      "mechanism": "Use small typed judgments for candidate ranking, routing or leak flags.",
+      "invariant": "Escalate consequential ambiguity; preserve originals and measure total repair cost.",
+      "delta": "TypeSafe/Jev typed judgments differ from RouteLLM model routing and local Von classifiers.",
+      "probe": "Compare hints against simple retrieval and relevant known failures before relying on confidence.",
+      "limit": "Closed services, context overflow, calibration bugs and benchmark mismatch prevent default certification.",
+      "source": "https://github.com/lm-sys/RouteLLM/tree/0b64",
+      "license": "Apache-2.0; services/models have separate terms; verify revision before use",
+      "conditions": "Representative qualification exists; fast output is advisory, never a fidelity oracle."
+    },
+    {
+      "id": "feedback-controller",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "expert-process"
+      ],
+      "requires": [],
+      "mechanism": "Define target, sensor, next action, disturbance handling and stop; route feedback into the next producing operation.",
+      "invariant": "Feedback must alter the next decision or operation.",
+      "delta": "Separate judgment, repo-specific execution and durable conditional memory.",
+      "probe": "Trace one correction from observation to changed operation.",
+      "limit": "No scheduling or effectiveness is established by describing the loop.",
+      "source": "https://github.com/humanlayer/skills/tree/ca7c8088db69e315a8b2deea43820270457f8f3c",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "review-capacity",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "expert-process"
+      ],
+      "requires": [],
+      "mechanism": "Bound work in progress by actual human review capacity.",
+      "invariant": "Retain unresolved work without creating review debt.",
+      "delta": "An open review can suppress repetitive automated proposals, not independent useful research.",
+      "probe": "Inspect outstanding review and downstream dependencies before producing another artifact.",
+      "limit": "Open PR count is only a rough proxy for cognitive load.",
+      "source": "https://github.com/humanlayer/skills/tree/ca7c8088db69e315a8b2deea43820270457f8f3c",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "structural-correction",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "expert-process",
+        "competence"
+      ],
+      "requires": [],
+      "mechanism": "Move recurring deterministic mistakes into types, validation, shared components or checks before growing instructions.",
+      "invariant": "Preserve the correction purpose and scope.",
+      "delta": "Judgment remains conditional; not every taste issue has a deterministic rule.",
+      "probe": "Show the failure path is intercepted by the actual enforcing operation.",
+      "limit": "Receipt or agreement does not prove enforcement or improvement.",
+      "source": "https://github.com/cursor/plugins/tree/e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a/pstack",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "premise-discrimination",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "expert-process",
+        "hidden-state"
+      ],
+      "requires": [],
+      "mechanism": "When repairs repeatedly fail, test competing premises rather than patching the same symptom.",
+      "invariant": "Use a discriminating observation.",
+      "delta": "A resource census fits imbalance problems, not every failure.",
+      "probe": "Specify observations that would distinguish at least two causal explanations.",
+      "limit": "A plausible story remains a hypothesis until tested.",
+      "source": "https://github.com/cursor/plugins/tree/e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a/pstack",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "realistic-ui-boundaries",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "competence",
+        "appearance",
+        "data"
+      ],
+      "requires": [],
+      "mechanism": "Map rendered fields to their actual input boundaries and plausible or schema-backed extremes.",
+      "invariant": "Change inputs through the real boundary; preserve the component under examination.",
+      "delta": "Short, absent, singular, localized and empty values matter alongside long text.",
+      "probe": "Inspect real contracts; later render ordinary and extreme fixtures and preserve counterexamples.",
+      "limit": "Source review cannot establish rendered robustness; no actual scenario execution during package construction.",
+      "source": "https://github.com/emilkowalski/skills/tree/e8a175de22ae1e49370fc144c1f3bb9aeedf988d",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "meaningful-ui-variants",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "character",
+        "appearance"
+      ],
+      "requires": [],
+      "mechanism": "Compare variants that differ on a consequential design axis in realistic full-scale context.",
+      "invariant": "Same task, content and surrounding product context.",
+      "delta": "Keep variant generation separate from data robustness and motion review.",
+      "probe": "State the unresolved choice and what each variant would teach.",
+      "limit": "Fixed variant counts and compulsory approval are author policies, not universal requirements.",
+      "source": "https://github.com/emilkowalski/skills/tree/e8a175de22ae1e49370fc144c1f3bb9aeedf988d",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "project-grounded-components",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "competence",
+        "interaction"
+      ],
+      "requires": [],
+      "mechanism": "Inspect installed components, actual CLI output, framework, base primitives and registry changes before adding UI.",
+      "invariant": "Respect the project configuration and real component API.",
+      "delta": "Preview generated file/dependency/CSS changes; prose API summaries can lag runtime schema.",
+      "probe": "Compare actual output and existing source to proposed additions.",
+      "limit": "Registry access and dry-run transitive effects require inspection; no automatic installation.",
+      "source": "https://github.com/shadcn-ui/ui/tree/295a1f114a138f23b5dfee0e0c6812394dfeb90c",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "dependency-frontier-interview",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "expert-process"
+      ],
+      "requires": [],
+      "mechanism": "Represent consequential decisions as a dependency tree; ask only the currently answerable frontier.",
+      "invariant": "Do not ask questions that depend on unsettled answers or inspectable facts.",
+      "delta": "Batch independent questions, then recompute after replies; retain reversible scoped intent reuse.",
+      "probe": "Check prerequisites and show independent work while dependent decisions wait.",
+      "limit": "Grilling every branch and requiring final confirmation would add avoidable user burden.",
+      "source": "https://github.com/mattpocock/skills/tree/24fe0ef7737efae15c87225755e9f6f5965e4888/skills",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "question-led-disposable-code",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "expert-process",
+        "hidden-state",
+        "character"
+      ],
+      "requires": [],
+      "mechanism": "Build a reproducible disposable probe for a specific uncertainty and expose relevant state.",
+      "invariant": "Preserve the question, inputs, execution recipe, observation and verdict.",
+      "delta": "Logic/state uncertainty and visual uncertainty require different probes.",
+      "probe": "Define competing outcomes before writing code; promote only supported properties.",
+      "limit": "Cheap code does not imply cheap evaluation or authorize external effects.",
+      "source": "https://github.com/mattpocock/skills/tree/24fe0ef7737efae15c87225755e9f6f5965e4888/skills",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "alternative-interface-design",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli",
+        "game",
+        "document",
+        "physical",
+        "recording"
+      ],
+      "properties": [
+        "structure",
+        "expert-process"
+      ],
+      "requires": [],
+      "mechanism": "Compare materially different interface choices under the same constraints.",
+      "invariant": "Evaluate common caller simplicity, flexibility, locality and hidden complexity.",
+      "delta": "Different design constraints reveal alternatives a single favored sketch may miss.",
+      "probe": "Inspect realistic caller examples and failure contracts before selecting.",
+      "limit": "Fixed multi-agent counts are unnecessary; agreement is not correctness.",
+      "source": "https://github.com/mattpocock/skills/tree/24fe0ef7737efae15c87225755e9f6f5965e4888/skills",
+      "license": "MIT observed at inspected revision; recheck exact files before reuse",
+      "conditions": "Conditional transfer after inspecting fit; analyst-side in strict mode. See expert-integration.md for scope and inspected files."
+    },
+    {
+      "id": "qualified-action-replay",
+      "source": "https://github.com/tester-army/e2e/tree/f99e80ebc04f8194f967244198783db871390e06",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli"
+      ],
+      "properties": [
+        "interaction",
+        "expert-process"
+      ],
+      "requires": [
+        "capture",
+        "control"
+      ],
+      "mechanism": "Reuse only qualified actions under explicit starting conditions and identity; run outcome assertions live and hand off on ambiguity or changed state.",
+      "invariant": "Preserve actual evidence and declared scope.",
+      "delta": "Separate operation reuse from verdict reuse; separate mechanical policy from semantic correctness.",
+      "probe": "Inspect the actual executing boundary, invalidation and failure path.",
+      "limit": "Recorded observable effects do not establish whole-state equivalence; no cost reduction measured here.",
+      "license": "Apache-2.0",
+      "conditions": "Inspect fit and exact revision before adoption; see expert-integration.md."
+    },
+    {
+      "id": "evidence-preserving-boundaries",
+      "source": "https://github.com/dmmulroy/anti-slop/tree/c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b",
+      "surfaces": [
+        "web",
+        "android",
+        "desktop",
+        "source",
+        "api",
+        "cli"
+      ],
+      "properties": [
+        "structure",
+        "expert-process"
+      ],
+      "requires": [],
+      "mechanism": "Parse external data at boundaries, retain precise evidence and mechanically reject selected unsupported conversions.",
+      "invariant": "Preserve actual evidence and declared scope.",
+      "delta": "Separate operation reuse from verdict reuse; separate mechanical policy from semantic correctness.",
+      "probe": "Inspect the actual executing boundary, invalidation and failure path.",
+      "limit": "AST policy is bounded and language-specific; do not universalize author taste or mistake a comment for proof.",
+      "license": "MIT",
+      "conditions": "Inspect fit and exact revision before adoption; see expert-integration.md."
+    },
+    {
+      "id": "selective-state-model",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "behavior",
+        "hidden-state",
+        "state",
+        "ordering",
+        "concurrency",
+        "recovery"
+      ],
+      "requires": [
+        "model-checking"
+      ],
+      "mechanism": "Model critical histories and interleavings; preserve environmental and fairness assumptions.",
+      "invariant": "The property is derived from intent and observed contracts, not weakened to fit a candidate.",
+      "delta": "TLA+/P explore abstract transitions; Stateright can share actor code with runtime.",
+      "probe": "Find a counterexample, reproduce it in the implementation, then recheck both after repair.",
+      "limit": "Bounded model success does not establish implementation conformance or visual quality.",
+      "source": "https://github.com/p-org/P/tree/260da928f67569ca7a8c0039a02d0bad7cde6096",
+      "license": "MIT",
+      "conditions": "Consequential state, ordering or exact-rule uncertainty; read formal-methods.md and qualify the tool before adoption."
+    },
+    {
+      "id": "observable-model-bridge",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "behavior",
+        "hidden-state",
+        "state",
+        "ordering",
+        "concurrency"
+      ],
+      "requires": [
+        "runtime-traces"
+      ],
+      "mechanism": "Map captured logs/actions into explicit monitor events with identity, ordering and partitions.",
+      "invariant": "The event mapping retains relevant behavior and exposes missing observations.",
+      "delta": "PObserve links monitor specifications to logs rather than stopping at design-time models.",
+      "probe": "Replay a distinguishing observed trace and inspect parser omissions and monitor outcomes.",
+      "limit": "Missing events or incorrect ordering can make a monitor misleading.",
+      "source": "https://github.com/p-org/P/blob/260da928f67569ca7a8c0039a02d0bad7cde6096/Docs/docs/advanced/pobserve/logparser.md",
+      "license": "MIT",
+      "conditions": "Consequential state, ordering or exact-rule uncertainty; read formal-methods.md and qualify the tool before adoption."
+    },
+    {
+      "id": "controlled-schedule-replay",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "behavior",
+        "ordering",
+        "concurrency",
+        "recovery"
+      ],
+      "requires": [
+        "controlled-scheduler"
+      ],
+      "mechanism": "Explore supported concurrency and save reproducible failure schedules against actual code.",
+      "invariant": "Suspected race evidence survives into an implementation reproduction.",
+      "delta": "Coyote instruments C# execution; separate abstract models require an additional conformance bridge.",
+      "probe": "Reproduce the saved schedule before and after repair while qualifying uncontrolled effects.",
+      "limit": "Only supported controlled operations participate; this is not arbitrary native/application coverage.",
+      "source": "https://github.com/microsoft/coyote/blob/d8f5c0fb15da70780649abcb3343053bc87cb097/Samples/WebApps/ImageGalleryAspNet/TraceReplayer/Program.cs",
+      "license": "MIT",
+      "conditions": "Consequential state, ordering or exact-rule uncertainty; read formal-methods.md and qualify the tool before adoption."
+    },
+    {
+      "id": "proof-statement-validation",
+      "surfaces": [
+        "*"
+      ],
+      "properties": [
+        "correctness",
+        "transformation",
+        "numeric",
+        "behavior"
+      ],
+      "requires": [
+        "proof-checking"
+      ],
+      "mechanism": "Separate intended theorem statement, accepted proof and transitive axiom/replay evidence.",
+      "invariant": "The statement and assumptions continue to express the independently reviewed objective.",
+      "delta": "Lean comparator checks against a trusted statement; successful generation/build alone is weaker.",
+      "probe": "Inspect statement meaning and transitive axioms; qualify independent replay when consequence warrants.",
+      "limit": "A correct proof of the wrong abstraction does not establish the intended product behavior.",
+      "source": "https://github.com/leanprover/reference-manual/blob/4f677697f1f86b7ea817746eba00d339e9f59d68/Manual/ValidatingProofs.lean",
+      "license": "Apache-2.0",
+      "conditions": "Consequential state, ordering or exact-rule uncertainty; read formal-methods.md and qualify the tool before adoption."
+    },
+    {
+      "id": "document-structure-grounding",
+      "surfaces": [
+        "document"
+      ],
+      "properties": [
+        "structure",
+        "data",
+        "appearance"
+      ],
+      "requires": [
+        "document-parsing",
+        "document-rendering"
+      ],
+      "mechanism": "Retain native hierarchy and rendered layout with page, bounding-box, span and table-coordinate provenance.",
+      "invariant": "Do not flatten structure and visual evidence into one authoritative text stream.",
+      "delta": "Docling conversion status and provenance expose omissions; native table spans preserve distinctions lost in Markdown.",
+      "probe": "Check consequential reading order and merged cells against actual rendered pages.",
+      "limit": "Parsing confidence is not layout fidelity; OCR and model terms require separate review.",
+      "source": "https://github.com/docling-project/docling/tree/d6f03078ad364108df3e7e82e8f0dcc3fd7f39ea",
+      "license": "MIT",
+      "conditions": "Conditional surface-specific transfer; read surface-methods.md. Original source-bearing structures remain analyst-side in strict mode."
+    },
+    {
+      "id": "controlled-document-roundtrip",
+      "surfaces": [
+        "document"
+      ],
+      "properties": [
+        "structure",
+        "appearance",
+        "competence"
+      ],
+      "requires": [
+        "document-editing",
+        "document-rendering"
+      ],
+      "mechanism": "Inventory native objects and relationships, edit a narrow boundary, save, reopen and compare intended and unintended changes.",
+      "invariant": "Preserve required formatting and relationships outside the intended edit.",
+      "delta": "python-docx paragraph text replacement removes run formatting; top-level inventories omit nested and revision structures.",
+      "probe": "Compare styles, links, table relationships and pagination after a controlled round trip.",
+      "limit": "Library save success does not certify all OOXML structures or appearance.",
+      "source": "https://github.com/python-openxml/python-docx/tree/e45454602b53e8e572b179ccf1c91093ec9f4ed7",
+      "license": "MIT",
+      "conditions": "Conditional surface-specific transfer; read surface-methods.md. Original source-bearing structures remain analyst-side in strict mode."
+    },
+    {
+      "id": "timestamp-grounded-recording",
+      "surfaces": [
+        "recording",
+        "audio",
+        "game"
+      ],
+      "properties": [
+        "timing",
+        "dynamics",
+        "appearance"
+      ],
+      "requires": [
+        "media-decoding"
+      ],
+      "mechanism": "Retain integer presentation timestamps and rational time bases; seek to a preceding keyframe and decode forward.",
+      "invariant": "Do not infer exact time from frame index divided by average frame rate.",
+      "delta": "PyAV separates stream time bases, codec time bases and seek behavior.",
+      "probe": "Compare sequential and seek-forward timestamps around a relevant interval.",
+      "limit": "Media timestamps do not establish input latency or loss-free capture.",
+      "source": "https://github.com/PyAV-Org/PyAV/tree/b618b2d9802cb8c4ac368ff97fc2873de05aab89",
+      "license": "BSD-3-Clause",
+      "conditions": "Conditional surface-specific transfer; read surface-methods.md. Original source-bearing structures remain analyst-side in strict mode."
+    },
+    {
+      "id": "calibrated-physical-protocol",
+      "surfaces": [
+        "physical"
+      ],
+      "properties": [
+        "timing",
+        "data",
+        "hidden-state"
+      ],
+      "requires": [
+        "signal-capture",
+        "protocol-decoding"
+      ],
+      "mechanism": "Retain raw sample intervals, channels, clock, trigger and loss evidence beside versioned decoder parameters.",
+      "invariant": "Decoded labels remain interpretations tied to raw measurements.",
+      "delta": "sigrok session metadata and protocol decoders answer different questions; fallback parameters must stay visible.",
+      "probe": "Compare known framing against raw edges and investigate warning, parity and missing-clock cases.",
+      "limit": "Sample metadata alone does not prove calibrated clocks, complete capture or physical equivalence.",
+      "source": "https://github.com/sigrokproject/libsigrok/tree/0bc2487778e660f4d3116729b6f4aee2b1996bb0",
+      "license": "libsigrok GPL-3.0-or-later; decoder files have separately reviewed terms",
+      "conditions": "Conditional surface-specific transfer; read surface-methods.md. Original source-bearing structures remain analyst-side in strict mode."
+    }
+  ]
+}

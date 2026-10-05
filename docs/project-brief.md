@@ -56,4 +56,12 @@ Evaluate goal-only discovery separately from transferring a fixed reference set.
 
 Evaluate taste with blinded comparisons of the running artifacts by people representative of the audience. Use measurable layout, timing and behavior checks as supporting evidence. Retain disagreements and failure cases. Exact-reconstruction evaluations use explicit reference comparisons; adaptation evaluations judge the target brief and transferred properties, since a successful adaptation may intentionally look different.
 
-No measured gain, general taste evaluator, working adapter, enforced information boundary, or demonstrated reconstruction is claimed at this stage.
+The [RDD skill](reference-driven-development.md) implements the reusable method
+and bounded supporting helpers. Arbitrary reconstruction, a general taste
+evaluator and measured performance gains are not established. Source-assisted
+and strict independent implementation remain separate access policies.
+
+Expert-process references can contribute conditional judgment from skills,
+plugins, prompts and tools. Apply that judgment to the current operation before
+choosing reusable packaging. Evaluate actual behavior and total cost; instructions
+alone do not establish effectiveness.

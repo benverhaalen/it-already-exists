@@ -1,6 +1,10 @@
 # Architecture and application mechanism
 
-Design proposal, September 14, 2026. The components and operations below are conceptual; they are not implemented interfaces.
+The portable [RDD skill](reference-driven-development.md) and its Python helpers
+implement bounded intake, records, planning, observation, comparison and repair.
+The host agent performs research and construction. External tools and execution
+boundaries need separate qualification. The design below includes ambitions
+beyond those implemented helpers.
 
 ## Recommended delivery model
 
@@ -53,6 +57,8 @@ The acquisition path depends on the input and available access: visual capture, 
 Keep screenshots and crops, recordings, structured measurements, complete action histories, version/environment metadata and observations linked. A timestamped transition can be essential evidence for motion or feedback. AOI is a candidate continuous observer for brief changes while the agent is thinking or executing; its contribution requires an ablation against simpler capture.
 
 Separate observations from explanations. "Draft text remained after this failed save" can be observed; "this reduces anxiety" is a hypothesis about its value. Record unobserved states and unavailable channels explicitly.
+
+Expert-process references can contribute how to investigate or act as well as what to build. Follow the [expert-process transfer module](../skills/reference-driven-development/references/expert-processes.md): retain decision cues, evidence-seeking actions, exceptions, and completion criteria; apply them in the current operation; choose reusable packaging only when it adds value. The reference/decision/transfer/check chain remains the same. Tool-backed capabilities and feedback loops require actual runtime implementation and checks, beyond skill text.
 
 ### 4. Distill a transferable decision
 

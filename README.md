@@ -10,16 +10,19 @@ Keep what works. Change what your project needs. Combine references with a clear
 ## Start here
 
 1. Describe the result, its users, and its constraints.
-2. Use the [process](docs/architecture.md) to guide research and implementation.
-3. Check the complete user journey, including errors and saved state.
-4. Use the [repair guide](docs/failure-recovery.md) when results fail.
+2. Install the [RDD skill](docs/reference-driven-development.md).
+3. Use the [process](docs/architecture.md) to guide research and implementation.
+4. Check the complete user journey, including errors and saved state.
+5. Use the [repair guide](docs/failure-recovery.md) when results fail.
 
 For app inspection, see the [runtime observation guide](docs/runtime-observation.md).
 For independent implementation, see the [access boundaries](docs/surfaces.md).
 
 ## Status
 
-Early development. The repository contains process documents and an Android capture tool.
+The repository contains an installable skill and Python tools for research, observation, comparison, and repair.
 Automatic reconstruction of arbitrary apps is not complete.
 
 Keep private source files, captures, and credentials outside this repository.
+
+Project code and text use the [MIT license](LICENSE). Bundled assets retain their [original licenses](THIRD_PARTY_NOTICES.md).
