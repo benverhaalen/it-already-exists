@@ -1,75 +1,25 @@
 # it-already-exists
 
-**Build from the best of what already exists.**
+Build software from useful parts of existing work.
 
-You want to build a production app with Claude Code or Codex. Someone has already built the interaction you need: a thoughtful onboarding flow, a useful empty state, a search experience that remembers where you were, an editor that handles mistakes gracefully.
+Give your coding agent a goal. The agent finds references, studies their useful details, builds the result, and checks it.
+You can also supply apps, websites, source code, images, or recordings.
 
-There is a lot to learn from the details of existing products. Your agent needs a way to inspect those details, understand which ones matter for your users, and carry them into what it builds.
+Keep what works. Change what your project needs. Combine references with a clear purpose.
 
-`it-already-exists` is being designed to do that inside the project you are already working on. Describe what you want to build and who it is for. Your agent should seek out strong references for that goal, understand the useful details, and carry them into design, implementation, and verification. You can also supply a website, an APK, a recording, or an app on your computer; references are optional inputs, not homework.
+## Start here
 
-The goal is a product with coherent taste, considered interactions, and fewer overlooked details—with less handholding.
+1. Describe the result, its users, and its constraints.
+2. Use the [process](docs/architecture.md) to guide research and implementation.
+3. Check the complete user journey, including errors and saved state.
+4. Use the [repair guide](docs/failure-recovery.md) when results fail.
 
-## The idea
-
-Start from things that already work. Understand what makes them work. Make deliberate changes for the product you are building.
-
-The inspiration is the Virgil Abloh-style 3% rule: preserve the strength of something familiar and change it with purpose. Here, that is a creative principle rather than a numerical similarity target.
-
-Combine references by the jobs they do: one might establish visual direction, another a navigation pattern, another recovery from an error. Resolve those choices into one product language, then inspect whether the implementation actually carries them through.
-
-Study each choice in context: who it serves, what problem it addresses, which alternatives it competes with, and what would make it wrong for this project. Distinguish what the product demonstrates from documented design rationale and our own hypotheses.
-
-## Intended experience
-
-From your existing project, tell your coding agent something like:
-
-> Help me build a place for designers to save inspiration and find it again when they start a project. Make the whole experience feel considered, including the little details I haven't thought of.
-
-The proposed workflow is:
-
-1. Understand your goal, audience, project and constraints. When an important choice is unclear, use concrete scenarios or small previews to make it easy to react. You can reject both options, combine parts, or explain a different direction.
-2. Actively discover references for the product's important decisions, whether or not you supplied any. Use your feedback to guide what to seek and which properties to adopt.
-3. Extract evidence: appearance, interaction, state, timing, data, and edge cases.
-4. Explain what to retain, what to adapt, and why it fits this project.
-5. Give the coding agent focused implementation guidance and relevant evidence as it works.
-6. Exercise the finished experience, find missing details, and repair them.
-
-The conversation should stay about your product. You should not have to know reference apps or choose between vague style labels. Comparisons are provisional ways to learn what you mean; feedback can change the question itself. The agent retains the underlying references and reasoning so you can inspect them when useful.
-
-Default: adapt useful properties into a coherent original product. Faithful reconstruction is available as a separate intended mode, with strict clean-room and source-assisted workflows kept distinct.
+For app inspection, see the [runtime observation guide](docs/runtime-observation.md).
+For independent implementation, see the [access boundaries](docs/surfaces.md).
 
 ## Status
 
-Early development. This repository contains the product design, a generic Android observation recorder, and a runtime-observation workflow. The general analysis pipeline and installable agent integration remain unfinished.
+Early development. The repository contains process documents and an Android capture tool.
+Automatic reconstruction of arbitrary apps is not complete.
 
-The recommended starting shape is a command-line core with small Claude Code and Codex skill integrations. The existing coding agent is the main interface; a dedicated frontend is not part of the initial plan. Packaging and implementation details remain proposals until tested.
-
-References can reveal good solutions, but they do not establish that those solutions fit a different audience or guarantee bug-free software. That is why application and verification are part of the product.
-
-Target-specific experiments live outside this repository. Only reusable tools, abstracted process lessons, and synthetic examples belong here. See the [runtime-observation workflow](docs/runtime-observation.md) for acquisition readiness, evidence limits, and failure recovery.
-
-## Design documents
-
-- [Product brief](docs/project-brief.md)
-- [Architecture and application mechanism](docs/architecture.md)
-- [Understanding design choices in context](docs/design-reasoning.md)
-- [Supported surface ambitions and evidence limits](docs/surfaces.md)
-- [Runtime observation and evidence](docs/runtime-observation.md)
-- [Compatibility recovery and testing constraints](docs/compatibility-recovery.md)
-- [Worked example: preserving a draft through failure](examples/reference-to-implementation.md)
-- [Worked example: transferring visual taste](examples/visual-direction.md)
-
-## Android observation recorder
-
-With an already running, task-owned emulator and ADB installed:
-
-```sh
-python3 tools/capture_android_reference.py \
-  --serial emulator-5554 --output /path/to/private-evidence \
-  --label initial-state capture
-```
-
-Use `--capture-method pull` for older ADB implementations and `--timeout 60` for a slower runtime. The JSON-lines journal distinguishes a completed input from a completed capture; failed operations record the last attempted step. Host elapsed time is not original-device animation timing.
-
-If Android capture stalls, `--capture-method console` uses the emulator's own screenshot command. This requires a native emulator on the same host; it does not support containers or remote emulator hosts. The recorder verifies both the console acknowledgment and a fresh PNG, records the observer and hash, and retains failed attempts. Inspect the image before deciding whether another input is needed.
+Keep private source files, captures, and credentials outside this repository.
