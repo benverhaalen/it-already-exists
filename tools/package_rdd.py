@@ -22,6 +22,11 @@ def allowed(path):
     parts = path.parts
     if path.as_posix() in {'SKILL.md', 'agents/openai.yaml', 'LICENSE'}:
         return True
+    if path.as_posix() in {
+            'scripts/fixtures/arm64_abi/stack-prefix.c',
+            'scripts/fixtures/arm64_abi/bridge-control.c',
+            'scripts/fixtures/arm64_abi/bridge-control.S'}:
+        return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}
     if len(parts) == 2 and parts[0] == 'references':
