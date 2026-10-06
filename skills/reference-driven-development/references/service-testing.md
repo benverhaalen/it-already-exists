@@ -158,3 +158,17 @@ is denied; stale summary counts do not establish actual availability. Verify the
 original complete screen journey after transfer, including detail records and
 refresh. A populated listing alone does not establish accurate products, pricing,
 checkout or redemption.
+
+Use `scripts/firestore_dependency_audit.py` on a JSON list of captured REST
+records before calling a catalog complete. It retains each typed reference's
+source document and field location, reports missing same-project records and
+separates external references. Conflicting captures fail rather than quietly
+selecting a version. The audit makes no requests and does not authorize reads.
+Review each missing record before acquiring it through the qualified boundary.
+
+An active listing may omit an inactive child item that is still referenced by a
+sellable bundle. Follow the explicit reference; do not apply the parent's
+listing filter to every dependency. Audit again after acquisition, preserve
+unavailable records, and compare the original detail journey. Zero missing
+typed references does not cover string IDs, subcollection queries, stock,
+server-calculated prices, checkout or issued entitlements.
