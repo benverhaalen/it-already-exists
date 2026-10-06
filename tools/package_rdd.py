@@ -39,7 +39,12 @@ def allowed(path):
             'scripts/fixtures/firebase_core/LICENSE',
             'scripts/fixtures/firebase_firestore/LocalFirestoreSettings.h',
             'scripts/fixtures/firebase_firestore/local-control.m',
-            'scripts/fixtures/stripe_core/local-startup-control.swift'}:
+            'scripts/fixtures/stripe_core/local-startup-control.swift',
+            'scripts/fixtures/datadog_core/local-transport.swift',
+            'scripts/fixtures/datadog_core/crash-control.swift',
+            'scripts/fixtures/datadog_core/startup-control.swift',
+            'scripts/fixtures/datadog_core/flutter-local-startup.patch',
+            'scripts/fixtures/datadog_core/LICENSE'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}

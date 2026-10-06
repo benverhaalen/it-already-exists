@@ -275,6 +275,44 @@ It is a bounded startup fixture, not a working purchase adapter or process-wide
 network sandbox. Qualify the original client codec and each later payment journey
 separately. Keep deliberate telemetry suppression distinct from faithful recording.
 
+## Qualify SDK traffic beyond collection consent
+
+Collection consent is not a network boundary. Datadog iOS 3.16.0 uses a NOP
+writer for denied consent, but its default clock provider separately starts
+NTP synchronization. Features can also request a writer that bypasses consent.
+Inspect the [clock provider](https://github.com/DataDog/dd-sdk-ios/blob/3.16.0/DatadogCore/Sources/Core/Context/ServerOffsetPublisher.swift),
+[writer selection](https://github.com/DataDog/dd-sdk-ios/blob/3.16.0/DatadogCore/Sources/Core/Storage/FeatureStorage.swift)
+and [core transport construction](https://github.com/DataDog/dd-sdk-ios/blob/3.16.0/DatadogCore/Sources/Datadog.swift).
+For a deliberate local test policy, replace both the upload transport and clock
+provider before initializing the native core. Retain actual SDK state and feature
+registration; do not reply with fabricated initialization success.
+
+The authored [local-transport.swift](../scripts/fixtures/datadog_core/local-transport.swift)
+adds an explicit configuration method inside the DatadogCore source target.
+Add [crash-control.swift](../scripts/fixtures/datadog_core/crash-control.swift)
+inside DatadogCrashReporting and
+[startup-control.swift](../scripts/fixtures/datadog_core/startup-control.swift)
+inside the Flutter test host. These exact fixture bytes were compiled with
+Datadog iOS 3.16.0, KSCrash 2.5.1, DictionaryCoder 1.2.0 and Swift 5 language mode.
+The [Flutter plugin patch](../scripts/fixtures/datadog_core/flutter-local-startup.patch)
+applies to pub package datadog_flutter_plugin 3.7.0. In a test host, call
+`RDDDatadogHost.qualifyNativeConfiguration()` before registering the upstream
+`DatadogSdkPlugin` with its Flutter registrar. Apply the patch from the package
+root with `patch -p1 --fuzz=0`; retain the upstream Apache license. The patch
+requires the pristine `DatadogSdkPlugin.swift` SHA-256
+`cf41acefa6e0365ba8ef24aa980511b4bbdf4722ebd409aba686628514beb3ce`.
+Check that digest before applying the zero-context patch.
+
+Simulator checks passed for rejection of external and loopback requests through
+this configuration's HTTP factory, local clock offset, actual initialized core
+with denied consent, and actual registered crash-reporting feature. The plugin
+preserves its core configuration mappings and native crash initialization while
+using an inert token, local environment and denied consent for the test policy.
+It registers upstream logs and RUM channels; their complete behavior and crash
+capture/recovery are not qualified by these initialization checks. The transport
+is deliberately unavailable, not a successful mock uploader. This policy changes
+telemetry behavior and is not a process-wide sandbox or an arbitrary APK adapter.
+
 ## Make improvements transfer across apps
 
 Separate portable platform adapters from app-specific fixes. A reusable repair needs a trigger, observed contract, affected operation, independent control, actual-app result, fallback, rollback and version conditions. An offline modification changes behavior; retain the original comparison baseline and identify which properties are intentionally adapted. Never fabricate successful persistence, rewards or server responses merely to avoid an error dialog.

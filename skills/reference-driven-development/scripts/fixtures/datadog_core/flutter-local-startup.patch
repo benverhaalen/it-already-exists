@@ -1,0 +1,28 @@
+--- a/ios/datadog_flutter_plugin/Sources/datadog_flutter_plugin/DatadogSdkPlugin.swift
++++ b/ios/datadog_flutter_plugin/Sources/datadog_flutter_plugin/DatadogSdkPlugin.swift
+@@ -41,2 +41,2 @@
+-            clientToken: clientToken,
+-            env: env
++            clientToken: "rdd-inert-no-upload-authority",
++            env: "local-test"
+@@ -44,0 +45,2 @@
++        rddUseUnavailableTransportForLocalTesting()
++        precondition(rddCheckUnavailableTransportForLocalTesting())
+@@ -155,0 +158 @@
++        NSLog("RDD_DATADOG_UPSTREAM_CALL %@",call.method)
+@@ -169 +172 @@
+-                let trackingConsent = TrackingConsent.parseFromFlutter(trackingConsentString)
++                let trackingConsent: TrackingConsent = .notGranted
+@@ -191,0 +195,2 @@
++                            precondition(CrashReporting.rddIsEnabledForLocalTesting())
++                            NSLog("RDD_DATADOG_CRASH_CONTROL_PASS nativeFeature=1")
+@@ -284 +289 @@
+-                let trackingConsent = TrackingConsent.parseFromFlutter(trackingConsentString)
++                let trackingConsent: TrackingConsent = .notGranted
+@@ -344,0 +350,6 @@
++        precondition(Datadog.isInitialized())
++        try! core?.register(feature: RDDDatadogContextProbe())
++        core?.scope(for: RDDDatadogContextProbe.self).context { context in
++            precondition(context.trackingConsent == .notGranted && context.serverTimeOffset == 0)
++            NSLog("RDD_DATADOG_INITIALIZATION_CONTROL_PASS actualConsent=notGranted actualClockOffset=0")
++        }
