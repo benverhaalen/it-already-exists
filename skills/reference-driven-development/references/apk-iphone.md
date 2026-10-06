@@ -381,8 +381,13 @@ For the qualified manual host, place the Darwin native sources in
 Pod prefix header supplies it. Bundle the upstream privacy manifest in a
 separate resource bundle to avoid collisions with other plugins' manifests.
 Register `SqflitePlugin` with the engine registrar. The control executes before
-engine startup and plugin registration; do not block an active application
-thread to run it during normal use.
+engine startup and plugin registration. Run it only in a dedicated qualification
+launch and require its returned Boolean to pass; normal launches should not run
+the disposable probe. It waits synchronously with a timeout per operation, so
+slow storage can cause launch watchdog failures. Do not block an active
+application thread to run it during normal use. The direct probe uses a separate
+plugin instance and does not exercise the engine messenger itself; retain the
+subsequent real frontend calls as separate integration evidence.
 
 The simulator control passed request and success-envelope codec round trips,
 disk-backed open/insert/query, integer/text/blob/null preservation, transaction
