@@ -21,6 +21,7 @@ Default to adapting useful properties into a coherent original result. Faithful 
 | Bound static APK metadata with bundled `scripts/apk_intake.py`, or inspect products, source, recordings, or other surfaces | [Observation and reverse engineering](references/observation.md) |
 | Qualify and control a task-owned installed Android application | [Observation sessions](references/observation-sessions.md) |
 | Inspect native APK dependencies and choose an iPhone execution route | [APK-to-iPhone](references/apk-iphone.md) |
+| Preserve service-connected journeys while isolating spending and redemption | [Service testing](references/service-testing.md) |
 | Preserve document structure, media time or physical signal evidence | [Surface-specific methods](references/surface-methods.md) |
 | Carry a substantial reconstruction from intake through repair | [End-to-end pipeline](references/pipeline.md) |
 | Learn judgment from skills, plugins, prompts, or expert workflows; choose its carrier | [Expert-process transfer](references/expert-processes.md) |

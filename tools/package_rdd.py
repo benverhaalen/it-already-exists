@@ -23,7 +23,7 @@ def allowed(path):
     if path.as_posix() in {'SKILL.md', 'agents/openai.yaml', 'LICENSE'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
-        return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt'}
+        return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}
     if len(parts) == 2 and parts[0] == 'references':
         return path.suffix == '.md' or parts[1] == 'methods.json'
     return path.as_posix() in {

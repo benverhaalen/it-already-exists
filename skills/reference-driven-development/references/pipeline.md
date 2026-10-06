@@ -22,6 +22,11 @@ Append a reference record and an observed evidence record for the saved report u
 
 ## Establish usable observation
 
+For a service-connected reference with purchases, credits or redeemable rights,
+load [service-testing.md](service-testing.md) before launch. Separate live
+reviewed reads from isolated test payment, issuance and redemption; qualify
+the actual egress boundary, not just a UI button or policy file.
+
 Read [observation.md](observation.md) and the applicable portable observation module before runtime acquisition. The repository runtime-observation guide contains additional lessons for its legacy recorder; it is not required by the portable session adapter. Prove input identity, compatible environment, responsive control, application readiness, fresh capture and a repeat/reset path separately. Choose channels that can distinguish the unresolved property.
 
 For an explicitly selected installed Android app, [observation-sessions.md](observation-sessions.md)
