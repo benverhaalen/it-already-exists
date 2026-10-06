@@ -319,6 +319,38 @@ checks does not prove a target cannot bypass it or establish server fidelity.
 
 ## Transfer typed catalog references
 
+### Follow asset dependencies through detail records
+
+A working listing image does not establish working detail imagery. Trace the
+original detail query and cache requests: a separate record, nested array or
+gallery may supply different URLs. Inventory those exact leaves and distinguish
+image, video and external-link entries. Preserve the original capture, reviewed
+source URLs, content types, byte lengths and hashes. Fetch approved assets once
+through the qualified acquisition boundary; verify local HTTP responses against
+the captured bytes before relying on the original renderer.
+
+Use `scripts/asset_field_transfer.py` for explicit reviewed replacements in JSON,
+including Firestore REST wrappers. Each binding has `pointer` (an RFC 6901 JSON
+pointer), `expected` (the exact source URL) and `replacement` (the cached URL).
+It returns a fresh document and changed-leaf URL hashes; it rejects missing,
+stale, duplicate or invalid bindings. It does not discover fields, download
+assets, contact services or establish permission. Do not globally replace URL
+strings: unrelated links and other occurrences stay unchanged.
+
+```sh
+python scripts/asset_field_transfer.py --input /private/captured-fields.json \
+  --bindings /private/reviewed-asset-bindings.json --output /private/asset-transfer.json
+```
+
+Keep the output private; it contains the transferred document, not just hashes.
+Pass only its `document` through the separately qualified local writer. Compare
+all unrelated fields before mutation and read back the result. Protect against
+concurrent record changes; the pure helper provides no transactional update.
+Invalidate the affected original cache when necessary, then inspect the actual
+detail images and return journey across ordinary reopens. Successful HTTP or
+navigation assertions alone do not establish visible image correctness. Record
+unmirrored asset families instead of claiming complete imagery from one screen.
+
 When a permitted reference catalog is replayed in a local Firestore namespace,
 use `scripts/firestore_reference_transfer.py` on its REST `fields` object.
 It recursively changes only `referenceValue` entries under the explicit source
