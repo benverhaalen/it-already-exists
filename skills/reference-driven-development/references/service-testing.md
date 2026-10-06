@@ -13,6 +13,18 @@ error envelope first. A JSON endpoint that always returns success does not
 preserve those contracts. An HTTP 200 response can contain a callable error;
 a response with no data or error is also a failure.
 
+Inspect the actual SDK request before treating its JSON fields as business values.
+The [callable protocol](https://firebase.google.com/docs/functions/callable-reference)
+encodes 64-bit integers as typed objects with decimal strings. A local fixture
+that reads these objects as ordinary integers can reject a valid client request
+before any business rule runs. Use [callable_values.py](../scripts/callable_values.py)
+to decode nested values with explicit traversal and integer bounds. It preserves
+unknown typed maps and returns fresh containers. Its known-wrapper validation is
+stricter than SDK coercion; qualify it against captured request shapes. Python
+integers retain magnitude, not signedness metadata, so this is not a lossless
+wire encoder. This helper's checks qualify decoding only, not fee calculations
+or agreement with a production quote.
+
 The authored [native control](../scripts/fixtures/firebase_functions/AppDelegate.swift)
 was compiled with Firebase Apple SDK 12.19.0 from revision
 `27eaab3918e0bf78711cf1abf240577176326432`. It passed native serialization of an
