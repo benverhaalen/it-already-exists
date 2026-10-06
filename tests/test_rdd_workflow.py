@@ -75,6 +75,24 @@ class WorkflowTest(unittest.TestCase):
         self.task['tags'] = ['visual']
         self.assertEqual(self.compile()['ui_review']['module'], 'references/ui-continuity.md')
 
+    def test_apk_first_reference_reaches_actual_builder_without_ios_dependency(self):
+        self.assertIsNone(self.compile()['apk_reconstruction_review'])
+        self.task.update(surface='apk', operation='reconstruct')
+        plan = workflow.investigate(workflow.task_spec(self.task), workflow.catalog())
+        for result in (plan, self.compile()):
+            review = result['apk_reconstruction_review']
+            self.assertEqual(review['goal'], self.task['goal'])
+            self.assertEqual(review['journey'], self.task['journey'])
+            self.assertIn('not prerequisites', review['reference'])
+            self.assertIn('decoded bytes', review['encoded_artifacts'])
+            self.assertIn('both sides', review['service_boundary'])
+        self.task.update(surface='ios', access='strict-clean-room', tags=['apk-iphone'])
+        packet = self.compile()
+        self.assertFalse(packet['ready_for_handoff'])
+        self.assertEqual(packet['apk_reconstruction_review']['access'], 'strict-clean-room')
+        self.task.update(surface='document', tags=[])
+        self.assertIsNone(self.compile()['apk_reconstruction_review'])
+
     def test_scoped_latest_decisions_do_not_override_other_tasks(self):
         self.add('other', 'decision', ['c'], task_scope='b', status='contradicted')
         packet = self.compile()

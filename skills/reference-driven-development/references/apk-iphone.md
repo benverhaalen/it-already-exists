@@ -2,6 +2,25 @@
 
 The intended journey is package intake → usable Android oracle → selected execution route → iPhone build → matched complete journeys → reference transfer or modification. Preserve this full goal when testing one component. Current bundled tools qualify metadata and Android observation; they do not convert arbitrary APKs or provide a general iPhone runtime.
 
+The supplied versioned APK and its Android execution are the primary reference.
+Do not require an existing iOS counterpart or the user's personal phone to
+reconstruct it. Use task-owned Android execution and iOS simulators for iterative
+comparison; physical iPhone checks qualify device-specific behavior later.
+Recover original assets, logic and protocols within the declared access policy.
+Judge fidelity against complete Android journeys, not an imagined native design.
+
+For encoded artifacts such as QR codes, recover the actual payload-producing
+path. Compare decoded bytes, serialization, encoding/error-correction settings,
+geometry, colors, refresh/expiration timing, caching, background/return and
+redemption outcomes. A matching-looking code alone proves little. Do not assume
+that a code rotates, carries a signature or is scanned for every product type.
+Distinguish data delivered by a service from data constructed by the client;
+preserve the observed division and unresolved questions. Where external effects
+must be isolated, feed both clients equivalent service state and preserve the
+entire client flow; see [service testing](service-testing.md). A test namespace
+is a declared external-state difference, not permission to alter the renderer
+or replace purchase/redemption with canned success.
+
 ## Inspect the actual native contract
 
 Install `scripts/requirements-native-profile.txt` in a task-owned Python environment, then run:

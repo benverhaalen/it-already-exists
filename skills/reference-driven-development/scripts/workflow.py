@@ -262,6 +262,25 @@ def ui_review(task):
             'limits': 'Guidance is not image generation, independent review, user approval or visual/interaction qualification.'}
 
 
+def apk_reconstruction_review(task):
+    """APK-first comparison contract; no existing iOS counterpart is required."""
+    if task['operation'] not in {'reconstruct', 'repair'} or not (
+            task['surface'] in {'apk', 'android'} or 'apk-iphone' in task.get('tags', [])):
+        return None
+    return {
+        'status': 'proposed; not evidence of a running reconstruction or fidelity',
+        'module': 'references/apk-iphone.md',
+        'goal': task['goal'], 'journey': task['journey'], 'access': task['access'],
+        'reference': 'The supplied versioned APK and its original Android execution are the behavioral oracle. An existing iOS app and the user\'s personal phone are not prerequisites.',
+        'operation': 'Recover original logic, assets and service contracts under the declared access policy; run original Android and reconstructed iOS journeys with equivalent inputs, service state, clocks and histories.',
+        'comparison': ['original entry and default state', 'complete interactions and durable outcomes',
+                       'rendering and motion', 'platform adapters and deliberate differences'],
+        'encoded_artifacts': 'When present, compare actual decoded bytes, serialization, rendering parameters, validity/refresh timing, lifecycle and error states. Do not substitute an arbitrary code image or assume rotation, signing or scanning from its appearance.',
+        'service_boundary': 'Keep complete client flows operational. Isolate only explicitly requested external effects in a stateful test environment shared by both sides; record modified boundaries and unknown service behavior separately.',
+        'access_boundary': 'Binary/source evidence stays analyst-side in strict clean-room mode; independently reviewed behavior crosses the isolated implementer boundary.',
+        'limits': 'Missing service data or authority is not solved by a screenshot or client rewrite. Simulator equivalence does not qualify physical performance or universal APK coverage.'}
+
+
 def failure_review(task, repair=False):
     """Conditional repair guidance; never evidence that an audit ran."""
     triggers = {'reliability', 'compatibility', 'crash', 'offline', 'performance', 'repeated-failure'}
@@ -300,6 +319,7 @@ def investigate(task, methods):
             'access': task['access'], 'investigation': plans,
             'human_input': input_status(task), 'approach_review': approach_review(task),
             'ui_review': ui_review(task), 'failure_review': failure_review(task),
+            'apk_reconstruction_review': apk_reconstruction_review(task),
             'stop_rule': 'Stop each probe at its stated evidence or bound; unknown is not recovered. Stop discovery when further search is unlikely to change the next decision; retain unresolved alternatives.',
             'limits': ['No tools installed or executed; capabilities are caller declarations, not verified receipts.',
                        'Method matches use exact surface/property labels, not semantic fit or optimal ranking.',
@@ -446,6 +466,7 @@ def compile_context(task, records, store, purpose='implement'):
               'human_input': input_status(task),
               'approach_review': approach_review(task, repair=purpose == 'repair' or bool(required_reruns)),
               'ui_review': ui_review(task),
+              'apk_reconstruction_review': apk_reconstruction_review(task),
               'failure_review': failure_review(task, repair=purpose == 'repair' or bool(required_reruns)),
               'blockers': blockers, 'records': closure(records, chosen), 'corrections': corrections,
               'checks': checks, 'retained_alternative_ids': [r['id'] for r in alternatives],
