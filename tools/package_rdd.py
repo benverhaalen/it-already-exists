@@ -30,6 +30,7 @@ def allowed(path):
             'scripts/fixtures/arm64_abi/mixed-control.S',
             'scripts/fixtures/flutter_abi/flutter-tonic.patch',
             'scripts/fixtures/flutter_abi/dart-snapshot.patch',
+            'scripts/fixtures/flutter_abi/dart-loopback.patch',
             'scripts/fixtures/flutter_abi/TONIC-LICENSE',
             'scripts/fixtures/flutter_abi/DART-LICENSE'}:
         return True

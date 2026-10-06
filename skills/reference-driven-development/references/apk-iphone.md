@@ -151,6 +151,23 @@ application UI, physical-device execution or universal APK support. Obfuscated
 Dart class names can defeat name-based diagnostics; use actual retained engine
 entrypoints for initialization probes and preserve separate app-journey checks.
 
+For controlled service tests, `dart-loopback.patch` applies after the snapshot
+overlay in the pinned Dart SDK root. Enable `rdd_test_loopback_only=true` through
+GN. It guards the Darwin Dart IO TCP connect paths, bind destinations, UDP sends,
+message peers and DNS resolution; only numeric loopback destinations are allowed.
+`localhost` is resolved locally without DNS, Unix socket traffic is denied, and
+reverse DNS is denied. This is an intentional test boundary, not original network
+behavior. Keep live reviewed reads in the host-controlled mirror.
+
+Actual linked simulator controls have verified asynchronous and synchronous
+external TCP denial, non-local DNS/reverse-DNS denial, external UDP denial,
+local UDP delivery, numeric localhost lookup and Unix message-send denial.
+Other guarded bind and peer cases still need runtime controls. This patch covers
+Dart IO only: native plugins, foreign libraries, inherited sockets and operating
+system services require separate qualification. Do not register an external SDK
+or claim process isolation from these checks. Preserve normal local service
+contracts instead of fabricating successful plugin responses to bypass startup.
+
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 
 ## Make improvements transfer across apps

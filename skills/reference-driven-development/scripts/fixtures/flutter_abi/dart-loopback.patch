@@ -1,0 +1,251 @@
+--- a/runtime/BUILD.gn
++++ b/runtime/BUILD.gn
+@@ -117,6 +117,7 @@
+ # Host OS remains compiler-detected; only compiled target contracts change.
+ declare_args() {
+   rdd_android_snapshot_abi = false
++  rdd_test_loopback_only = false
+ }
+ if (rdd_android_snapshot_abi) {
+   assert(target_os == "ios" && target_cpu == "arm64")
+@@ -125,6 +126,9 @@
+
+ config("dart_os_config") {
+   defines = []
++  if (rdd_test_loopback_only && target_os == "ios" && target_cpu == "arm64") {
++    defines += [ "RDD_TEST_LOOPBACK_ONLY" ]
++  }
+
+   if (target_os == "android" || rdd_android_snapshot_abi) {
+     defines += [ "DART_TARGET_OS_ANDROID" ]
+--- a/runtime/bin/socket_macos.cc
++++ b/runtime/bin/socket_macos.cc
+@@ -10,6 +10,7 @@
+ #include <errno.h>  // NOLINT
+
+ #include "bin/fdutils.h"
++#include "bin/rdd_test_loopback.h"
+ #include "platform/signal_blocker.h"
+
+ namespace dart {
+@@ -53,6 +54,9 @@
+ }
+
+ static intptr_t Connect(intptr_t fd, const RawAddr& addr) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) { FDUtils::SaveErrorAndClose(fd); return -1; }
++#endif
+   intptr_t result = TEMP_FAILURE_RETRY(
+       connect(fd, &addr.addr, SocketAddress::GetAddrLength(addr)));
+   if ((result == 0) || (errno == EINPROGRESS)) {
+@@ -81,6 +85,9 @@
+
+ intptr_t Socket::CreateBindConnect(const RawAddr& addr,
+                                    const RawAddr& source_addr) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) return -1;
++#endif
+   intptr_t fd = Create(addr);
+   if (fd < 0) {
+     return fd;
+@@ -90,6 +97,9 @@
+   VOID_NO_RETRY_EXPECTED(
+       setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)));
+
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&source_addr.addr)) { FDUtils::SaveErrorAndClose(fd); return -1; }
++#endif
+   intptr_t result = TEMP_FAILURE_RETRY(
+       bind(fd, &source_addr.addr, SocketAddress::GetAddrLength(source_addr)));
+   if (result != 0) {
+@@ -102,11 +112,17 @@
+
+ intptr_t Socket::CreateUnixDomainBindConnect(const RawAddr& addr,
+                                              const RawAddr& source_addr) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) return -1;
++#endif
+   intptr_t fd = Create(addr);
+   if (fd < 0) {
+     return fd;
+   }
+
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&source_addr.addr)) { FDUtils::SaveErrorAndClose(fd); return -1; }
++#endif
+   intptr_t result = TEMP_FAILURE_RETRY(
+       bind(fd, &source_addr.addr, SocketAddress::GetAddrLength(source_addr)));
+   if (result != 0) {
+@@ -121,6 +137,9 @@
+                                     bool reuseAddress,
+                                     bool reusePort,
+                                     int ttl) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) return -1;
++#endif
+   intptr_t fd;
+
+   fd = NO_RETRY_EXPECTED(socket(addr.addr.sa_family, SOCK_DGRAM, IPPROTO_UDP));
+@@ -176,6 +195,9 @@
+ intptr_t ServerSocket::CreateBindListen(const RawAddr& addr,
+                                         intptr_t backlog,
+                                         bool v6_only) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) return -1;
++#endif
+   intptr_t fd;
+
+   fd = TEMP_FAILURE_RETRY(socket(addr.ss.ss_family, SOCK_STREAM, 0));
+@@ -234,6 +256,9 @@
+
+ intptr_t ServerSocket::CreateUnixDomainBindListen(const RawAddr& addr,
+                                                   intptr_t backlog) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) return -1;
++#endif
+   intptr_t fd;
+   fd = NO_RETRY_EXPECTED(socket(addr.ss.ss_family, SOCK_STREAM, 0));
+   if (fd < 0) {
+--- a/runtime/bin/sync_socket_macos.cc
++++ b/runtime/bin/sync_socket_macos.cc
+@@ -10,6 +10,7 @@
+ #include <errno.h>  // NOLINT
+
+ #include "bin/fdutils.h"
++#include "bin/rdd_test_loopback.h"
+ #include "bin/socket_base.h"
+ #include "platform/signal_blocker.h"
+
+@@ -35,6 +36,9 @@
+ }
+
+ static intptr_t Connect(intptr_t fd, const RawAddr& addr) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) { FDUtils::SaveErrorAndClose(fd); return -1; }
++#endif
+   intptr_t result = TEMP_FAILURE_RETRY(
+       connect(fd, &addr.addr, SocketAddress::GetAddrLength(addr)));
+   if (result == 0) {
+--- a/runtime/bin/socket_base_macos.cc
++++ b/runtime/bin/socket_base_macos.cc
+@@ -18,6 +18,7 @@
+ #include <unistd.h>       // NOLINT
+
+ #include "bin/fdutils.h"
++#include "bin/rdd_test_loopback.h"
+ #include "bin/file.h"
+ #include "bin/socket_base_macos.h"
+ #include "platform/signal_blocker.h"
+@@ -53,12 +54,23 @@
+ AddressList<SocketAddress>* SocketBase::LookupAddress(const char* host,
+                                                       int type,
+                                                       OSError** os_error) {
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  host = RddNumericLocalHost(host);
++  if (!host) {
++    ASSERT(*os_error == nullptr);
++    *os_error = new OSError(EACCES, "RDD test runtime denies non-loopback DNS", OSError::kSystem);
++    return nullptr;
++  }
++#endif
+   // Perform a name lookup for a host name.
+   struct addrinfo hints;
+   memset(&hints, 0, sizeof(hints));
+   hints.ai_family = SocketAddress::FromType(type);
+   hints.ai_socktype = SOCK_STREAM;
+   hints.ai_flags = 0;
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  hints.ai_flags = AI_NUMERICHOST;
++#endif
+   hints.ai_protocol = IPPROTO_TCP;
+   struct addrinfo* info = nullptr;
+   int status = getaddrinfo(host, nullptr, &hints, &info);
+--- a/runtime/bin/socket_base_posix.cc
++++ b/runtime/bin/socket_base_posix.cc
+@@ -17,6 +17,7 @@
+ #include <unistd.h>       // NOLINT
+
+ #include "bin/fdutils.h"
++#include "bin/rdd_test_loopback.h"
+ #include "bin/file.h"
+ #include "bin/ifaddrs.h"
+ #include "bin/socket_base_macos.h"
+@@ -206,6 +207,9 @@
+                             const RawAddr& addr,
+                             SocketOpKind sync) {
+   ASSERT(fd >= 0);
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  if (!RddRequireLocal(&addr.addr)) return -1;
++#endif
+   ssize_t written_bytes =
+       TEMP_FAILURE_RETRY(sendto(fd, buffer, num_bytes, 0, &addr.addr,
+                                 SocketAddress::GetAddrLength(addr)));
+@@ -227,6 +231,16 @@
+                                  OSError* p_oserror) {
+   ASSERT(fd >= 0);
+
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  struct sockaddr_storage peer = {};
++  socklen_t peer_len = sizeof(peer);
++  if (getpeername(fd, reinterpret_cast<sockaddr*>(&peer), &peer_len) != 0 ||
++      !RddRequireLocal(reinterpret_cast<sockaddr*>(&peer))) {
++    errno = EACCES;
++    p_oserror->SetCodeAndMessage(OSError::kSystem, errno);
++    return -1;
++  }
++#endif
+   struct iovec iov = {
+       .iov_base = buffer,
+       .iov_len = num_bytes,
+@@ -333,6 +347,11 @@
+                                intptr_t host_len,
+                                OSError** os_error) {
+   ASSERT(host_len >= NI_MAXHOST);
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++  ASSERT(*os_error == nullptr);
++  *os_error = new OSError(EACCES, "RDD test runtime denies reverse DNS", OSError::kSystem);
++  return false;
++#endif
+   int status = NO_RETRY_EXPECTED(
+       getnameinfo(&addr.addr, SocketAddress::GetAddrLength(addr), host,
+                   host_len, nullptr, 0, NI_NAMEREQD));
+--- /dev/null
++++ b/runtime/bin/rdd_test_loopback.h
+@@ -0,0 +1,37 @@
++// Task-owned loopback test boundary. Not a native-plugin/process sandbox.
++#ifndef RDD_TEST_LOOPBACK_H_
++#define RDD_TEST_LOOPBACK_H_
++#include <arpa/inet.h>
++#include <errno.h>
++#include <string.h>
++#include <sys/socket.h>
++#if defined(RDD_TEST_LOOPBACK_ONLY)
++namespace dart { namespace bin {
++inline bool RddLocalAddress(const struct sockaddr* address) {
++  if (!address) return false;
++  if (address->sa_family == AF_INET) {
++    return (ntohl(reinterpret_cast<const sockaddr_in*>(address)->sin_addr.s_addr) >> 24) == 127;
++  }
++  if (address->sa_family == AF_INET6) {
++    const auto* a = reinterpret_cast<const sockaddr_in6*>(address);
++    return IN6_IS_ADDR_LOOPBACK(&a->sin6_addr) && a->sin6_scope_id == 0;
++  }
++  return false;
++}
++inline bool RddRequireLocal(const struct sockaddr* address) {
++  if (RddLocalAddress(address)) return true;
++  errno = EACCES;
++  return false;
++}
++inline const char* RddNumericLocalHost(const char* host) {
++  if (!host) return nullptr;
++  if (strcmp(host, "localhost") == 0) return "127.0.0.1";
++  sockaddr_in a4 = {}; a4.sin_family = AF_INET;
++  if (inet_pton(AF_INET, host, &a4.sin_addr) == 1 && RddLocalAddress(reinterpret_cast<sockaddr*>(&a4))) return host;
++  sockaddr_in6 a6 = {}; a6.sin6_family = AF_INET6;
++  if (inet_pton(AF_INET6, host, &a6.sin6_addr) == 1 && RddLocalAddress(reinterpret_cast<sockaddr*>(&a6))) return host;
++  return nullptr;
++}
++} }
++#endif
++#endif
