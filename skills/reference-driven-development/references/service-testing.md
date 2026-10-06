@@ -22,7 +22,10 @@ controls. The loopback fixture recorded exactly the three expected requests.
 These checks used no production account, token, payment or business function.
 
 To reproduce, use a dedicated iOS control target with this `@main` source and
-the real FirebaseCore and FirebaseFunctions products. Apply the
+the real FirebaseCore and FirebaseFunctions products. Include
+[GuardControl.swift](../scripts/fixtures/firebase_functions/GuardControl.swift)
+and a copy of the endpoint guard in that control target as well as in the SDK.
+The shared source avoids relying on an SDK-internal symbol from another module. Apply the
 [SDK patch](../scripts/fixtures/firebase_functions/local-callable.patch) to the
 inspected SDK revision and add
 [the endpoint guard](../scripts/fixtures/firebase_functions/RDDLocalCallableTransport.swift)
@@ -48,6 +51,28 @@ credentials, query strings and fragments. Do not use it as a whole-process
 isolation certificate. A native transport PASS and original client request
 forwarding establish different properties; keep both records and recover the
 real business contract before implementing local account, order or pass state.
+
+The guard control varies one URL property per rejection case instead of
+combining several invalid properties in one URL. It passed on native Swift
+6.2.4 and in the iOS control: two permitted cases and 22 rejected variants,
+including credentials, empty/nonempty queries and fragments, host/port,
+namespace, region/function syntax, maximum function length and encoded line
+breaks. These are source-level predicate checks with no networking; the three
+SDK denied-endpoint calls separately exercise the patched SDK entry path.
+Neither check proves redirect containment or whole-process isolation.
+The path expression uses strict full-string anchors. A prior trailing-newline
+probe was rejected; it did not demonstrate an exploit in the previous guard.
+
+On a Mac with Xcode, run the standalone control from the fixture directory:
+
+```sh
+xcrun swiftc -D RDD_CALLABLE_GUARD_STANDALONE \
+  RDDLocalCallableTransport.swift GuardControl.swift -o /private/guard-control
+RDD_FUNCTIONS_LOCAL_ONLY=1 /private/guard-control
+```
+
+Require `RDD_CALLABLE_GUARD_CONTROL_PASS allowed=2 rejected=22 requests=0`.
+Do not define the standalone compilation flag in the iOS app target.
 
 Upstream implementation: [Firebase Functions SDK](https://github.com/firebase/firebase-ios-sdk/tree/27eaab3918e0bf78711cf1abf240577176326432/FirebaseFunctions/Sources).
 

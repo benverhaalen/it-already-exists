@@ -19,6 +19,7 @@ import FirebaseFunctions
     window?.rootViewController=view;window?.makeKeyAndVisible()
     Task { @MainActor in
       do {
+        let guardCases = try rddRunCallableGuardControl()
         let payload:[String:Any]=["integer":Int64(9007199254740993),"bool":true,"null":NSNull(),"list":["a","b"]]
         let result=try await functions.httpsCallable("rddEcho").call(payload)
         guard let data=result.data as? [String:Any], let number=data["integer"] as? NSNumber,
@@ -48,7 +49,7 @@ import FirebaseFunctions
           guard rejected else { throw NSError(domain:"RDDCallableControl",code:4) }
         }
         label.text="PASS: native echo, integer/null/list preservation, callable error, malformed response and endpoint rejection"
-        NSLog("RDD_FUNCTIONS_NATIVE_CONTROL_PASS echo=1 int64=1 null=1 list=1 error200=1 malformed=1 deniedEndpoints=3")
+        NSLog("RDD_FUNCTIONS_NATIVE_CONTROL_PASS echo=1 int64=1 null=1 list=1 error200=1 malformed=1 deniedEndpoints=3 guardCases=%ld", guardCases)
       } catch {
         let error=error as NSError
         label.text="FAIL: inspect scoped native control log"

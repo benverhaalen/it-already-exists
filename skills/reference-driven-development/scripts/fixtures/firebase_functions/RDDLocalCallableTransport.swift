@@ -6,7 +6,7 @@ func rddQualifyLocalCallableURL(_ url: URL) throws {
   guard ProcessInfo.processInfo.environment["RDD_FUNCTIONS_LOCAL_ONLY"] == "1" else { return }
   let components=URLComponents(url:url,resolvingAgainstBaseURL:false)
   let path=url.path
-  let permittedPath=path.range(of:"^/demo-rdd-accounts/[a-z0-9]+(?:-[a-z0-9]+)*/[A-Za-z][A-Za-z0-9_-]{0,99}$",options:.regularExpression) != nil
+  let permittedPath=path.range(of:"\\A/demo-rdd-accounts/[a-z0-9]+(?:-[a-z0-9]+)*/[A-Za-z][A-Za-z0-9_-]{0,99}\\z",options:.regularExpression) != nil
   guard url.scheme == "http", url.host == "127.0.0.1", url.port == 5006,
         url.user == nil, url.password == nil, components?.query == nil,
         components?.fragment == nil, permittedPath else {

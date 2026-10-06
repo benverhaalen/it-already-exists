@@ -54,6 +54,7 @@ def allowed(path):
             'scripts/fixtures/sqflite/LICENSE',
             'scripts/fixtures/sqflite/FMDB_LICENSE.txt',
             'scripts/fixtures/firebase_functions/AppDelegate.swift',
+            'scripts/fixtures/firebase_functions/GuardControl.swift',
             'scripts/fixtures/firebase_functions/RDDLocalCallableTransport.swift',
             'scripts/fixtures/firebase_functions/local-callable-server.py',
             'scripts/fixtures/firebase_functions/local-callable.patch',
