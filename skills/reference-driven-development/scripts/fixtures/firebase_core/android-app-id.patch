@@ -1,0 +1,14 @@
+--- a/FirebaseCore/Sources/FIRApp.m
++++ b/FirebaseCore/Sources/FIRApp.m
+@@ -663,7 +663,11 @@
+     return NO;
+   }
+
++  #if defined(RDD_ANDROID_FIREBASE_ID)
++  if (![platform isEqualToString:@"ios"] && ![platform isEqualToString:@"android"]) {
++#else
+   if (![platform isEqualToString:@"ios"]) {
++#endif
+     // The platform must be @"ios"
+     return NO;
+   }

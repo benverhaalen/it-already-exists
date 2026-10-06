@@ -79,6 +79,29 @@ match the original caller. Android-specific compiled branches and FFI calling
 conventions remain separate obligations. A matching runtime version or available
 iOS SDK is evidence for an experiment, not proof that the original app will run.
 
+Before registering a native plugin, compare platform-specific configuration and
+identity validation as well as its channel codec. A matching API can still reject
+Android configuration. Inspect the selected SDK product's actual dependency graph;
+a package manifest can mention networking products that are absent from the linked
+closure, while component auto-registration can activate products that are present.
+Qualify the built closure and initialization paths before relying on isolation.
+
+For Firebase Core 12.19.0, the bundled opt-in
+`scripts/fixtures/firebase_core/android-app-id.patch` adds Android v1 IDs to the
+existing iOS validator without replacing the ID or weakening its remaining format
+checks. It is pinned to firebase-ios-sdk revision
+`27eaab3918e0bf78711cf1abf240577176326432`. Check and apply from that repository
+root, then define `RDD_ANDROID_FIREBASE_ID` only in the FirebaseCore C target.
+The accompanying Apache 2.0 license applies to the upstream source patch.
+`registry-control.m` supplies a synthetic native control: both platform IDs must
+validate, a malformed ID must fail, actual SDK configuration must retain the ID,
+data-collection state must change, and deletion must empty the registry. Run it
+in an empty task-owned app with only FirebaseCore and its required dependencies;
+observe the deletion callback separately from the function result. These native
+controls passed on an ARM64 iOS simulator. They do not qualify authentication,
+Installations, service authority, other SDK versions, or full application startup.
+Changing a local validator does not grant an Android identity iOS backend authority.
+
 Test VM loading before application execution. Match snapshot format, product
 flags, pointer compression and compiled platform ABI separately. The official
 [engine configuration](https://github.com/flutter/flutter/blob/78fc3012e45889657f72359b005af7beac47ba3d/engine/src/flutter/tools/gn)

@@ -32,7 +32,10 @@ def allowed(path):
             'scripts/fixtures/flutter_abi/dart-snapshot.patch',
             'scripts/fixtures/flutter_abi/dart-loopback.patch',
             'scripts/fixtures/flutter_abi/TONIC-LICENSE',
-            'scripts/fixtures/flutter_abi/DART-LICENSE'}:
+            'scripts/fixtures/flutter_abi/DART-LICENSE',
+            'scripts/fixtures/firebase_core/android-app-id.patch',
+            'scripts/fixtures/firebase_core/registry-control.m',
+            'scripts/fixtures/firebase_core/LICENSE'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}
