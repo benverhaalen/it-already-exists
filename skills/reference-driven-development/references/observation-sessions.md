@@ -149,3 +149,32 @@ actual route listing before retrying: the wrapper will not remove an unconfirmed
 route. Cleanup failure also requires inspection. This is neither whole-app network
 isolation nor authorization to contact production services. See the official
 [ADB command reference](https://android.googlesource.com/platform/packages/modules/adb/+/refs/heads/main/docs/user/adb.1.md).
+
+
+For a cached HTTP object, `scripts/android_http_fixture_probe.py` makes one local
+GET and compares the exact body length and SHA-256 with captured reference bytes:
+
+```sh
+python3 /path/to/skill/scripts/android_http_fixture_probe.py \
+  --serial emulator-5560 --host 10.0.2.2 --port 8089 --path /fixture \
+  --expected-bytes 11 --expected-sha256 CAPTURED_SHA256
+```
+
+Replace the digest with the actual captured object's SHA-256. This probe uses
+Android Toybox `nc` and `head`, caps captured stdout at the expected body plus
+16 KiB of headers plus one overflow byte, and bounds the host command. It requires
+HTTP 200 and a matching Content-Length; redirects, chunked transfer and duplicate
+headers are outside its contract. It emits `RDD_HTTP_BYTES_MATCH` only after exact
+comparison. Use that marker with the route wrapper's `--required-text` when testing
+an actual reverse route. The wrapper alone proves only route lifecycle.
+
+For the standard Android emulator, `10.0.2.2` addresses the host loopback. Compare
+that path with guest `127.0.0.1` under the configured reverse route when diagnosing
+empty responses. Do not infer a network fix from a newly visible image: memory or
+disk caches, different URLs and independent UI transitions can confound it. Keep
+source bytes, endpoint settings and the discriminating response receipt together.
+The probe does not create routes, refresh remote assets or qualify WebSockets,
+TLS, authentication, whole-app egress or native iPhone networking. A local service
+can itself contact upstream systems; choose a fixture server that serves captured
+bytes without forwarding. Sources: [emulator networking](https://developer.android.com/studio/run/emulator-networking-address),
+[Toybox netcat](https://android.googlesource.com/platform/external/toybox/+/refs/heads/main/toys/net/netcat.c).
