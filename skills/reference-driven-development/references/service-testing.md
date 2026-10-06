@@ -128,7 +128,7 @@ through a separately qualified local writer. Output files must not already exist
 This is a bounded reference translator, not a complete Firestore schema validator,
 a query translator or proof of backend equivalence. Other-project references are
 preserved and may remain unusable locally. It supports explicit default-database
-roots only. Check that every required referenced record is present.
+roots only. Check that every required referenced record is present. Trace follow-up subcollection and collection-group queries as well; dated offers or inventory overrides may be stored outside their parent records.
 
 Recover actual filters, ordering and cursors from the original query before
 mirroring data. A denied broad listing does not establish that a narrower query
