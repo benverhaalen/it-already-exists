@@ -24,7 +24,7 @@ class LocationFixtureTests(unittest.TestCase):
         self.assertGreater(speed, 0)
         self.assertAlmostEqual(111.1949266 / speed, 360, places=5)
 
-    def run_case(self, command_result=0, state="Booted", start_error=False, cleanup_error=False):
+    def run_case(self, command_result=0, state="Booted", start_error=False, cleanup_error=False, command_log="", required_text=()):
         calls = []
         executed = []
 
@@ -38,6 +38,7 @@ class LocationFixtureTests(unittest.TestCase):
 
         def execute(argv, timeout, log):
             executed.append(argv)
+            log.write_text(command_log)
             if isinstance(command_result, Exception):
                 raise command_result
             return command_result
@@ -45,7 +46,7 @@ class LocationFixtureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "new-evidence"
             result = fixture.run_fixture("owned-device", "test.bundle", (0, 0), (0.001, 0), 30,
-                                         ["test-command"], output, invoke=invoke, execute=execute)
+                                         ["test-command"], output, invoke=invoke, execute=execute, required_text=required_text)
             self.assertEqual(json.loads((output / "receipt.json").read_text()), result)
         return result, calls, executed
 
@@ -80,6 +81,16 @@ class LocationFixtureTests(unittest.TestCase):
             with self.assertRaises(subprocess.TimeoutExpired):
                 fixture.run_command([sys.executable, "-c", "import time; time.sleep(30)"],
                                     0.05, Path(directory) / "command.log")
+
+    def test_zero_exit_without_selected_test_execution_witness_is_not_pass(self):
+        result, _, _ = self.run_case(command_log="Executed 0 tests\nTEST SUCCEEDED", required_text=["selected_test passed"])
+        self.assertEqual(result["test_exit"], 0)
+        self.assertTrue(result["cleanup_succeeded"])
+        self.assertFalse(result["fixture_command_passed"])
+        result, _, _ = self.run_case(command_log="selected_test passed\nrequired_transition passed", required_text=["selected_test passed", "required_transition passed"])
+        self.assertTrue(result["fixture_command_passed"])
+        result, _, _ = self.run_case(command_log="selected_test passed", required_text=["selected_test passed", "required_transition passed"])
+        self.assertFalse(result["fixture_command_passed"])
 
 
 if __name__ == "__main__":

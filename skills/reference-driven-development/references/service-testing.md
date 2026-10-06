@@ -5,6 +5,52 @@ rendering can match while the issuing ledger, payment processor or venue scanner
 remains outside the reconstruction. Do not claim production validity from a
 successful local checkout or a visually identical code.
 
+## Qualify callable transport before business behavior
+
+Use the real native SDK when the original client calls a callable-function
+plugin. Recover its channel, argument fields, timeout units, success data and
+error envelope first. A JSON endpoint that always returns success does not
+preserve those contracts. An HTTP 200 response can contain a callable error;
+a response with no data or error is also a failure.
+
+The authored [native control](../scripts/fixtures/firebase_functions/AppDelegate.swift)
+was compiled with Firebase Apple SDK 12.19.0 from revision
+`27eaab3918e0bf78711cf1abf240577176326432`. It passed native serialization of an
+integer above JavaScript's exact-integer range, Boolean, null and list values;
+an HTTP 200 permission error; a malformed response; and three denied endpoint
+controls. The loopback fixture recorded exactly the three expected requests.
+These checks used no production account, token, payment or business function.
+
+To reproduce, use a dedicated iOS control target with this `@main` source and
+the real FirebaseCore and FirebaseFunctions products. Apply the
+[SDK patch](../scripts/fixtures/firebase_functions/local-callable.patch) to the
+inspected SDK revision and add
+[the endpoint guard](../scripts/fixtures/firebase_functions/RDDLocalCallableTransport.swift)
+to its `FirebaseFunctions/Sources` directory. Preserve the
+[Apache license](../scripts/fixtures/firebase_functions/firebase-ios-sdk-LICENSE).
+The patch qualifies the endpoint before token acquisition in callable and
+stream entry paths. Only the callable path was exercised by this control.
+
+Start the [local protocol fixture](../scripts/fixtures/firebase_functions/local-callable-server.py)
+with `python3 local-callable-server.py --evidence /private/new-requests.jsonl`.
+It binds only `127.0.0.1:5006`. Launch the native control with
+`RDD_FUNCTIONS_LOCAL_ONLY=1` in its environment; with `simctl launch`, use the
+`SIMCTL_CHILD_` prefix. Require the actual `RDD_FUNCTIONS_NATIVE_CONTROL_PASS`
+record and inspect the request receipt. The test namespace is
+`demo-rdd-accounts`; credentials and headers are not copied into the receipt.
+The server supplies protocol controls and explicit errors for unknown business
+functions. It does not implement an application's account or purchase rules.
+
+The guard is opt-in and covers the initial SDK endpoint, not redirects or all
+native networking. It permits only HTTP on the fixed numeric loopback endpoint
+with the test namespace, a region and a bounded function name. It rejects URL
+credentials, query strings and fragments. Do not use it as a whole-process
+isolation certificate. A native transport PASS and original client request
+forwarding establish different properties; keep both records and recover the
+real business contract before implementing local account, order or pass state.
+
+Upstream implementation: [Firebase Functions SDK](https://github.com/firebase/firebase-ios-sdk/tree/27eaab3918e0bf78711cf1abf240577176326432/FirebaseFunctions/Sources).
+
 Before running a money-connected reference, define the complete journey:
 catalog → current quote → payment outcome → durable order → pass display →
 validation → redemption → restart. Include changed prices, cancellation,

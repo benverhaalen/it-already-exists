@@ -1,0 +1,18 @@
+--- a/FirebaseFunctions/Sources/Functions.swift
++++ b/FirebaseFunctions/Sources/Functions.swift
+@@ -398,6 +398,7 @@
+                     withObject data: Any?,
+                     options: HTTPSCallableOptions?,
+                     timeout: TimeInterval) async throws -> sending HTTPSCallableResult {
++    try rddQualifyLocalCallableURL(url)
+     let context = try await contextProvider.context(options: options)
+     let fetcher = try makeFetcher(
+       url: url,
+@@ -425,6 +426,7 @@
+       let task = Task {
+         let urlRequest: URLRequest
+         do {
++          try rddQualifyLocalCallableURL(url)
+           let context = try await contextProvider.context(options: options)
+           urlRequest = try makeRequestForStreamableContent(
+             url: url,

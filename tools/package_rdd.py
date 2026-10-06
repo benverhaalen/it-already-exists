@@ -52,7 +52,12 @@ def allowed(path):
             'scripts/fixtures/sqflite/RDDSQLiteControl.m',
             'scripts/fixtures/sqflite/standalone-import.patch',
             'scripts/fixtures/sqflite/LICENSE',
-            'scripts/fixtures/sqflite/FMDB_LICENSE.txt'}:
+            'scripts/fixtures/sqflite/FMDB_LICENSE.txt',
+            'scripts/fixtures/firebase_functions/AppDelegate.swift',
+            'scripts/fixtures/firebase_functions/RDDLocalCallableTransport.swift',
+            'scripts/fixtures/firebase_functions/local-callable-server.py',
+            'scripts/fixtures/firebase_functions/local-callable.patch',
+            'scripts/fixtures/firebase_functions/firebase-ios-sdk-LICENSE'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}

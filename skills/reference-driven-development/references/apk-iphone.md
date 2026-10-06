@@ -26,6 +26,14 @@ that path on command success, failure or timeout. It writes the command log and
 a separate lifecycle receipt. A failed cleanup cannot produce a passing receipt.
 It does not restart a failed command or select another device.
 
+Use repeated `--require-log-text` arguments for actual selected-test execution
+and consequential transition witnesses, in addition to checking the process
+exit. Some test tools return success when a misspelled selector executes zero
+tests. The helper requires every supplied literal witness in the command log;
+it inspects at most 16 MiB and does not store witness text in the receipt. These
+markers are evidence handles, not independent proof: inspect the assertions and
+actual test result that produce them.
+
 Existing simulator location scenarios are replaced; use a dedicated device and
 do not run competing fixtures on it. Permission remains unchanged unless
 `--grant-location` is explicit. That option persists the in-use grant after the

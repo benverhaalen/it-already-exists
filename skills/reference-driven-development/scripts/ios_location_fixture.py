@@ -48,13 +48,14 @@ def run_command(command, timeout, log):
 
 
 def run_fixture(device, bundle, start, end, timeout, command, output, grant=False,
-                invoke=subprocess.run, execute=run_command):
+                invoke=subprocess.run, execute=run_command, required_text=()):
     speed = trajectory_speed(start, end, timeout)
     output.mkdir(parents=True, exist_ok=False)
     receipt = {"device": device, "simulated": True, "start": list(start), "end": list(end),
                "speed_meters_per_second": speed, "timeout_seconds": timeout,
                "permission_grant_requested": grant, "test_exit": None,
                "trajectory_started": False, "cleanup_succeeded": False,
+               "required_log_witnesses": len(required_text), "log_witnesses_passed": not required_text,
                "limits": "Fixture lifecycle only; inspect native fixes and actual journey assertions separately. No network isolation is provided."}
     attempted = False
 
@@ -76,6 +77,12 @@ def run_fixture(device, bundle, start, end, timeout, command, output, grant=Fals
             f"{start[0]},{start[1]}", f"{end[0]},{end[1]}")
         receipt["trajectory_started"] = True
         receipt["test_exit"] = execute(command, timeout, output / "command.log")
+        if required_text:
+            log = output / "command.log"
+            if log.stat().st_size > 16 * 1024 * 1024:
+                raise ValueError("Witness log exceeds the 16 MiB inspection bound")
+            data = log.read_bytes()
+            receipt["log_witnesses_passed"] = all(marker.encode() in data for marker in required_text)
     except Exception as error:
         receipt["error_type"] = type(error).__name__
     finally:
@@ -85,7 +92,7 @@ def run_fixture(device, bundle, start, end, timeout, command, output, grant=Fals
                 receipt["cleanup_succeeded"] = True
             except Exception as error:
                 receipt["cleanup_error_type"] = type(error).__name__
-        receipt["fixture_command_passed"] = (receipt["test_exit"] == 0 and receipt["cleanup_succeeded"])
+        receipt["fixture_command_passed"] = (receipt["test_exit"] == 0 and receipt["cleanup_succeeded"] and receipt["log_witnesses_passed"])
         (output / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     return receipt
 
@@ -99,6 +106,7 @@ def main():
     parser.add_argument("--timeout", type=int, default=300)
     parser.add_argument("--grant-location", action="store_true", help="Explicitly grant in-use permission; grant persists afterward")
     parser.add_argument("--output", type=Path, required=True, help="New private evidence directory")
+    parser.add_argument("--require-log-text", action="append", default=[], help="Require a literal execution/outcome witness in the command log; repeat as needed")
     parser.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     try:
@@ -110,8 +118,10 @@ def main():
     command = args.command[1:] if args.command[:1] == ["--"] else args.command
     if not command:
         parser.error("Supply a test command after --")
+    if len(args.require_log_text) > 16 or any(not value or len(value.encode()) > 512 for value in args.require_log_text):
+        parser.error("Provide at most 16 nonempty log witnesses of at most 512 bytes each")
     receipt = run_fixture(args.device, args.bundle, args.start, args.end, args.timeout,
-                          command, args.output, args.grant_location)
+                          command, args.output, args.grant_location, required_text=args.require_log_text)
     print(json.dumps(receipt))
     return 0 if receipt["fixture_command_passed"] else 1
 
