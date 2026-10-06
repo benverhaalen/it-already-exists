@@ -44,7 +44,9 @@ def allowed(path):
             'scripts/fixtures/datadog_core/crash-control.swift',
             'scripts/fixtures/datadog_core/startup-control.swift',
             'scripts/fixtures/datadog_core/flutter-local-startup.patch',
-            'scripts/fixtures/datadog_core/LICENSE'}:
+            'scripts/fixtures/datadog_core/LICENSE',
+            'scripts/fixtures/path_provider/android-ios-directories.swift',
+            'scripts/fixtures/path_provider/LICENSE'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}

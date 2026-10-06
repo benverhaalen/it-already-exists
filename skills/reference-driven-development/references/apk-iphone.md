@@ -320,3 +320,40 @@ Separate portable platform adapters from app-specific fixes. A reusable repair n
 Qualify a varied owned corpus: managed UI, JNI/native rendering, audio, persistence, concurrency, graphics state and lifecycle, followed by mixed engines and external services. Compare Android and iPhone using normal inputs, captures and durable-state checks. Measure cold setup, additional app-specific work, diagnostic iterations and physical performance separately. Progress means broader supported contracts and less repeated intervention; passing a metadata fixture does not establish runtime coverage.
 
 For RDD, preserve the running reference's screens, state transitions and interaction evidence with provenance. Source-assisted work may use inspected code and assets within its authorized scope. Strict independent implementation receives reviewed behavioral specifications through an actual access boundary; the execution analyst's APK, code and complete dependency report are not automatically safe exports.
+
+
+### Preserve directory contracts across platforms
+
+An Android AOT frontend still sends Android plugin channel names when running
+inside an iOS host. Installing only the iOS plugin does not cover that wire
+contract. Inspect the actual generated request and reply envelopes before
+mapping the underlying operation to native storage.
+
+The authored [directory adapter](../scripts/fixtures/path_provider/android-ios-directories.swift)
+uses the Android `PathProviderApi` channel names for four no-argument operations.
+It follows the inspected `path_provider_android` 2.2.22 standard-codec single-item
+reply envelope and `path_provider_foundation` 2.4.4 iOS directory mapping:
+documents, application support, and caches. Temporary and application-cache
+requests share the caches directory, as these inspected plugins do. Directories
+are created through native Foundation APIs before returning their real paths.
+
+Compile the fixture in a Flutter iOS host and call
+`RDDPathProviderHost.registerMessenger` with the running engine messenger. Its
+native control writes, reads and removes a unique file in each directory, checks
+container membership, and checks the cache alias and documents/support
+separation. These exact fixture bytes compiled and passed those controls in an
+iOS simulator; an original Android frontend then called documents, temporary
+and support operations through the adapter and advanced to its populated
+selection screen. A follow-on image cache still required its SQLite plugin.
+
+This is bounded directory compatibility, not full persistence qualification.
+Absolute Android paths, preexisting data migration, backup policy, protected
+files, app groups and shared/external storage remain separate transfer questions.
+The fixture does not register Android external-storage channels. Inspect actual
+consumers and compare persistent state across relaunch; do not substitute an iOS
+sandbox path for shared storage without testing its intended property.
+
+Sources: [Android plugin](https://github.com/flutter/packages/tree/path_provider_android-v2.2.22/packages/path_provider/path_provider_android),
+[iOS plugin](https://github.com/flutter/packages/tree/path_provider_foundation-v2.4.4/packages/path_provider/path_provider_foundation).
+Upstream BSD attribution accompanies the fixture. Plugin versions establish the
+inspected contracts; they do not prove an arbitrary APK used those versions.
