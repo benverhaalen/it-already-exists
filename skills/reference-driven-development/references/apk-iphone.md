@@ -9,6 +9,40 @@ comparison; physical iPhone checks qualify device-specific behavior later.
 Recover original assets, logic and protocols within the declared access policy.
 Judge fidelity against complete Android journeys, not an imagined native design.
 
+### Keep location fixtures alive through the journey
+
+Location permission, a fresh native fix, and the resulting application route are
+separate requirements. A simulator with granted permission can still leave the
+original client waiting when its simulated trajectory has ended. Preserve both
+manual selection and location-selected entry paths; do not require a manual city
+selector when the original client legitimately opens the nearby catalog.
+
+Use `scripts/ios_location_fixture.py` around a bounded test command on an explicit
+task-owned booted simulator. Pass `--device` with its UUID, `--bundle`, two nearby
+coordinates via `--start` and `--end`, a `--timeout`, and a new private `--output`
+directory, followed by `--` and the test command. The helper starts one fresh
+interpolated path whose calculated duration exceeds the test timeout, then clears
+that path on command success, failure or timeout. It writes the command log and
+a separate lifecycle receipt. A failed cleanup cannot produce a passing receipt.
+It does not restart a failed command or select another device.
+
+Existing simulator location scenarios are replaced; use a dedicated device and
+do not run competing fixtures on it. Permission remains unchanged unless
+`--grant-location` is explicit. That option persists the in-use grant after the
+test and can mask the normal permission-request experience; test permission
+prompting, denial and reduced accuracy separately. Keep fixture coordinates and
+command output private when they contain user or application data. This helper
+provides no network isolation.
+
+The helper was exercised around an original frontend's location-selected catalog,
+dated offer and guest restriction journey on an iOS simulator. Separately check
+the actual native permission and fresh fix, codec preservation and app transition;
+the wrapper's zero command exit does not establish those properties by itself.
+Physical-device location, event streams, background/return, permission changes
+and all product states remain independent qualifications. Its lifecycle tests
+cover failed and timed-out commands, failed trajectory startup, failed cleanup
+and refusal to mutate a shutdown device.
+
 For encoded artifacts such as QR codes, recover the actual payload-producing
 path. Compare decoded bytes, serialization, encoding/error-correction settings,
 geometry, colors, refresh/expiration timing, caching, background/return and
