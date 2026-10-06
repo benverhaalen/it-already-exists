@@ -142,7 +142,9 @@ executable segment. It does not discover function boundaries, deserialize
 snapshots, infer a response schema or follow control flow. Candidate references
 may include data inside a supplied range; absence does not prove no reference.
 Tests include register mismatches, nonadjacent loads, range crossings and ELF
-boundary failures. One compiled-client comparison matched all five selected
+boundary failures. Fixed instruction vectors assembled independently with LLVM
+check direct/adjacent loads and reject ADDS/SUB; local encoders are not the
+only decoding oracle. One compiled-client comparison matched all five selected
 references from a Capstone baseline; this is narrow qualification.
 
 [Blutter](https://github.com/worawit/blutter) recovers pool metadata through a

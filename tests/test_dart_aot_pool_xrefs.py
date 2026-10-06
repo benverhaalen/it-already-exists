@@ -33,6 +33,17 @@ class PoolXrefsTests(unittest.TestCase):
         self.assertEqual([r['instruction'] for r in rows], ['0x100c'])
         self.assertEqual(m.scan(struct.pack('<I', ldr(2, 0x788)), 0x2000, {0x16788}), [])
 
+    def test_independent_llvm_instruction_vectors(self):
+        # Assembled by Xcode LLVM clang, checked with llvm-objdump; these
+        # literals deliberately do not use the local encoding helpers.
+        # ldr x2,[x27,#0x108]; add x2,x27,#0x16,lsl #12;
+        # ldr x2,[x2,#0x788]; adds/sub x2,x27,#0x16,lsl #12.
+        self.assertEqual(m.pool_load(0xf9408762), (0x108, 'ldr-pool'))
+        self.assertEqual(m.pool_load(0xf943c442, 0x91405b62),
+                         (0x16788, 'adjacent-add-ldr-pool'))
+        self.assertIsNone(m.pool_load(0xf943c442, 0xb1405b62))
+        self.assertIsNone(m.pool_load(0xf943c442, 0xd1405b62))
+
     def test_bad_ranges_are_not_silently_scanned(self):
         for value in ([], [{'start':0,'end':3}], [{'start':4,'end':4}],
                       [{'start':0,'end':8},{'start':4,'end':12}],
