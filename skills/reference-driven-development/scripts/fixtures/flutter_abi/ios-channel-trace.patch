@@ -1,0 +1,13 @@
+--- a/shell/platform/darwin/ios/platform_message_handler_ios.mm
++++ b/shell/platform/darwin/ios/platform_message_handler_ios.mm
+@@ -86,6 +86,10 @@
+         dispatch_async(dispatch_get_main_queue(), run_handler);
+       }
+     } else {
++      // Opt-in channel names only. Never log message payloads.
++      if ([[[NSProcessInfo processInfo] environment][@"RDD_TRACE_MISSING_CHANNELS"] isEqualToString:@"1"]) {
++        NSLog(@"RDD_MISSING_PLATFORM_CHANNEL %s", message->channel().c_str());
++      }
+       if (completer) {
+         completer->CompleteEmpty();
+       }

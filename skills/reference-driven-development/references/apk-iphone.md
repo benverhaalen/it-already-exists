@@ -102,6 +102,19 @@ controls passed on an ARM64 iOS simulator. They do not qualify authentication,
 Installations, service authority, other SDK versions, or full application startup.
 Changing a local validator does not grant an Android identity iOS backend authority.
 
+When a compiled caller omits the failed channel name, trace the host dispatch
+boundary before guessing plugins. The pinned Flutter overlay
+`scripts/fixtures/flutter_abi/ios-channel-trace.patch` logs only missing channel
+names when the process environment has `RDD_TRACE_MISSING_CHANNELS=1`; it does
+not log payloads or change replies. Apply from the same Flutter engine root as
+`flutter-tonic.patch` and retain `TONIC-LICENSE`, which matches the Flutter source
+license. With simulator launch, pass the variable as
+`SIMCTL_CHILD_RDD_TRACE_MISSING_CHANNELS=1`. The linked overlay has identified
+missing channels during original Android snapshot startup on an iOS simulator.
+Missing does not mean fatal: correlate names and timing with the actual failed
+journey, then inspect codec, method, state, error and service contracts. Leave
+unknown calls as explicit gaps. Keep tracing off for normal use.
+
 Test VM loading before application execution. Match snapshot format, product
 flags, pointer compression and compiled platform ABI separately. The official
 [engine configuration](https://github.com/flutter/flutter/blob/78fc3012e45889657f72359b005af7beac47ba3d/engine/src/flutter/tools/gn)

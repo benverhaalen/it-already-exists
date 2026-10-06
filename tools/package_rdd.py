@@ -31,6 +31,7 @@ def allowed(path):
             'scripts/fixtures/flutter_abi/flutter-tonic.patch',
             'scripts/fixtures/flutter_abi/dart-snapshot.patch',
             'scripts/fixtures/flutter_abi/dart-loopback.patch',
+            'scripts/fixtures/flutter_abi/ios-channel-trace.patch',
             'scripts/fixtures/flutter_abi/TONIC-LICENSE',
             'scripts/fixtures/flutter_abi/DART-LICENSE',
             'scripts/fixtures/firebase_core/android-app-id.patch',
