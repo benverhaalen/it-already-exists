@@ -114,6 +114,45 @@ qualify that gate and dismissal separately; do not count it as checkout coverage
 Use the controlled identity path to continue the original journey. Track
 unobserved variants explicitly rather than substituting a familiar product flow.
 
+## Recover response contracts from compiled clients
+
+Use parser evidence to narrow a fixture before returning success. A service
+method name and nearby string labels are leads; trace the original caller,
+result extraction, map keys, casts and continuation. Distinguish an empty list
+from missing data, null, errors and records with unknown required fields. Test
+the real original screen against the fixture, including loading completion and
+visible empty-state content. Do not equate an accepted payload with production
+business rules. A zero-card account does not qualify payment or checkout.
+
+For ARM64 Dart AOT, `scripts/dart_aot_pool_xrefs.py` finds direct pool loads and
+adjacent ADD/LDR loads within supplied, instruction-aligned ELF ranges. Install
+`requirements-native-profile.txt`; provide a JSON list of `{ "start": "0x1000",
+"end": "0x1010" }` ranges from qualified metadata and a Blutter `pp.txt` dump:
+
+```sh
+python scripts/dart_aot_pool_xrefs.py --elf /private/libapp.so \
+  --ranges /private/ranges.json --pool /private/pp.txt \
+  --slot 0x108 --output /private/new-pool-references.json
+```
+
+The output retains source hashes, range bounds, pattern and label. Keep it
+private: labels can reveal application or sensitive data. The helper rejects
+wrong architectures, overlapping ranges and ranges outside a file-backed
+executable segment. It does not discover function boundaries, deserialize
+snapshots, infer a response schema or follow control flow. Candidate references
+may include data inside a supplied range; absence does not prove no reference.
+Tests include register mismatches, nonadjacent loads, range crossings and ELF
+boundary failures. One compiled-client comparison matched all five selected
+references from a Capstone baseline; this is narrow qualification.
+
+[Blutter](https://github.com/worawit/blutter) recovers pool metadata through a
+matching Dart runtime. [unflutter's annotator](https://github.com/zboralski/unflutter/blob/main/internal/disasm/annotate.go)
+uses the same direct and adjacent pool-load patterns; its broader analysis
+tracks register provenance for indirect calls. That broader tool remains a
+candidate, not an integrated or validated replacement. This helper was authored
+independently and uses explicit existing metadata rather than a new snapshot
+parser. Preserve upstream licenses when adopting upstream code.
+
 ## Local test identities
 
 When requested, keep synthetic accounts and application profiles entirely in
@@ -163,6 +202,10 @@ profile document or subscription. Inspect the original continuation and its
 record references; qualify that the local record exists and reaches the client.
 Return success only after required local persistence succeeds. Keep identifiers
 test-only and distinguish recovered field types from unknown production rules.
+
+Qualify sign-in through the original credential form before testing restoration;
+preloading a native session only tests the returning-user path. Keep synthetic
+credentials out of typing logs and clear temporary credential transfer state.
 
 Verify the ordinary returning-user journey without setup shortcuts: finish the
 original onboarding, terminate the process, then launch with no reset, persona
