@@ -24,7 +24,7 @@ class LocationFixtureTests(unittest.TestCase):
         self.assertGreater(speed, 0)
         self.assertAlmostEqual(111.1949266 / speed, 360, places=5)
 
-    def run_case(self, command_result=0, state="Booted", start_error=False, cleanup_error=False, command_log="", required_text=()):
+    def run_case(self, command_result=0, state="Booted", start_error=False, cleanup_error=False, command_log="", required_text=(), capture_failure=False, capture_error=False):
         calls = []
         executed = []
 
@@ -33,6 +33,10 @@ class LocationFixtureTests(unittest.TestCase):
             if argv[2] == "list":
                 data = {"devices": {"runtime": [{"udid": "owned-device", "state": state}]}}
                 return subprocess.CompletedProcess(argv, 0, json.dumps(data), "")
+            if argv[2] == "io":
+                if not capture_error:
+                    Path(argv[-1]).write_bytes(b"\x89PNG\r\n\x1a\n")
+                return subprocess.CompletedProcess(argv, int(capture_error), "", "")
             failed = (start_error and "start" in argv) or (cleanup_error and "clear" in argv)
             return subprocess.CompletedProcess(argv, int(failed), "", "")
 
@@ -46,7 +50,7 @@ class LocationFixtureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "new-evidence"
             result = fixture.run_fixture("owned-device", "test.bundle", (0, 0), (0.001, 0), 30,
-                                         ["test-command"], output, invoke=invoke, execute=execute, required_text=required_text)
+                                         ["test-command"], output, invoke=invoke, execute=execute, required_text=required_text, capture_failure=capture_failure)
             self.assertEqual(json.loads((output / "receipt.json").read_text()), result)
         return result, calls, executed
 
@@ -81,6 +85,22 @@ class LocationFixtureTests(unittest.TestCase):
             with self.assertRaises(subprocess.TimeoutExpired):
                 fixture.run_command([sys.executable, "-c", "import time; time.sleep(30)"],
                                     0.05, Path(directory) / "command.log")
+
+    def test_failure_capture_never_changes_outcome_or_targets_unvalidated_device(self):
+        for failure in (2, subprocess.TimeoutExpired(["test-command"], 30)):
+            result, calls, _ = self.run_case(failure, capture_failure=True)
+            self.assertFalse(result["fixture_command_passed"])
+            self.assertTrue(result["failure_screenshot_captured"])
+            self.assertEqual(calls[-1][2:5], ["io", "owned-device", "screenshot"])
+        result, calls, _ = self.run_case(capture_failure=True)
+        self.assertTrue(result["fixture_command_passed"])
+        self.assertFalse(any("screenshot" in c for c in calls))
+        result, calls, _ = self.run_case(2, capture_failure=True, capture_error=True)
+        self.assertFalse(result["fixture_command_passed"])
+        self.assertFalse(result["failure_screenshot_captured"])
+        self.assertIn("failure_capture_error_type", result)
+        result, calls, _ = self.run_case(2, state="Shutdown", capture_failure=True)
+        self.assertFalse(any("screenshot" in c for c in calls))
 
     def test_zero_exit_without_selected_test_execution_witness_is_not_pass(self):
         result, _, _ = self.run_case(command_log="Executed 0 tests\nTEST SUCCEEDED", required_text=["selected_test passed"])

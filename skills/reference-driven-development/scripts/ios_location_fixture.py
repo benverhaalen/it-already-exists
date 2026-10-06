@@ -48,13 +48,14 @@ def run_command(command, timeout, log):
 
 
 def run_fixture(device, bundle, start, end, timeout, command, output, grant=False,
-                invoke=subprocess.run, execute=run_command, required_text=()):
+                invoke=subprocess.run, execute=run_command, required_text=(), capture_failure=False):
     speed = trajectory_speed(start, end, timeout)
     output.mkdir(parents=True, exist_ok=False)
     receipt = {"device": device, "simulated": True, "start": list(start), "end": list(end),
                "speed_meters_per_second": speed, "timeout_seconds": timeout,
                "permission_grant_requested": grant, "test_exit": None,
                "trajectory_started": False, "cleanup_succeeded": False,
+               "failure_capture_requested": capture_failure, "failure_screenshot_captured": False,
                "required_log_witnesses": len(required_text), "log_witnesses_passed": not required_text,
                "limits": "Fixture lifecycle only; inspect native fixes and actual journey assertions separately. No network isolation is provided."}
     attempted = False
@@ -93,6 +94,16 @@ def run_fixture(device, bundle, start, end, timeout, command, output, grant=Fals
             except Exception as error:
                 receipt["cleanup_error_type"] = type(error).__name__
         receipt["fixture_command_passed"] = (receipt["test_exit"] == 0 and receipt["cleanup_succeeded"] and receipt["log_witnesses_passed"])
+        if capture_failure and attempted and not receipt["fixture_command_passed"]:
+            try:
+                image = output / "failure.png"
+                sim("io", device, "screenshot", str(image))
+                with image.open("rb") as stream:
+                    if stream.read(8) != b"\x89PNG\r\n\x1a\n":
+                        raise ValueError("Failure capture is not a PNG")
+                receipt["failure_screenshot_captured"] = True
+            except Exception as error:
+                receipt["failure_capture_error_type"] = type(error).__name__
         (output / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     return receipt
 
@@ -105,6 +116,7 @@ def main():
     parser.add_argument("--end", type=coordinate, required=True)
     parser.add_argument("--timeout", type=int, default=300)
     parser.add_argument("--grant-location", action="store_true", help="Explicitly grant in-use permission; grant persists afterward")
+    parser.add_argument("--capture-failure", action="store_true", help="Save the selected simulator screen privately after a failed command or witness check")
     parser.add_argument("--output", type=Path, required=True, help="New private evidence directory")
     parser.add_argument("--require-log-text", action="append", default=[], help="Require a literal execution/outcome witness in the command log; repeat as needed")
     parser.add_argument("command", nargs=argparse.REMAINDER)
@@ -121,7 +133,7 @@ def main():
     if len(args.require_log_text) > 16 or any(not value or len(value.encode()) > 512 for value in args.require_log_text):
         parser.error("Provide at most 16 nonempty log witnesses of at most 512 bytes each")
     receipt = run_fixture(args.device, args.bundle, args.start, args.end, args.timeout,
-                          command, args.output, args.grant_location, required_text=args.require_log_text)
+                          command, args.output, args.grant_location, required_text=args.require_log_text, capture_failure=args.capture_failure)
     print(json.dumps(receipt))
     return 0 if receipt["fixture_command_passed"] else 1
 

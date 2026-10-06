@@ -34,6 +34,18 @@ it inspects at most 16 MiB and does not store witness text in the receipt. These
 markers are evidence handles, not independent proof: inspect the assertions and
 actual test result that produce them.
 
+Use `--capture-failure` to save `failure.png` from that selected simulator after
+an unsuccessful command, missing witness, or cleanup failure. Capture happens
+after fixture cleanup; it is a diagnostic observation, not the exact failure
+instant or proof of its cause. Capture failure is recorded separately and cannot
+change the test outcome. Screens can contain private data; keep this output
+private and inspect it before sharing. A clipboard or permission dialog can block
+a test without establishing an application hang. Handle a known dialog specifically
+in the UI driver; do not accept arbitrary system alerts. See Apple's
+[interruption-handler guidance](https://developer.apple.com/videos/play/wwdc2020/10220/).
+Host process-group termination does not guarantee that simulator test runners or
+applications stopped; inspect their actual state before starting another run.
+
 Existing simulator location scenarios are replaced; use a dedicated device and
 do not run competing fixtures on it. Permission remains unchanged unless
 `--grant-location` is explicit. That option persists the in-use grant after the
