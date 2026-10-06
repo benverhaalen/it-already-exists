@@ -1,9 +1,9 @@
 --- a/third_party/tonic/BUILD.gn
 +++ b/third_party/tonic/BUILD.gn
 @@ -4,7 +4,18 @@
- 
+
  import("//flutter/build/dart/dart.gni")
- 
+
 +declare_args() {
 +  rdd_android_ffi_abi = false
 +}
@@ -24,7 +24,7 @@
 @@ -14,7 +14,30 @@
  #include "tonic/converter/dart_converter.h"
  #include "tonic/dart_wrappable.h"
- 
+
 +// Opt-in incoming Android AAPCS scalar boundary on an Apple ARM64 host.
 +#if defined(RDD_ANDROID_FFI_ON_DARWIN)
 +#if !defined(__APPLE__) || !defined(__aarch64__) || !__has_attribute(ms_abi)
@@ -49,7 +49,7 @@
 +}
 +#endif
 +
- 
+
  class DartArgIterator {
   public:
 @@ -305,12 +328,21 @@
@@ -61,7 +61,7 @@
 +      "RDD incoming FFI supports only qualified scalar and pointer returns");
 +#endif
    static const size_t n_args = sizeof...(Args);
- 
+
    // Static C entry-point with Dart FFI signature.
 -  static FfiReturn Call(
 +  static TONIC_RDD_INCOMING_ABI FfiReturn Call(
@@ -84,7 +84,7 @@
 +      "RDD incoming FFI supports only qualified scalar and pointer returns");
 +#endif
    static const size_t n_args = sizeof...(Args);
- 
+
    // Static C entry-point with Dart FFI signature.
 -  static FfiReturn Call(
 +  static TONIC_RDD_INCOMING_ABI FfiReturn Call(
@@ -108,7 +108,7 @@
 +      "RDD incoming FFI supports only qualified scalar and pointer returns");
 +#endif
    static const size_t n_args = sizeof...(Args);
- 
+
    // Static C entry-point with Dart FFI signature.
 -  static FfiReturn Call(
 +  static TONIC_RDD_INCOMING_ABI FfiReturn Call(
@@ -125,7 +125,7 @@
          DartConverter<typename std::remove_const<typename std::remove_reference<
 @@ -456,9 +506,14 @@
    static const size_t n_args = sizeof...(Args);
- 
+
    // Static C entry-point with Dart FFI signature.
 -  static void Call(
 +  static TONIC_RDD_INCOMING_ABI void Call(
@@ -141,7 +141,7 @@
          DartConverter<typename std::remove_const<typename std::remove_reference<
 @@ -500,10 +555,15 @@
    static const size_t n_args = sizeof...(Args);
- 
+
    // Static C entry-point with Dart FFI signature.
 -  static void Call(
 +  static TONIC_RDD_INCOMING_ABI void Call(
@@ -157,9 +157,9 @@
      (static_cast<C*>(receiver)->*method)(
          DartConverter<typename std::remove_const<typename std::remove_reference<
 @@ -544,4 +604,6 @@
- 
+
  }  // namespace tonic
- 
+
 +#undef TONIC_RDD_INCOMING_ABI
 +
  #endif  // LIB_TONIC_DART_ARGS_H_

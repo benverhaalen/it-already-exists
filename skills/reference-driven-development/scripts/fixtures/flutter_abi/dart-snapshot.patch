@@ -3,7 +3,7 @@
 @@ -113,10 +113,20 @@
    }
  }
- 
+
 +# Private experiment: preserve original Android snapshot ABI on a Darwin host.
 +# Host OS remains compiler-detected; only compiled target contracts change.
 +declare_args() {
@@ -16,7 +16,7 @@
 +
  config("dart_os_config") {
    defines = []
- 
+
 -  if (target_os == "android") {
 +  if (target_os == "android" || rdd_android_snapshot_abi) {
      defines += [ "DART_TARGET_OS_ANDROID" ]
