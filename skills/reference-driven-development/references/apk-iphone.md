@@ -33,6 +33,8 @@ The helper uses [pyelftools](https://github.com/eliben/pyelftools) 0.33, a publi
 
 Use [Android's ABI contract](https://developer.android.com/ndk/guides/abis) and the [ELF loading](https://gabi.xinuos.com/elf/07-pheader.html) and [dynamic linking](https://gabi.xinuos.com/elf/08-dynamic.html) specifications to interpret the results. Matching ARM64 instruction sets does not establish matching Android/iOS calling, loader, library or operating-system contracts. Presence of DEX alongside native code preserves both workstreams. Static dependencies omit dynamic loads, JNI/Java calls, direct syscalls, hidden payloads, external splits and server behavior.
 
+To compare a reference decompile's native profile against a candidate's, run `scripts/apk_native_compare.py reference.json candidate.json --output comparison.json`. It classifies each matched library as `identical_bytes` (actual SHA256 match), `runtime_marker_match_bytes_differ` (same ISA/word-size/endianness only), `runtime_marker_mismatch`, `uncompared` (one or both sides uninspected), or `reference_only`/`candidate_only`. Shared Flutter engine builds, Dart snapshot formats and ISAs routinely produce `runtime_marker_match_bytes_differ` across unrelated applications; the report always sets `verdict.application_equivalence` to `not_evaluated_by_this_tool` and never declares two APKs the same application from runtime clues alone. Treat `identical_bytes` across every compared native library as partial evidence only — DEX, assets, manifest and signing identity still need their own comparison before claiming artifact equivalence.
+
 ## Compare execution routes by required contracts
 
 Qualify the observation runtime before investing in the app route: actual guest
