@@ -116,6 +116,16 @@ incoming foreign boundary; keep host implementation calls native. This is a
 conditional mechanism for qualified signatures, not permission to treat all
 Windows, Android and Darwin ABIs as interchangeable. Variadic conventions differ.
 
+Keep an experimental convention adapter opt-in and compile-time guarded to its
+qualified host, architecture and converted argument/return types. Check both a
+working foreign-layout call and intentional rejection of unsupported signatures.
+Then compile the runtime's complete binding-registration translation unit with
+its actual generated flags and the proposed overlay; a hand-picked dispatcher
+can pass while another registered signature fails. Keep this check outside a
+live build's source and output graph. A registration compile qualifies signature
+coverage only; separately verify linked function addresses, original guest calls,
+callbacks and complete behavior before expanding compatibility claims.
+
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 
 ## Make improvements transfer across apps
