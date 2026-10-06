@@ -49,6 +49,8 @@ class PackTests(unittest.TestCase):
             assembly = (output / 'snapshot.S').read_text()
             self.assertIn(',32768,16', assembly)
             self.assertIn('.space 16', assembly)
+            for name, address in zip(packer.SYMBOLS, [2048, 16384, 2056, 16392]):
+                self.assertIn(f'.globl {name}\n.set {name}, _rdd_snapshot_start + {address}', assembly)
             self.assertIn('application equivalence', receipt['not_verified'])
             with self.assertRaises(FileExistsError):
                 packer.pack(source, output)

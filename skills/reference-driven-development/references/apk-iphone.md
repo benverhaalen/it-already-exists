@@ -63,7 +63,7 @@ Keep candidate routes until evidence discriminates them:
 
 For qualified ARM64 Dart ELF snapshots with identity file/virtual mappings,
 `scripts/dart_aot_macho_pack.py input.so /private/new-output` emits unchanged
-snapshot bytes, Mach-O assembly and a geometry receipt. It refuses unsupported
+snapshot bytes, Mach-O assembly with the four Flutter snapshot exports, and a geometry receipt. It refuses unsupported
 layouts and existing output directories. Link with the receipt's segment
 permissions and check the actual instruction-to-writable-storage distance before
 execution. Dart snapshots can address writable BSS relative to their instruction
@@ -78,6 +78,18 @@ and plugin implementations where their message codecs, results, errors and timin
 match the original caller. Android-specific compiled branches and FFI calling
 conventions remain separate obligations. A matching runtime version or available
 iOS SDK is evidence for an experiment, not proof that the original app will run.
+
+Test VM loading before application execution. Match snapshot format, product
+flags, pointer compression and compiled platform ABI separately. The official
+[engine configuration](https://github.com/flutter/flutter/blob/78fc3012e45889657f72359b005af7beac47ba3d/engine/src/flutter/tools/gn)
+enables compressed pointers for Android ARM64 but excludes iOS because of address
+space reservation constraints. Platform metadata changes do not convert this
+object layout. A VM mismatch requires a matching runtime or a qualified snapshot
+transformation; suppressing its diagnostic is insufficient. Inspect initialization
+order too: this revision invokes Dart plugin registration before resolving the
+application entrypoint, so a deliberately missing entrypoint alone does not
+prevent plugin execution. Use a source-verified initialization-only probe or an
+enforced service boundary before running an unfamiliar snapshot.
 
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 

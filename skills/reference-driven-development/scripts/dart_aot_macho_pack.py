@@ -112,6 +112,10 @@ _rdd_snapshot_bss:
 .incbin "{quoted}",{offset},{size}
 .space {memory-size}
 '''
+    # Mach-O's leading underscore maps these ELF snapshot names to the
+    # kDart* C exports that Flutter's dynamic-library snapshot loader expects.
+    for name in SYMBOLS:
+        assembly += f'\n.globl {name}\n.set {name}, _rdd_snapshot_start + {receipt["snapshot_symbols"][name]["offset"]}\n'
     blob.write_bytes(data)
     (destination / 'snapshot.S').write_text(assembly)
     (destination / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
