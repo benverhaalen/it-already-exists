@@ -12,6 +12,8 @@ Choose evidence channels for the property being inferred, not merely for conveni
 
 Record version, environment, role, preceding actions, locale, viewport/device, and relevant state. Link actual captures or reproducible observations. Preserve missing evidence and hypotheses instead of inventing internals.
 
+For Android archive acquisition from a product name, use [APK acquisition](apk-acquisition.md) to resolve identity and an explicit build before bounded intake.
+
 First establish acquisition readiness: access, reset/replay, observation reliability, and known perturbations. Completed input and completed capture are different events. A stale image, failed capture, or unchanged observer cannot prove an unchanged product. Verify freshness and inspect actual output. Do not execute untrusted code merely because it is a reference.
 
 Use discriminating probes: history changes, delayed response, failure, retry, duplicate input, role changes, restart, and state restoration. For example, a draft visible after navigation might be volatile memory; restart or storage inspection separates it from durable recovery. Probe what distinguishes candidate explanations, rather than collecting many similar screenshots.

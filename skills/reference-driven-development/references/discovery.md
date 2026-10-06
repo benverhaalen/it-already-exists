@@ -34,3 +34,5 @@ implementation handoff. It is a proposed operation, not a claim that research
 ran. The agent must apply it, inspect outputs and record the selected mechanism,
 conditions, rejected alternatives and discriminating evidence. Reuse valid prior
 evidence for settled work instead of requiring research on every small edit.
+
+When omissions, inspection cost, lost conditions or weak combinations obstruct the artifact, use [research improvement](research-improvement.md). Compare changes to discovery, investigation and transfer on paired decisions and actual artifact checks; choose providers only as supporting mechanisms.

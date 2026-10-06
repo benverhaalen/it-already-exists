@@ -18,6 +18,8 @@ Default to adapting useful properties into a coherent original result. Faithful 
 | Decision | Supporting module |
 | --- | --- |
 | Find references or reframe an idea | [Discovery](references/discovery.md) |
+| Improve discovery, investigation, synthesis or research reuse | [Research improvement](references/research-improvement.md) |
+| Resolve a named Android app to a reference archive | [APK acquisition](references/apk-acquisition.md) |
 | Bound static APK metadata with bundled `scripts/apk_intake.py`, or inspect products, source, recordings, or other surfaces | [Observation and reverse engineering](references/observation.md) |
 | Qualify and control a task-owned installed Android application | [Observation sessions](references/observation-sessions.md) |
 | Inspect native APK dependencies and choose an iPhone execution route | [APK-to-iPhone](references/apk-iphone.md) |

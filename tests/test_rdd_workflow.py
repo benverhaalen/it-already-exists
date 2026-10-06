@@ -75,6 +75,27 @@ class WorkflowTest(unittest.TestCase):
         self.task['tags'] = ['visual']
         self.assertEqual(self.compile()['ui_review']['module'], 'references/ui-continuity.md')
 
+    def test_research_targets_survive_plan_and_builder_handoff(self):
+        self.task['unknowns'] = [dict(id='response', property='hidden-state',
+                                     alternatives=['cached state', 'fresh computation'],
+                                     next_evidence='compare response after reset', stop='one bounded reset trial')]
+        # Updating unresolved questions changes the decision basis: acknowledge it
+        # instead of silently treating an earlier adoption as still current.
+        self.add('d-current', 'decision', ['c'], task_scope='a',
+                 context_sha256=workflow.decision_basis(self.task))
+        self.add('t-current', 'transfer', ['c'], task_scope='a', depends_on=['d-current'])
+        self.task['transfers'] = ['t-current']
+        self.assertTrue(self.compile()['ready_for_handoff'])
+        for result in (workflow.investigate(workflow.task_spec(self.task), workflow.catalog()), self.compile()):
+            target = result['approach_review']['research_review']['targets'][0]
+            self.assertEqual(target, dict(id='response', property='hidden-state',
+                                         competing_explanations=['cached state', 'fresh computation'],
+                                         next_evidence='compare response after reset', bound='one bounded reset trial'))
+        self.task['unknowns'][0]['alternatives'].append('external service')
+        refreshed = workflow.investigate(workflow.task_spec(self.task), workflow.catalog())
+        self.assertEqual(len(refreshed['approach_review']['research_review']['targets'][0]['competing_explanations']), 3)
+        self.assertEqual(len(target['competing_explanations']), 2)
+
     def test_apk_first_reference_reaches_actual_builder_without_ios_dependency(self):
         self.assertIsNone(self.compile()['apk_reconstruction_review'])
         self.task.update(surface='apk', operation='reconstruct')
