@@ -35,6 +35,23 @@ Use [Android's ABI contract](https://developer.android.com/ndk/guides/abis) and 
 
 ## Compare execution routes by required contracts
 
+Qualify the observation runtime before investing in the app route: actual guest
+ABI support, API level, completed boot and graphics initialization. A downloadable
+system image and a shipped emulator binary do not prove a compatible launch.
+Use crash stacks to separate CPU, loader and graphics failures; inspect a working
+upstream or owned setup for a discriminating adaptation. After an ambiguous
+installation transport error, inspect the actual package-manager result and
+complete installed split hash multiset before repeating installation.
+
+Treat startup as part of the full journey. Capture plugin/configuration inputs
+without exposing credentials, distinguish absent configuration from a platform
+adapter failure, and inspect the original dependency's validation contract.
+Test reversible configuration changes through the original SDK path under the
+declared external-effect controls. A constructed SDK or displayed first frame
+does not establish payment, service or complete-app fidelity. Preserve the
+unmodified reference and the exact adaptation; do not return success from
+initialization just to get past the splash screen.
+
 Keep candidate routes until evidence discriminates them:
 
 - Original native logic with a compatibility host: inspect loader/relocation, CPU, Bionic, JNI, threading, clock, graphics, audio, filesystem and lifecycle requirements. Qualify each adapter with owned discriminating controls, then actual app journeys. Unknown calls must remain explicit gaps rather than success-returning stubs.
