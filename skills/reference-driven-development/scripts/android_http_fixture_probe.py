@@ -55,7 +55,9 @@ def probe(adb, serial, host, port, path, expected_bytes, expected_sha256,
     # All shell tokens are fixed or validated above. Cap output in the guest;
     # cap+1 detects an oversized response rather than accepting its prefix.
     cap = HEADER_LIMIT + expected_bytes
-    command = (f"toybox nc -q 2 -w 5 -W 5 {host} {port} | "
+    # Android's shell supports pipefail. Without it a successful head masks
+    # nc's connection failure; even matching bytes must not qualify that run.
+    command = (f"set -o pipefail; toybox nc -q 2 -w 5 -W 5 {host} {port} | "
                f"toybox head -c {cap + 1}")
     request = f"GET {path} HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n".encode("ascii")
     r = invoke([adb, "-s", serial, "shell", "-T", command], input=request,

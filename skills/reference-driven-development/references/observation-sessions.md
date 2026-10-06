@@ -168,6 +168,13 @@ headers are outside its contract. It emits `RDD_HTTP_BYTES_MATCH` only after exa
 comparison. Use that marker with the route wrapper's `--required-text` when testing
 an actual reverse route. The wrapper alone proves only route lifecycle.
 
+The guest shell uses `pipefail` so a failed `nc` is not hidden by a successful
+output limiter. A nonzero command exit rejects the run even if captured bytes
+match. Keep command failure separate from a zero-exit response that fails HTTP
+or integrity checks; neither alone identifies the underlying route defect.
+Qualify both a known-good local response and a refused local connection on the
+selected Android shell before relying on this distinction.
+
 For the standard Android emulator, `10.0.2.2` addresses the host loopback. Compare
 that path with guest `127.0.0.1` under the configured reverse route when diagnosing
 empty responses. Do not infer a network fix from a newly visible image: memory or

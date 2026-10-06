@@ -1,7 +1,10 @@
 import hashlib
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
+import tempfile
 import unittest
 
 SCRIPTS = Path(__file__).resolve().parents[1] / 'skills/reference-driven-development/scripts'
@@ -43,6 +46,31 @@ class HTTPFixtureTests(unittest.TestCase):
                      ('emulator-5560', '127.0.0.1', 8089, '/a?token=x')]:
             with self.assertRaises(ValueError):
                 probe.probe('adb', *args, len(BODY), DIGEST, invoke=invoke)
+
+    @unittest.skipUnless(shutil.which('bash'), 'Requires a pipefail-capable shell')
+    def test_pipeline_preserves_failed_transport_even_with_matching_bytes(self):
+        # Exercise real shell pipeline status, rather than mocking its result.
+        # A failing transport can emit a complete response before it fails.
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Path(directory) / 'response'
+            fixture.write_bytes(RESPONSE)
+            for transport_exit in (0, 37):
+                with self.subTest(transport_exit=transport_exit):
+                    def invoke(argv, **kw):
+                        wrapper = ('toybox() { if [ "$1" = nc ]; then '
+                                   'cat "$RDD_RESPONSE"; return "$RDD_EXIT"; '
+                                   'else shift; command head "$@"; fi; }; ')
+                        return subprocess.run(['bash', '-c', wrapper + argv[-1]],
+                                              env={**os.environ, 'RDD_RESPONSE': str(fixture),
+                                                   'RDD_EXIT': str(transport_exit)}, **kw)
+                    if transport_exit:
+                        with self.assertRaisesRegex(ValueError, 'Android fixture command failed'):
+                            probe.probe('adb', 'emulator-5560', '10.0.2.2', 8089,
+                                        '/fixture', len(BODY), DIGEST, invoke=invoke)
+                    else:
+                        self.assertEqual(probe.probe('adb', 'emulator-5560', '10.0.2.2',
+                                                    8089, '/fixture', len(BODY), DIGEST,
+                                                    invoke=invoke)['bytes'], len(BODY))
 
 
 if __name__ == '__main__':
