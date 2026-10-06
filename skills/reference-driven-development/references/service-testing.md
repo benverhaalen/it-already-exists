@@ -157,6 +157,22 @@ SDK routing may require source changes or instrumentation when release builds
 strip emulator APIs. An emulator account alone is not integrated functionality;
 unknown production rules and emulator differences remain explicit limits.
 
+Separate callable response data from durable service state. An account-creation
+response may parse correctly while the original client still waits for its
+profile document or subscription. Inspect the original continuation and its
+record references; qualify that the local record exists and reaches the client.
+Return success only after required local persistence succeeds. Keep identifiers
+test-only and distinguish recovered field types from unknown production rules.
+
+Verify the ordinary returning-user journey without setup shortcuts: finish the
+original onboarding, terminate the process, then launch with no reset, persona
+seeding or automatic sign-in flags. Require the populated original entry screen
+and the same identity in the original account screen across repeated launches.
+Check that relaunch does not create another account. Native session-storage
+controls alone do not prove this client journey. Test expired sessions, explicit
+sign-out and account switching separately; a successful immediate relaunch does
+not establish them or persistence after reinstall.
+
 ## Bundled request guard (HTTP)
 
 `scripts/service_guard.py` evaluates an exact request fingerprint including
