@@ -206,6 +206,52 @@ contracts instead of fabricating successful plugin responses to bypass startup.
 
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 
+## Preserve service SDK behavior across platform hosts
+
+Prefer an inspected native SDK and matching channel codec when both platforms
+already implement the same service. Reusing listeners, query evaluation, cache
+and durable state can remove a large custom reimplementation. Match the APK's
+actual codec tags, field order, enums and argument counts; the newest plugin can
+be incompatible with the original compiled client. Keep SDK API changes separate
+from the client's wire contract.
+
+For local Firestore tests, [LocalFirestoreSettings.h](../scripts/fixtures/firebase_firestore/LocalFirestoreSettings.h)
+requires a numeric loopback host and valid port and disables TLS for the emulator.
+Apply it before native instance construction or access. Inspect every construction
+path, including codec readers that can construct a service instance independently
+of the main plugin factory. Check cached instances and additional databases too.
+The pinned native SDK's emulator convenience method changes its host but does not
+by itself disable TLS; inspect actual settings rather than assuming that behavior.
+
+The authored [local-control.m](../scripts/fixtures/firebase_firestore/local-control.m)
+was built with Firebase Apple SDK 12.19.0 and executed in an iOS simulator against
+an owned Firestore emulator. It checks rejected external/DNS hosts, IPv6 settings,
+absence of Auth/App Check/Installations classes in the selected runtime, and a
+local write, server read and server-confirmed listener with a large integer.
+Compile it with the adjacent header and the native Core/Firestore SDK targets.
+Its synthetic Android app ID requires the opt-in Core validator adaptation in
+[android-app-id.patch](../scripts/fixtures/firebase_core/android-app-id.patch)
+and `RDD_ANDROID_FIREBASE_ID`; stock Core rejects that identity. The recorded
+control used that adapted Core build.
+Use a local `demo-rdd-accounts` project on `127.0.0.1:8082`; the fixture writes only
+`compatibilityControls/native-ios`. Original APK service adapters need separate
+codec and journey qualification. IPv6 connectivity is not tested by this control.
+
+This is a service endpoint adapter, not process isolation. Auth, App Check,
+Installations, telemetry and payments may establish their own connections.
+Selecting only interop protocol targets does not include their concrete providers;
+verify the linked closure and actual runtime before relying on that distinction.
+Preserve original wire identities separately from deliberate local service
+authority changes. Provider configuration is not attestation, and a local test
+token is not a production credential. Do not register an uncontrolled production
+provider or fabricate an authorized result to bypass initialization.
+
+Reference mechanisms: [native SDK target definitions](https://github.com/firebase/firebase-ios-sdk/blob/12.19.0/Package.swift),
+[Firestore emulator configuration](https://firebase.google.com/docs/emulator-suite/connect_firestore),
+and [FlutterFire's versioned service plugins](https://github.com/firebase/flutterfire).
+Native fixture success does not establish whole-app fidelity or universal APK
+compatibility.
+
 ## Make improvements transfer across apps
 
 Separate portable platform adapters from app-specific fixes. A reusable repair needs a trigger, observed contract, affected operation, independent control, actual-app result, fallback, rollback and version conditions. An offline modification changes behavior; retain the original comparison baseline and identify which properties are intentionally adapted. Never fabricate successful persistence, rewards or server responses merely to avoid an error dialog.
