@@ -268,7 +268,7 @@ class Session:
             self.event('emulator_execution', state=state or 'unknown')
             if state != 'running':
                 self.state['qualified'] = False
-                raise RuntimeError('emulator execution '+(state or 'unrecognized')+'; inspect before recovery')
+                raise RuntimeError('emulator execution '+(state or 'unknown')+'; inspect before recovery')
         qemu = self.device(['shell', 'getprop', 'ro.kernel.qemu']).decode().strip()
         if (qemu == '1') != (self.config['device_kind'] == 'emulator'):
             raise RuntimeError('device kind does not match declared route')

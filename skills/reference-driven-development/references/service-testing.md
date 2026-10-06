@@ -218,6 +218,19 @@ the selected local session and profile changes into the app's actual state and
 invalidation path. A control script or changed label alone is not in-app
 integration. Preserve a separate mode for exercising the real sign-up flow.
 
+When a persona edit spans authentication, a profile store and a local fixture,
+snapshot the affected state and use exact field masks. Check stable identity,
+credentials and unrelated fields after updating. On failure, attempt each
+compensating operation independently; one failed restore must not skip the
+others. Read back restored state rather than treating an acknowledgment as
+proof. Record the failed stage and each compensation outcome without secrets.
+Write a nonempty pending receipt before mutation and save the edit outcome
+before refreshing the app session. A failed refresh does not undo an applied
+edit. A pending receipt after interruption means unknown state; reconcile it
+before retrying. Inject partial-write and compensation failures separately.
+This is recovery across stores, not an atomic transaction or proof of the
+original account-edit behavior.
+
 On Apple platforms, qualify native session storage before blaming the service
 or replacing SDK responses. See [iOS session storage](ios-session-storage.md).
 When reusing a compiled cross-platform client, preserve the native plugin

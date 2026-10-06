@@ -99,8 +99,10 @@ class ObservationTests(unittest.TestCase):
                     result.update(response)
                 return result
             with patch.object(observation, 'run', side_effect=unavailable):
-                with self.assertRaises(RuntimeError):
+                with self.assertRaises(RuntimeError) as failure:
                     self.session().execute('qualify')
+            if response['status'] == 'completed':
+                self.assertIn('emulator execution unknown;', str(failure.exception))
             self.assertEqual(self.calls, [['get-state'], ['emu', 'avd', 'status']])
             saved = json.loads((self.root/'evidence/session.json').read_text())
             self.assertFalse(saved['qualified'])
