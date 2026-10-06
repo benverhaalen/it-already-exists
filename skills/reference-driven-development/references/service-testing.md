@@ -21,7 +21,43 @@ send a test QR to a real venue scanner. Test codes must use a separate namespace
 and test verifier. Preserve the original client journey and appearance while
 marking test provenance outside comparison captures.
 
-## Bundled request guard
+## Local test identities
+
+When requested, keep synthetic accounts and application profiles entirely in
+the controlled environment. Prefer the actual provider's supported emulator
+over inventing authentication responses. The MIT-licensed `firebase-tools` project's
+[Firebase Authentication emulator](https://firebase.google.com/docs/emulator-suite/connect_auth)
+supports account creation, sign-in and local email/SMS verification through
+normal SDK contracts. Its unsigned tokens have test authority only. Use a
+`demo-` project, explicit loopback binding, and the runtime egress boundary.
+Do not route synthetic identities or these tokens to production services.
+
+`scripts/local_auth.py` seeds a synthetic email and display name in an already
+running Firebase Auth emulator. It accepts only numeric loopback HTTP endpoints,
+disables proxies and redirects, requires `.invalid` email domains, and omits
+session tokens from output. Pass a private JSON fixture containing `email`,
+`name` and `password`; retain credentials and exported emulator state privately.
+The helper does not start the emulator or redirect an APK's SDK calls.
+
+For rapid persona setup, pass `--persona rdd-test-example` with an email/name
+fixture. Reusing the ID selects the same local account and updates its name
+and email without credential entry. This uses the inspected emulator-only JSON
+custom-token contract; it is deliberately a test-control operation. Keep these
+controls outside the normal comparison UI, or in a separate test overlay. Wire
+the selected local session and profile changes into the app's actual state and
+invalidation path. A control script or changed label alone is not in-app
+integration. Preserve a separate mode for exercising the real sign-up flow.
+
+Qualify account creation, duplicate/invalid input, verification, sign-in/out,
+refresh, profile updates, switching accounts and restart persistence. Test the
+original and candidate against equivalent fixture state. Auth emulation does
+not implement the application's profile, wallet, order or entitlement service.
+Recover those contracts separately and preserve relations using local IDs.
+SDK routing may require source changes or instrumentation when release builds
+strip emulator APIs. An emulator account alone is not integrated functionality;
+unknown production rules and emulator differences remain explicit limits.
+
+## Bundled request guard (HTTP)
 
 `scripts/service_guard.py` evaluates an exact request fingerprint including
 destination, verb, path/query, ordered headers and body digest. Unknown requests

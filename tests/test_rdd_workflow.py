@@ -89,6 +89,8 @@ class WorkflowTest(unittest.TestCase):
             self.assertIn('guest ABI support', review['runtime_qualification'])
             self.assertIn('before retrying', review['runtime_qualification'])
             self.assertIn('original SDK path', review['startup_dependencies'])
+            self.assertIn('synthetic accounts', review['test_identity'])
+            self.assertIn('actual SDK routing', review['test_identity'])
         self.task.update(surface='ios', access='strict-clean-room', tags=['apk-iphone'])
         packet = self.compile()
         self.assertFalse(packet['ready_for_handoff'])
