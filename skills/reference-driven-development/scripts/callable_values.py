@@ -60,7 +60,12 @@ def main():
     args = parser.parse_args()
     if args.input.stat().st_size > 1024 * 1024:
         parser.error('input exceeds 1 MiB')
-    value = decode(json.loads(args.input.read_text()))
+    try:
+        value = decode(json.loads(args.input.read_text()))
+    except RecursionError:
+        parser.error('JSON nesting exceeds parser capacity')
+    except ValueError:
+        parser.error('invalid or unsupported callable JSON value')
     with open(args.output, 'x', opener=lambda path, flags: os.open(path, flags, 0o600)) as stream:
         json.dump(value, stream, indent=2, allow_nan=False)
         stream.write('\n')

@@ -111,6 +111,30 @@ send a test QR to a real venue scanner. Test codes must use a separate namespace
 and test verifier. Preserve the original client journey and appearance while
 marking test provenance outside comparison captures.
 
+## Recover quote authority as well as its shape
+
+Separate four properties: SDK transport decoding, catalog price, client-side
+calculation, and server-authoritative quote. A response accepted by the original
+parser establishes its shape, not the price policy. Trace the caller, result
+parser, product/event overrides and calculations before interpreting fee fields.
+Missing, null and zero values are different; none proves an inheritance rule.
+
+Compare legitimate captured or operator-sandbox quotes under the same variant,
+quantity, identity class, location, currency, clock, promotions and service
+revision. Cover displayed fee labels, tips, discounts, per-line versus aggregate
+rounding, totals, changed-price requotes and failures. Bind each result to that
+context and the original screen; a matching total can conceal wrong components.
+Use existing `comparison.py` property packets to retain separate outcomes and
+missing evidence. A controlled local formula is a diagnostic fixture until an
+independent oracle qualifies the rule. Keep unknown fees unavailable rather than
+silently substituting zero or a plausible rate.
+
+A quote-only flag on a transaction endpoint is a lead, not evidence of no
+side effects. Inspect routing and service behavior within the declared access
+policy before calling it live. If the backend rule cannot be observed, record
+the exact unresolved inputs and oracle needed; continue qualifying the original
+client and other supported journeys without claiming complete checkout parity.
+
 ## Cover distinct product journeys
 
 Recover the original product and order variants before selecting comparison

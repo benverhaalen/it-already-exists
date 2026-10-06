@@ -39,6 +39,18 @@ class CallableValuesTest(unittest.TestCase):
         self.assertEqual(payload, before)
         self.assertIs(type(codec.decode(payload)['nested'][2]), bool)
 
+    def test_cli_rejects_parser_depth_and_invalid_json_without_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'input.json'
+            target = Path(directory) / 'decoded.json'
+            command = [sys.executable, codec.__file__, str(source), '--output', str(target)]
+            for value in ['[' * 2000 + '0' + ']' * 2000, '{', '[' * 65 + '0' + ']' * 65]:
+                source.write_text(value)
+                result = subprocess.run(command, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2)
+                self.assertNotIn('Traceback', result.stderr)
+                self.assertFalse(target.exists())
+
     def test_boundaries_and_malformed_typed_integers(self):
         for number, unsigned in [(-(1 << 63), False), ((1 << 63) - 1, False), ((1 << 64) - 1, True)]:
             self.assertEqual(codec.decode(wrapped(number, unsigned)), number)
