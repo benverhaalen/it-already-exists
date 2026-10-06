@@ -1,0 +1,43 @@
+{
+  "source": {
+    "revision": "d454b1b841d223f28bb725bb2928e2ac337b5611",
+    "sha256": {
+      "StandardMessageCodec.java": "a90e18bef499b017c5d2e2c20f73fbd48d695585d2c764b93c1c19de67399615",
+      "MessageCodec.java": "fe56489bc59e492326bf97803ea7f387aaa5e0788f46282117c469ebeeb61c17"
+    }
+  },
+  "generator": "WireVectors.java; stock upstream Java encoder; explicit custom single-value wrappers 200/201 only",
+  "byte_order": "little",
+  "vectors": {
+    "primitives": {
+      "bytes": 38,
+      "sha256": "9cea2c5dd90857bd7518254c7a527a676425d0470b458de6196ecb9595ccd186",
+      "hex": "0c070102030100000006000000000000000000000000f03f040100000000002000000702c3a9"
+    },
+    "nested-alignment": {
+      "bytes": 85,
+      "sha256": "39f656044003749da3070ae25194bb8f25a8658415bfdf679b443a7bebc09cbd",
+      "hex": "0c06c80c02c90600000000000000e03f02090200ffffffffffffff7f0a0200000000000000000080ffffffffffffff7f0e0200000000c03f000020c00b0200000000000000000080000000000000f07f08030001ff"
+    },
+    "map": {
+      "bytes": 32,
+      "sha256": "d7c3a8a00ae484bb225cb06d048c2dd0aac14173abfa1b3c0559c75d10db341d",
+      "hex": "0d020301000000070b696e7465676572206b6579010c01060000000000000040"
+    },
+    "size254": {
+      "bytes": 258,
+      "sha256": "afd14f61dcd60cf3898d3b3f4848f2ceb1855e75c435bd552f394d94db9fa38e",
+      "prefix_hex": "07fefe0078787878"
+    },
+    "size65536": {
+      "bytes": 65542,
+      "sha256": "08d1d4e942a7fa18c0aa14bb8ec143b966286a76a426494b6280b260c5866eb4",
+      "prefix_hex": "07ff000001007979"
+    },
+    "bigint": {
+      "bytes": 18,
+      "sha256": "2ad43fa469c75b4286b7a6ed7b5c09e80f0a2044c8d02bd375be4fd53a652c91",
+      "hex": "05102d313233343536373839616263646566"
+    }
+  }
+}

@@ -269,6 +269,14 @@ actual codec tags, field order, enums and argument counts; the newest plugin can
 be incompatible with the original compiled client. Keep SDK API changes separate
 from the client's wire contract.
 
+Use the offline [wire inspector](flutter-wire.md) when a Flutter boundary loses
+type identity or fails decoding. It retains tags and absolute byte offsets;
+Boolean, integer and floating-point values remain distinct. Declare custom
+single-value wrappers only after inspecting the exact generated codec. Qualify
+the diagnostic against upstream-generated vectors before using it to blame the
+application. A nested value's alignment depends on the complete message; copying
+a separately encoded double can corrupt an otherwise plausible fixture.
+
 For local Firestore tests, [LocalFirestoreSettings.h](../scripts/fixtures/firebase_firestore/LocalFirestoreSettings.h)
 requires a numeric loopback host and valid port and disables TLS for the emulator.
 Apply it before native instance construction or access. Inspect every construction
