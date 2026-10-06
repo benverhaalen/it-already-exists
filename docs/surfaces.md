@@ -40,7 +40,7 @@ The proposed AOI contribution is a continuous observation layer: track relevant 
 
 ## Combining evidence without conflating products
 
-A Kalshi APK, a session with its Android app, its website and a screen recording can all belong to one investigation. Keep their platform, version, time, role and environment attached to every claim. A behavior found on the website is a hypothesis for the Android app until checked there. Conflicting evidence should remain visible.
+An APK, a session with the corresponding Android app, its website and a screen recording can all belong to one investigation. Keep their platform, version, time, role and environment attached to every claim. A behavior found on the website is a hypothesis for the Android app until checked there. Conflicting evidence should remain visible.
 
 ## Outputs by purpose
 
