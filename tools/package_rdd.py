@@ -46,7 +46,12 @@ def allowed(path):
             'scripts/fixtures/datadog_core/flutter-local-startup.patch',
             'scripts/fixtures/datadog_core/LICENSE',
             'scripts/fixtures/path_provider/android-ios-directories.swift',
-            'scripts/fixtures/path_provider/LICENSE'}:
+            'scripts/fixtures/path_provider/LICENSE',
+            'scripts/fixtures/sqflite/RDDSQLiteControl.h',
+            'scripts/fixtures/sqflite/RDDSQLiteControl.m',
+            'scripts/fixtures/sqflite/standalone-import.patch',
+            'scripts/fixtures/sqflite/LICENSE',
+            'scripts/fixtures/sqflite/FMDB_LICENSE.txt'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}

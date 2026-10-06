@@ -357,3 +357,44 @@ Sources: [Android plugin](https://github.com/flutter/packages/tree/path_provider
 [iOS plugin](https://github.com/flutter/packages/tree/path_provider_foundation-v2.4.4/packages/path_provider/path_provider_foundation).
 Upstream BSD attribution accompanies the fixture. Plugin versions establish the
 inspected contracts; they do not prove an arbitrary APK used those versions.
+
+
+### Reuse the real database implementation
+
+When an original frontend calls `com.tekartik.sqflite`, first compare the
+upstream Android and Darwin method contracts. A storage path adapter does not
+supply database operations. Prefer the actual native SQLite implementation to
+mock query results: cache metadata, transactions and persistent state depend on
+its behavior.
+
+The authored [native control](../scripts/fixtures/sqflite/RDDSQLiteControl.m)
+was compiled against the Darwin native sources from `sqflite_darwin` 2.4.4.
+Acquire the [upstream archive](https://pub.dev/api/archives/sqflite_darwin-2.4.4.tar.gz)
+and verify SHA-256
+`dbdda396f975f74d611ffd3e6fb280ee3ee4cd2319b89278533f427e0140cf0b`.
+This native-source qualification does not imply that its newer Dart package
+constraints fit an older application's toolchain or prove the APK's version.
+
+For the qualified manual host, place the Darwin native sources in
+`SQLitePlugin` beside the control, retain both upstream licenses, link
+`libsqlite3.tbd`, and apply the accompanying Foundation import patch when no
+Pod prefix header supplies it. Bundle the upstream privacy manifest in a
+separate resource bundle to avoid collisions with other plugins' manifests.
+Register `SqflitePlugin` with the engine registrar. The control executes before
+engine startup and plugin registration; do not block an active application
+thread to run it during normal use.
+
+The simulator control passed request and success-envelope codec round trips,
+disk-backed open/insert/query, integer/text/blob/null preservation, transaction
+rollback, close/reopen persistence, a native missing-table error, and deletion.
+An original Android frontend subsequently issued actual query and insert calls
+through the registered native plugin and reached a populated image-bearing
+selection screen. Image delivery separately used reviewed cached source bytes;
+SQLite alone does not establish image or whole-screen fidelity.
+
+Error-envelope transport, batch operations, cursor paging, transaction IDs,
+concurrent callers, process restart, migrations and preexisting Android database
+files remain unqualified. The control uses a disposable database and tests a
+bounded contract, not arbitrary schemas. Keep actual-app transition evidence
+alongside controls; successful startup is not evidence that all database users
+work. Upstream implementation: [sqflite Darwin](https://github.com/tekartik/sqflite/tree/master/sqflite_darwin).
