@@ -64,6 +64,16 @@ integrity and acquisition/install receipts still require independent inspection.
 
 ## Readiness and uncertainty
 
+For a standard `emulator-N` route, qualification first queries `adb emu avd
+status`. ADB can report `device` while virtual-device execution is stopped;
+guest commands then wait without proving an app failure. A stopped, unrecognized
+or failed status blocks qualification before guest queries or input. The adapter
+never resumes, restarts or clears the device. Inspect the selected emulator's
+actual state before recovery; if explicitly resuming an owned stopped device,
+requalify the same session afterward. Nonstandard emulator serials still use
+guest readiness checks and do not gain this console guarantee.
+Source: [Android emulator console](https://developer.android.com/studio/run/emulator-console).
+
 Readiness, fixture and expected-effect probes poll read-only queries for at most
 `probe_wait_seconds` (0..60). Each query's subprocess deadline is capped by the
 remaining wait. `probe_stability` requires consecutive complete matching polls,

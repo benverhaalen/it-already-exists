@@ -42,6 +42,8 @@ class ObservationTests(unittest.TestCase):
         self.calls.append(command)
         if command == ['get-state']:
             data = b'device'
+        elif command == ['emu', 'avd', 'status']:
+            data = b'virtual device is running\nOK\n'
         elif command[:2] == ['shell', 'getprop']:
             data = b'1' if command[-1] in ('sys.boot_completed', 'ro.kernel.qemu') else b'synthetic'
         elif command[:3] == ['shell', 'pm', 'path']:
@@ -68,6 +70,40 @@ class ObservationTests(unittest.TestCase):
 
     def session(self):
         return observation.Session(self.root/'evidence', self.config)
+
+    def test_online_transport_stopped_vm_blocks_guest_and_input_without_restart(self):
+        original = self.device
+        def stopped(argv, *args, **kwargs):
+            result = original(argv, *args, **kwargs)
+            if argv[3:] == ['emu', 'avd', 'status']:
+                result['stdout'] = b'virtual device is stopped\r\nOK\r\n'
+            return result
+        with patch.object(observation, 'run', side_effect=stopped):
+            with self.assertRaisesRegex(RuntimeError, 'execution stopped'):
+                self.session().execute('qualify')
+        self.assertEqual(self.calls, [['get-state'], ['emu', 'avd', 'status']])
+        events = [json.loads(line) for line in (self.root/'evidence/events.jsonl').read_text().splitlines()]
+        self.assertTrue(any(e['kind'] == 'emulator_execution' and e['state'] == 'stopped' for e in events))
+        # Explicitly resuming the SAME VM permits qualification; adapter never resumes it.
+        self.assertTrue(self.session().execute('qualify')['state']['qualified'])
+
+    def test_unknown_or_timed_out_console_does_not_establish_running_vm(self):
+        original = self.device
+        for response in [dict(status='completed', exit_code=0, stdout=b'OK\n'),
+                         dict(status='timeout', exit_code=-9, stdout=b'')]:
+            self.session().execute('qualify')
+            self.calls.clear()
+            def unavailable(argv, *args, **kwargs):
+                result = original(argv, *args, **kwargs)
+                if argv[3:] == ['emu', 'avd', 'status']:
+                    result.update(response)
+                return result
+            with patch.object(observation, 'run', side_effect=unavailable):
+                with self.assertRaises(RuntimeError):
+                    self.session().execute('qualify')
+            self.assertEqual(self.calls, [['get-state'], ['emu', 'avd', 'status']])
+            saved = json.loads((self.root/'evidence/session.json').read_text())
+            self.assertFalse(saved['qualified'])
 
     def test_complete_journey_reset_and_fresh_capture(self):
         first = self.session().execute('qualify')['state']['capture']

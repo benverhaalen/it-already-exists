@@ -254,6 +254,21 @@ class Session:
     def qualify(self, fixture=False, capture_profile='qualify'):
         if self.device(['get-state']).decode().strip() != 'device':
             raise RuntimeError('device not responsive')
+        # ADB transport can stay online while the standard emulator VM is stopped.
+        # Query its control plane before waiting on a guest that cannot execute.
+        if self.config['device_kind'] == 'emulator' and re.fullmatch(r'emulator-[0-9]+', self.config['serial']):
+            try:
+                execution = self.device(['emu', 'avd', 'status']).decode().strip()
+            except (OSError, RuntimeError, UnicodeError):
+                self.state['qualified'] = False
+                raise
+            states = {'virtual device is running\nOK': 'running',
+                      'virtual device is stopped\nOK': 'stopped'}
+            state = states.get(execution.replace('\r\n', '\n'))
+            self.event('emulator_execution', state=state or 'unknown')
+            if state != 'running':
+                self.state['qualified'] = False
+                raise RuntimeError('emulator execution '+(state or 'unrecognized')+'; inspect before recovery')
         qemu = self.device(['shell', 'getprop', 'ro.kernel.qemu']).decode().strip()
         if (qemu == '1') != (self.config['device_kind'] == 'emulator'):
             raise RuntimeError('device kind does not match declared route')
