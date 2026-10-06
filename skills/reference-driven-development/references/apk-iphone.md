@@ -98,12 +98,23 @@ locations; argument count alone does not prove a mismatch. Adjacent 32-bit stack
 arguments are a discriminating control. Run `scripts/arm64_abi_control.py` on
 Apple Silicon with Xcode to compare compiler output and execute an owned
 Android-layout caller against a Darwin callee with and without a static bridge.
-The fixture detects incorrect argument values and qualifies one scalar layout
-repair. It does not provide a general bridge, load an APK, or establish iPhone
-execution. Extend controls to mixed floating-point, signed extension, return
-values, callbacks, aggregates and variadic calls before relying on wider coverage.
+The fixtures detect incorrect argument values, compare a static scalar bridge
+with a compiler-generated bridge, and exercise mixed integer, pointer, boolean
+and floating-point registers, stack spills and floating-point returns. Use
+`--clang /path/to/engine/clang` to test the actual engine compiler too. These
+controls do not provide a general bridge, load an APK, or establish iPhone
+execution. Extend controls to callbacks, aggregates and variadic calls before
+relying on wider coverage.
 Use [Apple's ARM64 ABI rules](https://developer.apple.com/documentation/xcode/writing-arm64-code-for-apple-platforms)
 and the matching runtime's generated signatures to select actual adaptations.
+For nonvariadic scalar dispatchers, investigate Clang's
+[`ms_abi` attribute](https://clang.llvm.org/docs/AttributeReference.html#ms-abi)
+as a static adapter: the inspected
+[LLVM ARM64 implementation](https://github.com/llvm/llvm-project/blob/8c7a2ce01a77c96028fe2c8566f65c45ad9408d3/llvm/lib/Target/AArch64/AArch64CallingConvention.td)
+uses the common AAPCS argument layout for that convention. Annotate only the
+incoming foreign boundary; keep host implementation calls native. This is a
+conditional mechanism for qualified signatures, not permission to treat all
+Windows, Android and Darwin ABIs as interchangeable. Variadic conventions differ.
 
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 
