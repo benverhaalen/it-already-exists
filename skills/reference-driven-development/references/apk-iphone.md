@@ -252,6 +252,29 @@ and [FlutterFire's versioned service plugins](https://github.com/firebase/flutte
 Native fixture success does not establish whole-app fidelity or universal APK
 compatibility.
 
+### Check connections made during SDK construction
+
+Do not assume initialization only stores configuration. In inspected Stripe
+Apple SDK 26.9.0, constructing `STPAPIClient` invokes fraud telemetry before the
+Flutter initialization method returns. Disable `advancedFraudSignalsEnabled`
+before client construction in the deliberate local test mode. Analytics has a
+separate test condition; disabling fraud signals alone does not disable it.
+Inspect [the constructor](https://github.com/stripe/stripe-ios/blob/26.9.0/StripeCore/StripeCore/Source/API%20Bindings/STPAPIClient.swift),
+[telemetry eligibility](https://github.com/stripe/stripe-ios/blob/26.9.0/StripeCore/StripeCore/Source/Telemetry/STPTelemetryClient.swift)
+and [analytics eligibility](https://github.com/stripe/stripe-ios/blob/26.9.0/StripeCore/StripeCore/Source/Analytics/STPAnalyticsClient.swift).
+
+The authored [local-startup-control.swift](../scripts/fixtures/stripe_core/local-startup-control.swift)
+was built with Swift 5 mode, Flutter and StripeCore 26.9.0 and run in an iOS
+simulator. Call `RDDStripeHost.registerMessenger` with an owned Flutter messenger.
+It checks native configuration, disabled telemetry and analytics, and rejection
+of external and local requests by this client's injected transport. It sets the
+SDK's process-wide `UITesting` environment flag and uses an inert synthetic key;
+run it only in a test host. Its JSON channel accepts startup configuration and
+explicitly rejects other payment operations and unqualified 3DS configuration.
+It is a bounded startup fixture, not a working purchase adapter or process-wide
+network sandbox. Qualify the original client codec and each later payment journey
+separately. Keep deliberate telemetry suppression distinct from faithful recording.
+
 ## Make improvements transfer across apps
 
 Separate portable platform adapters from app-specific fixes. A reusable repair needs a trigger, observed contract, affected operation, independent control, actual-app result, fallback, rollback and version conditions. An offline modification changes behavior; retain the original comparison baseline and identify which properties are intentionally adapted. Never fabricate successful persistence, rewards or server responses merely to avoid an error dialog.

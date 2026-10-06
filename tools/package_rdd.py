@@ -38,7 +38,8 @@ def allowed(path):
             'scripts/fixtures/firebase_core/registry-control.m',
             'scripts/fixtures/firebase_core/LICENSE',
             'scripts/fixtures/firebase_firestore/LocalFirestoreSettings.h',
-            'scripts/fixtures/firebase_firestore/local-control.m'}:
+            'scripts/fixtures/firebase_firestore/local-control.m',
+            'scripts/fixtures/stripe_core/local-startup-control.swift'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}
