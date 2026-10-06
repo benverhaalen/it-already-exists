@@ -126,6 +126,31 @@ live build's source and output graph. A registration compile qualifies signature
 coverage only; separately verify linked function addresses, original guest calls,
 callbacks and complete behavior before expanding compatibility claims.
 
+The bundled source overlays in `scripts/fixtures/flutter_abi/` preserve this
+experimental route. They are pinned to Flutter revision
+`78fc3012e45889657f72359b005af7beac47ba3d` and Dart SDK revision
+`2da4111d8d0cbf2a83c0662251508f017000da8a`. Apply `flutter-tonic.patch` from
+`engine/src/flutter` and `dart-snapshot.patch` from the nested Dart SDK root,
+using `git apply --check` before applying. Preserve the accompanying upstream
+BSD notices; the repository's MIT license does not replace them.
+
+Enable `dart_use_compressed_pointers=true rdd_android_snapshot_abi=true
+rdd_android_ffi_abi=true` through the engine's GN arguments for an ARM64 iOS
+simulator release build. The first overlay selects the original Android snapshot
+target contract while retaining the Darwin host implementation. The second
+adapts Tonic's incoming scalar/pointer dispatcher boundary and rejects wider
+converted signatures. Both default off. These are source overlays, not a complete
+engine installer: acquire the pinned dependencies, qualify the compiler, and
+resolve host toolchain prerequisites separately.
+
+The overlays have been checked against pristine pinned sources and linked into
+a simulator engine. Original Android snapshot initialization and retained
+lifecycle/accessibility/frame callbacks have executed in that engine. Those
+callbacks do not establish outgoing scene FFI, plugin compatibility, rendered
+application UI, physical-device execution or universal APK support. Obfuscated
+Dart class names can defeat name-based diagnostics; use actual retained engine
+entrypoints for initialization probes and preserve separate app-journey checks.
+
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 
 ## Make improvements transfer across apps

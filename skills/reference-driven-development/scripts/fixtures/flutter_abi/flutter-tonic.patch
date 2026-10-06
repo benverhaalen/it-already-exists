@@ -1,0 +1,165 @@
+--- a/third_party/tonic/BUILD.gn
++++ b/third_party/tonic/BUILD.gn
+@@ -4,7 +4,18 @@
+ 
+ import("//flutter/build/dart/dart.gni")
+ 
++declare_args() {
++  rdd_android_ffi_abi = false
++}
++
++if (rdd_android_ffi_abi && current_toolchain == default_toolchain) {
++  assert(target_os == "ios" && target_cpu == "arm64")
++}
++
+ config("config") {
++  if (rdd_android_ffi_abi && target_os == "ios" && target_cpu == "arm64") {
++    defines = [ "RDD_ANDROID_FFI_ON_DARWIN" ]
++  }
+   include_dirs = [
+     "//flutter/third_party",
+     "//flutter",
+--- a/third_party/tonic/dart_args.h
++++ b/third_party/tonic/dart_args.h
+@@ -14,7 +14,30 @@
+ #include "tonic/converter/dart_converter.h"
+ #include "tonic/dart_wrappable.h"
+ 
++// Opt-in incoming Android AAPCS scalar boundary on an Apple ARM64 host.
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++#if !defined(__APPLE__) || !defined(__aarch64__) || !__has_attribute(ms_abi)
++#error RDD Android FFI requires Apple ARM64 and Clang ms_abi support
++#endif
++#define TONIC_RDD_INCOMING_ABI __attribute__((ms_abi))
++#else
++#define TONIC_RDD_INCOMING_ABI
++#endif
++
+ namespace tonic {
++
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++template <typename T>
++constexpr bool RddSupportedScalarFfi() {
++  if constexpr (std::is_void<T>::value || std::is_pointer<T>::value) {
++    return true;
++  } else {
++    return (std::is_integral<T>::value && sizeof(T) <= 8) ||
++           std::is_same<T, double>::value;
++  }
++}
++#endif
++
+ 
+ class DartArgIterator {
+  public:
+@@ -305,12 +328,21 @@
+ template <typename Return, typename... Args, Return (*function)(Args...)>
+ struct FfiDispatcher<void, Return (*)(Args...), function> {
+   using FfiReturn = typename DartConverter<Return>::FfiType;
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++  static_assert(RddSupportedScalarFfi<FfiReturn>(),
++      "RDD incoming FFI supports only qualified scalar and pointer returns");
++#endif
+   static const size_t n_args = sizeof...(Args);
+ 
+   // Static C entry-point with Dart FFI signature.
+-  static FfiReturn Call(
++  static TONIC_RDD_INCOMING_ABI FfiReturn Call(
+       typename DartConverter<typename std::remove_const<
+           typename std::remove_reference<Args>::type>::type>::FfiType... args) {
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++    static_assert((RddSupportedScalarFfi<typename DartConverter<
++        typename std::remove_const<typename std::remove_reference<Args>::type>::type>::FfiType>() && ...),
++        "RDD incoming FFI supports only qualified scalar and pointer arguments");
++#endif
+     // Call C++ function, forwarding converted native arguments.
+     return DartConverter<Return>::ToFfi(function(
+         DartConverter<typename std::remove_const<typename std::remove_reference<
+@@ -352,13 +384,22 @@
+           Return (C::*method)(Args...)>
+ struct FfiDispatcher<C, Return (C::*)(Args...), method> {
+   using FfiReturn = typename DartConverter<Return>::FfiType;
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++  static_assert(RddSupportedScalarFfi<FfiReturn>(),
++      "RDD incoming FFI supports only qualified scalar and pointer returns");
++#endif
+   static const size_t n_args = sizeof...(Args);
+ 
+   // Static C entry-point with Dart FFI signature.
+-  static FfiReturn Call(
++  static TONIC_RDD_INCOMING_ABI FfiReturn Call(
+       DartWrappable* receiver,
+       typename DartConverter<typename std::remove_const<
+           typename std::remove_reference<Args>::type>::type>::FfiType... args) {
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++    static_assert((RddSupportedScalarFfi<typename DartConverter<
++        typename std::remove_const<typename std::remove_reference<Args>::type>::type>::FfiType>() && ...),
++        "RDD incoming FFI supports only qualified scalar and pointer arguments");
++#endif
+     // Call C++ method on receiver, forwarding converted native arguments.
+     return DartConverter<Return>::ToFfi((static_cast<C*>(receiver)->*method)(
+         DartConverter<typename std::remove_const<typename std::remove_reference<
+@@ -404,13 +445,22 @@
+           Return (C::*method)(Args...) const>
+ struct FfiDispatcher<C, Return (C::*)(Args...) const, method> {
+   using FfiReturn = typename DartConverter<Return>::FfiType;
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++  static_assert(RddSupportedScalarFfi<FfiReturn>(),
++      "RDD incoming FFI supports only qualified scalar and pointer returns");
++#endif
+   static const size_t n_args = sizeof...(Args);
+ 
+   // Static C entry-point with Dart FFI signature.
+-  static FfiReturn Call(
++  static TONIC_RDD_INCOMING_ABI FfiReturn Call(
+       DartWrappable* receiver,
+       typename DartConverter<typename std::remove_const<
+           typename std::remove_reference<Args>::type>::type>::FfiType... args) {
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++    static_assert((RddSupportedScalarFfi<typename DartConverter<
++        typename std::remove_const<typename std::remove_reference<Args>::type>::type>::FfiType>() && ...),
++        "RDD incoming FFI supports only qualified scalar and pointer arguments");
++#endif
+     // Call C++ method on receiver, forwarding converted native arguments.
+     return DartConverter<Return>::ToFfi((static_cast<C*>(receiver)->*method)(
+         DartConverter<typename std::remove_const<typename std::remove_reference<
+@@ -456,9 +506,14 @@
+   static const size_t n_args = sizeof...(Args);
+ 
+   // Static C entry-point with Dart FFI signature.
+-  static void Call(
++  static TONIC_RDD_INCOMING_ABI void Call(
+       typename DartConverter<typename std::remove_const<
+           typename std::remove_reference<Args>::type>::type>::FfiType... args) {
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++    static_assert((RddSupportedScalarFfi<typename DartConverter<
++        typename std::remove_const<typename std::remove_reference<Args>::type>::type>::FfiType>() && ...),
++        "RDD incoming FFI supports only qualified scalar and pointer arguments");
++#endif
+     // Call C++ function, forwarding converted native arguments.
+     function(
+         DartConverter<typename std::remove_const<typename std::remove_reference<
+@@ -500,10 +555,15 @@
+   static const size_t n_args = sizeof...(Args);
+ 
+   // Static C entry-point with Dart FFI signature.
+-  static void Call(
++  static TONIC_RDD_INCOMING_ABI void Call(
+       DartWrappable* receiver,
+       typename DartConverter<typename std::remove_const<
+           typename std::remove_reference<Args>::type>::type>::FfiType... args) {
++#if defined(RDD_ANDROID_FFI_ON_DARWIN)
++    static_assert((RddSupportedScalarFfi<typename DartConverter<
++        typename std::remove_const<typename std::remove_reference<Args>::type>::type>::FfiType>() && ...),
++        "RDD incoming FFI supports only qualified scalar and pointer arguments");
++#endif
+     // Call C++ method on receiver, forwarding converted native arguments.
+     (static_cast<C*>(receiver)->*method)(
+         DartConverter<typename std::remove_const<typename std::remove_reference<
+@@ -544,4 +604,6 @@
+ 
+ }  // namespace tonic
+ 
++#undef TONIC_RDD_INCOMING_ABI
++
+ #endif  // LIB_TONIC_DART_ARGS_H_

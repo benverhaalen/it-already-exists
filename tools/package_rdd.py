@@ -27,7 +27,11 @@ def allowed(path):
             'scripts/fixtures/arm64_abi/bridge-control.c',
             'scripts/fixtures/arm64_abi/bridge-control.S',
             'scripts/fixtures/arm64_abi/mixed-control.c',
-            'scripts/fixtures/arm64_abi/mixed-control.S'}:
+            'scripts/fixtures/arm64_abi/mixed-control.S',
+            'scripts/fixtures/flutter_abi/flutter-tonic.patch',
+            'scripts/fixtures/flutter_abi/dart-snapshot.patch',
+            'scripts/fixtures/flutter_abi/TONIC-LICENSE',
+            'scripts/fixtures/flutter_abi/DART-LICENSE'}:
         return True
     if len(parts) == 2 and parts[0] == 'scripts':
         return path.suffix == '.py' or parts[1] in {'requirements-comparison.txt', 'requirements-native-profile.txt', 'requirements-service-guard.txt'}

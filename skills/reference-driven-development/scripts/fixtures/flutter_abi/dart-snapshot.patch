@@ -1,0 +1,24 @@
+--- a/runtime/BUILD.gn
++++ b/runtime/BUILD.gn
+@@ -113,10 +113,20 @@
+   }
+ }
+ 
++# Private experiment: preserve original Android snapshot ABI on a Darwin host.
++# Host OS remains compiler-detected; only compiled target contracts change.
++declare_args() {
++  rdd_android_snapshot_abi = false
++}
++if (rdd_android_snapshot_abi) {
++  assert(target_os == "ios" && target_cpu == "arm64")
++  assert(dart_use_compressed_pointers)
++}
++
+ config("dart_os_config") {
+   defines = []
+ 
+-  if (target_os == "android") {
++  if (target_os == "android" || rdd_android_snapshot_abi) {
+     defines += [ "DART_TARGET_OS_ANDROID" ]
+   } else if (target_os == "fuchsia") {
+     defines += [ "DART_TARGET_OS_FUCHSIA" ]
