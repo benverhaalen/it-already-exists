@@ -61,6 +61,24 @@ Keep candidate routes until evidence discriminates them:
 - Full-system execution: assess guest OS and device support plus iOS interpreter/JIT availability, graphics, memory, latency and distribution. A simulator run does not establish physical iPhone feasibility.
 - Source recovery or independent reconstruction: preserve the behavioral oracle and compare complete outcomes. Agent-written cross-language code can reduce construction effort; it cannot recover unobserved behavior or absent server state by itself.
 
+For qualified ARM64 Dart ELF snapshots with identity file/virtual mappings,
+`scripts/dart_aot_macho_pack.py input.so /private/new-output` emits unchanged
+snapshot bytes, Mach-O assembly and a geometry receipt. It refuses unsupported
+layouts and existing output directories. Link with the receipt's segment
+permissions and check the actual instruction-to-writable-storage distance before
+execution. Dart snapshots can address writable BSS relative to their instruction
+image; embedding the entire payload in a read-only executable segment can fault
+during VM initialization. This packer qualifies bounded storage geometry only.
+It does not provide a matching VM, resolve Android/iOS ABI differences, implement
+Flutter native bindings or plugins, or establish physical-device compatibility.
+
+For engine-based apps, inspect the matching engine and the actual plugin
+registrant before reproducing generic Android APIs. Reuse existing iOS engine
+and plugin implementations where their message codecs, results, errors and timing
+match the original caller. Android-specific compiled branches and FFI calling
+conventions remain separate obligations. A matching runtime version or available
+iOS SDK is evidence for an experiment, not proof that the original app will run.
+
 Useful mechanism references include [touchHLE](https://github.com/touchHLE/touchHLE) for platform-framework replacement and explicit compatibility coverage, [libhybris](https://github.com/libhybris/libhybris) for Android Bionic boundary adaptation on Linux, [UTM](https://github.com/utmapp/UTM) for QEMU-based iOS execution and interpreter/JIT tradeoffs, and [ANGLE](https://github.com/google/angle) for graphics translation. These are conditional source leads, not integrated dependencies or demonstrated APK-to-iPhone solutions. Check the exact revision, component license and supported APIs before reuse.
 
 ## Make improvements transfer across apps
