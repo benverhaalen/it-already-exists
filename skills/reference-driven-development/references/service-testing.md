@@ -21,6 +21,21 @@ send a test QR to a real venue scanner. Test codes must use a separate namespace
 and test verifier. Preserve the original client journey and appearance while
 marking test provenance outside comparison captures.
 
+## Cover distinct product journeys
+
+Recover the original product and order variants before selecting comparison
+journeys. Bundles, standalone items, admission and reservations may share a
+listing while using different availability, option, fee and fulfillment rules.
+Preserve these differences in captured records and follow referenced items and
+dated inventory. A displayed bundle does not establish a working standalone item.
+
+For each observed variant, exercise selection from the normal entry state and
+record the next screen or restriction. Assert its actual content and the return
+path, not just that the list disappeared. If a guest reaches an account gate,
+qualify that gate and dismissal separately; do not count it as checkout coverage.
+Use the controlled identity path to continue the original journey. Track
+unobserved variants explicitly rather than substituting a familiar product flow.
+
 ## Local test identities
 
 When requested, keep synthetic accounts and application profiles entirely in
