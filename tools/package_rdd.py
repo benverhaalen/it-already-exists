@@ -36,6 +36,7 @@ def allowed(path):
             'scripts/fixtures/flutter_abi/DART-LICENSE',
             'scripts/fixtures/firebase_core/android-app-id.patch',
             'scripts/fixtures/firebase_core/registry-control.m',
+            'scripts/fixtures/keychain/KeychainControl.swift',
             'scripts/fixtures/firebase_core/LICENSE',
             'scripts/fixtures/firebase_firestore/LocalFirestoreSettings.h',
             'scripts/fixtures/firebase_firestore/local-control.m',

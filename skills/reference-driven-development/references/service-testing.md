@@ -63,6 +63,13 @@ the selected local session and profile changes into the app's actual state and
 invalidation path. A control script or changed label alone is not in-app
 integration. Preserve a separate mode for exercising the real sign-up flow.
 
+On Apple platforms, qualify native session storage before blaming the service
+or replacing SDK responses. See [iOS session storage](ios-session-storage.md).
+When reusing a compiled cross-platform client, preserve the native plugin
+registry's initialization constants as well as its callable channels. The client
+may obtain its initial user there before it subscribes to a state stream. A
+native signed-in user alone does not prove that the client sees the same session.
+
 Qualify account creation, duplicate/invalid input, verification, sign-in/out,
 refresh, profile updates, switching accounts and restart persistence. Test the
 original and candidate against equivalent fixture state. Auth emulation does
