@@ -11,6 +11,13 @@ validation → redemption → restart. Include changed prices, cancellation,
 payment failure, timeouts, retries, expiration and duplicate redemption. Keep
 original and candidate on the same controlled service state during comparison.
 
+Routine comparison and QA should replay captured state locally. Keep any live
+catalog refresh in a separate, explicitly enabled producer, with cached assets
+and dated provenance. Do not refresh for every launch, retry or test case. Live
+requests remain observable to the upstream service; neither read-only access
+nor removed telemetry guarantees invisibility. Qualify native SDK egress as
+well as the capture helper before claiming no runtime upstream traffic.
+
 Prefer an operator-provided sandbox with legitimate test payment and issuance
 credentials. Otherwise use live reviewed read-only discovery alongside an
 isolated stateful test service for payment, orders, passes and redemption. That
