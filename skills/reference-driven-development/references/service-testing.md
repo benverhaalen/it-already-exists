@@ -106,3 +106,33 @@ redirect targets and changed GraphQL bodies are denied; protection survives
 restart and failed policy reload. Inspect the original checkout and redemption
 journey against the controlled test service. Passing policy fixtures or proxy
 checks does not prove a target cannot bypass it or establish server fidelity.
+
+## Transfer typed catalog references
+
+When a permitted reference catalog is replayed in a local Firestore namespace,
+use `scripts/firestore_reference_transfer.py` on its REST `fields` object.
+It recursively changes only `referenceValue` entries under the explicit source
+root. Literal strings, URLs, other-project references and original input stay
+intact. Preserve the source capture separately; the output records changed field
+paths. It performs no requests and grants no service access.
+
+```sh
+python /path/to/skill/scripts/firestore_reference_transfer.py \
+  --input /private/source-fields.json --output /private/local-fields.json \
+  --source-root 'projects/reference/databases/(default)/documents/' \
+  --target-root 'projects/demo-local/databases/(default)/documents/'
+```
+
+The output wraps `fields` and `translated_reference_paths`; send only the fields
+through a separately qualified local writer. Output files must not already exist.
+This is a bounded reference translator, not a complete Firestore schema validator,
+a query translator or proof of backend equivalence. Other-project references are
+preserved and may remain unusable locally. It supports explicit default-database
+roots only. Check that every required referenced record is present.
+
+Recover actual filters, ordering and cursors from the original query before
+mirroring data. A denied broad listing does not establish that a narrower query
+is denied; stale summary counts do not establish actual availability. Verify the
+original complete screen journey after transfer, including detail records and
+refresh. A populated listing alone does not establish accurate products, pricing,
+checkout or redemption.
