@@ -122,3 +122,30 @@ The session lock prevents concurrent adapter operations within one directory;
 it does not reserve a device against other controllers. Keep the device task-owned
 and exclude competing input. Full operation budgets and qualified device leases
 remain integration work.
+
+## Android guest loopback fixtures
+
+An Android guest's `127.0.0.1` is the guest, not the host. For a task-owned
+emulator and local fixture service, `scripts/android_loopback_fixture.py` wraps
+one explicit ADB reverse route around a bounded command:
+
+```sh
+python3 /path/to/skill/scripts/android_loopback_fixture.py \
+  --serial emulator-5560 --device-port 18089 --host-port 8089 \
+  --timeout 60 --required-text FLOW_COMPLETED --output /private/new-receipt-dir \
+  -- python3 /private/check_cached_response.py
+```
+
+The wrapper refuses conflicting routes, borrows matching routes without removing
+them, and removes only a route it created. A command failure or missing completion
+witness cannot pass. Use a discriminating command that checks the actual response
+bytes or app transition; route presence alone does not prove reachability or
+fidelity. Keep command logs private. Each ADB operation has a separate 15-second
+bound; `--timeout` bounds the test command, not the entire fixture lifecycle.
+
+Run under one exclusive device controller. Identical route replacement by another
+controller cannot be distinguished. If route creation times out, inspect the
+actual route listing before retrying: the wrapper will not remove an unconfirmed
+route. Cleanup failure also requires inspection. This is neither whole-app network
+isolation nor authorization to contact production services. See the official
+[ADB command reference](https://android.googlesource.com/platform/packages/modules/adb/+/refs/heads/main/docs/user/adb.1.md).
