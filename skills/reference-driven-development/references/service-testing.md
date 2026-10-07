@@ -158,6 +158,12 @@ grouped items, ordinary reopen, partial consumption, completion and expiry.
 Use the original client to render those states. Assert the visible count and
 navigation, capture the actual screen, and read back durable state after each
 transition. A navigation-only probe must remain unqualified for content.
+Read back the actual mutation contract instead of assuming which fields consumption
+changes. Grouped and single-item views can expose the same content under different
+accessibility roles; inspect the tree before classifying a failed assertion as a
+rendering defect. Check identifier absence across roles when an item should vanish.
+For expiry, distinguish a preset expired fixture from crossing a live timer boundary.
+A filtered item can retain its unconsumed record; verify both the UI and durable state.
 
 Decode machine-readable artifacts from screenshots with an independent decoder.
 Check the complete payload, identifier membership and endpoint construction,
