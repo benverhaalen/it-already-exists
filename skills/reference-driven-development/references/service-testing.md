@@ -143,6 +143,37 @@ send a test QR to a real venue scanner. Test codes must use a separate namespace
 and test verifier. Preserve the original client journey and appearance while
 marking test provenance outside comparison captures.
 
+## Qualify populated state through the original renderer
+
+An empty screen passing does not qualify populated records. Recover the original
+query filters, reference types, deserializers and downstream dereferences before
+seeding test state. A field accepted as nullable by the parser can still be required
+by a later grouping, expiry or rendering operation. Include the metadata used by
+those operations even when its name seems unrelated to the visible product type.
+Use a crash address or runtime stack to locate the actual requirement; repair the
+fixture contract before replacing the screen or suppressing the exception.
+
+Start with the smallest coherent populated fixture, then cover individual and
+grouped items, ordinary reopen, partial consumption, completion and expiry.
+Use the original client to render those states. Assert the visible count and
+navigation, capture the actual screen, and read back durable state after each
+transition. A navigation-only probe must remain unqualified for content.
+
+Decode machine-readable artifacts from screenshots with an independent decoder.
+Check the complete payload, identifier membership and endpoint construction,
+including schemes added by the client. A displayed code can encode a malformed
+URL. Trace local configuration caches too: a service update may reach persistent
+storage after the current screen has already used an older value. Verify the
+actual encoded result after refresh and ordinary reopen. Capture it twice while the screen is open and again after ordinary reopen;
+determine whether it is stable or changes before assuming rotation. Keep test
+payloads in a distinct nonredeemable namespace. Encoding fidelity, client state
+changes and external verifier acceptance are separate properties.
+
+When the user relaxes a fidelity requirement, narrow that property's acceptance
+criteria explicitly. A requested local pricing policy can unblock rendering and
+lifecycle tests, but does not qualify reproduction of the upstream pricing policy.
+Keep currency units, rounding and jurisdiction inputs explicit in the local rule.
+
 ## Recover quote authority as well as its shape
 
 Separate four properties: SDK transport decoding, catalog price, client-side
