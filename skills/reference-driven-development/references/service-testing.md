@@ -101,6 +101,26 @@ requests remain observable to the upstream service; neither read-only access
 nor removed telemetry guarantees invisibility. Qualify native SDK egress as
 well as the capture helper before claiming no runtime upstream traffic.
 
+Checkpoint the complete local comparison state before relying on a long-running
+test session: authentication identities, service records, asset bytes, local
+overrides and server policy. Keep credentials and exports private. Record versions,
+input hashes and the intended defaults. An export file alone is insufficient:
+stop and import the checkpoint, then compare complete record fields, stable account
+identity and asset hashes before replaying the original client journey. Check
+nested collections as well as top-level records. Keep historical credentials or
+session continuity marked unknown when rebuilding an account from profile data.
+Compare protocol types as well as values. If import changes JSON representation,
+inspect the specific difference against the service contract before accepting it;
+do not broadly normalize away missing fields, integer precision or changed types.
+
+When no checkpoint exists, recover from immutable captures plus explicit recorded
+adaptations. Validate the complete plan before writing, refuse to overwrite an
+unqualified populated database, and read back every restored record. Do not rerun
+live capture scripts as a shortcut or silently replace missing state with defaults.
+Label any reconstructed defaults and test their affected client paths separately.
+For Firebase fixtures, use the official [emulator import/export mechanism](https://firebase.google.com/docs/emulator-suite/install_and_configure#export_and_import_emulator_data)
+and qualify the actual selected versions and services.
+
 Prefer an operator-provided sandbox with legitimate test payment and issuance
 credentials. Otherwise use live reviewed read-only discovery alongside an
 isolated stateful test service for payment, orders, passes and redemption. That
