@@ -185,6 +185,35 @@ or integrity checks; neither alone identifies the underlying route defect.
 Qualify both a known-good local response and a refused local connection on the
 selected Android shell before relying on this distinction.
 
+If the shell result is inconclusive, compare it with a temporary reader inside
+the owned app process before changing routes. With an already configured,
+task-owned Frida connection, `scripts/android_process_http_probe.py` attaches to
+the running package, reads one local fixture, checks its exact bytes, then unloads
+the script and detaches. It does not hook application requests or alter routing.
+
+```sh
+python3 /path/to/skill/scripts/android_process_http_probe.py \
+  --serial emulator-5560 --package org.example.fixture --frida-port 27465 \
+  --host 127.0.0.1 --port 8089 --path /fixture \
+  --expected-bytes 11 --expected-sha256 CAPTURED_SHA256
+```
+
+Install matching Frida client/server versions in the task environment; the helper
+was exercised with Frida 17.22.2. Confirm the loopback Frida port belongs to the
+selected emulator, and use one exclusive device controller. The helper requires
+an executing emulator and one running package PID; it neither provisions Frida
+nor starts the app. Its completion marker is `RDD_PROCESS_HTTP_BYTES_MATCH`.
+Transport, integrity, timeout or cleanup failures cannot produce that marker.
+The timeout bounds the RPC wait; attachment and cleanup depend on Frida returning.
+
+This establishes access from an instrumentation-origin socket in that process.
+It does not establish access through the app's original networking stack, image
+rendering, fresh process startup or whole-process egress isolation. If it succeeds
+while the shell probe is empty, inspect the shell transport before claiming the
+route is broken. Preserve both receipts and qualify actual app requests separately.
+See Frida's [Socket API](https://frida.re/docs/javascript-api/#socket) and
+[Python bindings](https://github.com/frida/frida-python).
+
 For the standard Android emulator, `10.0.2.2` addresses the host loopback. Compare
 that path with guest `127.0.0.1` under the configured reverse route when diagnosing
 empty responses. Do not infer a network fix from a newly visible image: memory or
