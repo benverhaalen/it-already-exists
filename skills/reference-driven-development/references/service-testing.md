@@ -113,6 +113,18 @@ Compare protocol types as well as values. If import changes JSON representation,
 inspect the specific difference against the service contract before accepting it;
 do not broadly normalize away missing fields, integer precision or changed types.
 
+Separate restart restoration from changes made by the client after launch. Preserve
+before/after state and investigate each changed field; do not ignore an entire user
+record merely because some profile updates are expected. Use
+`scripts/json_state_delta.py --before /private/before.json --after /private/after.json
+--output /private/delta.json` for an exact, type-sensitive JSON comparison. Exit 0
+means equal, 1 means differences, and 2 means invalid input or failed output.
+The receipt reports RFC 6901 pointers and hashes without copying changed values;
+it still belongs in private evidence. Array length changes are reported as a whole
+array because positions can shift. The helper does not normalize service types or
+authorize changes. Review protocol representation differences separately, and
+qualify expected client mutations through the actual operation and readback.
+
 When no checkpoint exists, recover from immutable captures plus explicit recorded
 adaptations. Validate the complete plan before writing, refuse to overwrite an
 unqualified populated database, and read back every restored record. Do not rerun
