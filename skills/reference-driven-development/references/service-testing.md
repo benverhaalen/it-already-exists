@@ -164,6 +164,13 @@ accessibility roles; inspect the tree before classifying a failed assertion as a
 rendering defect. Check identifier absence across roles when an item should vanish.
 For expiry, distinguish a preset expired fixture from crossing a live timer boundary.
 A filtered item can retain its unconsumed record; verify both the UI and durable state.
+Before setting the boundary expectation, trace the actual clock source and deadline
+constructor. A displayed local time, venue timezone, device timezone and server
+instant can differ. Record offsets and date interpretation; a test crossing the
+wrong instant cannot establish an expiry defect. Compare an already-expired state
+and a live crossing separately, restore exact fixtures, then recheck active content.
+Keep clock substitution scoped to testing; do not change original behavior merely
+to make an assumed deadline pass.
 
 Decode machine-readable artifacts from screenshots with an independent decoder.
 Check the complete payload, identifier membership and endpoint construction,
