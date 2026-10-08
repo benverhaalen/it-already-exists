@@ -136,6 +136,18 @@ evidence about that action. Verify captured-data dependencies for the selected
 city, item and journey before replay; a catalog list can exist while its detail
 or quote records are absent.
 
+For adapters keyed by SHA256(URL UTF-8 bytes + exact request body bytes), use
+`scripts/replay_readiness.py --manifest requests.json --root cache --output audit.json`
+before replay. The manifest has a `requests` list; each entry has unique `id`,
+exact `url`, and `evidence_mode` (`captured-response`, `derived-fixture`, or
+`unknown`). Optional `body` and `response` objects have relative `path` and
+`sha256`; a response path must be `<request-cache-key>.json`. Preserve actual
+body bytes, including escaping, instead of reserializing equivalent JSON. The
+helper checks hashes and strict JSON without network access. Missing responses
+and derived/unknown provenance produce exit 2 for review; they cannot silently
+qualify as captured behavior. Labels are supplied, so inspect source provenance
+and journey coverage separately. Keep manifests with private captures.
+
 Inspect configuration as a behavioral dependency too. A public configuration
 can introduce production payment authority or an update gate that prevents an
 older reference from opening. Project those fields explicitly into the local
