@@ -101,6 +101,33 @@ requests remain observable to the upstream service; neither read-only access
 nor removed telemetry guarantees invisibility. Qualify native SDK egress as
 well as the capture helper before claiming no runtime upstream traffic.
 
+For an explicitly requested standalone, interactive test app, move synthetic
+identity, private records and permitted business calculations onto the target
+device. Keep the original client protocol, including token refresh, query
+listeners, typed references and callable result/error envelopes. A local service
+running on the development computer does not establish standalone operation;
+loopback on a physical device refers to that device. Separate simulator ports
+from host fixtures when both share the same network namespace.
+
+Treat live public reads as a separate authorized mode from deterministic replay.
+Preserve the reference's actual query clauses: access rules may require filters,
+and a changed header or selected location does not prove that the returned
+records changed. Key any fallback cache by the complete endpoint and canonical
+query, label stale results, and do not substitute cached success for an access
+denial. Bound foreground refreshes and avoid repeated upstream reads during
+routine QA. HTTP method alone does not establish a read: inspect the operation,
+including read-only POST query endpoints.
+
+For a local quote, resolve the selected product, dated inventory and venue rather
+than a copied display price. Preserve integer money units, quantity bounds and
+inclusive-tax semantics. Mark approximated fees and jurisdictions explicitly;
+a rendered total does not establish production price parity or a completed
+purchase. Exercise the original screen with changed quantity and missing data.
+Then stop the development services and test an ordinary reopen with persisted
+identity, selected location, images and private state. Build success, a public
+HTTP response and a pure calculation test remain separate evidence from that
+complete journey.
+
 Checkpoint the complete local comparison state before relying on a long-running
 test session: authentication identities, service records, asset bytes, local
 overrides and server policy. Keep credentials and exports private. Record versions,
