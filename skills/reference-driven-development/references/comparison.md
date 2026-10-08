@@ -179,3 +179,31 @@ export](video-timeline.md). It preserves actual decoded presentation timestamps
 and adjacent-frame brackets instead of assuming constant frame rate. This
 supports comparisons of the specified visible events. Device input receipt and
 physical display presentation require their own synchronized measurement path.
+
+## Distinguish preserved output from reconstructed behavior
+
+Give each observation an evidence mode. Displaying an original cached image or
+composite can qualify unchanged presentation; it cannot qualify the renderer that
+must produce a new result after an edit. Independently rendered reference output
+is stronger evidence than exporting and reimporting through the same candidate:
+shared mistakes can survive that round trip. Keep both checks with their separate
+jobs. Record fonts, color space, alpha, target version, defaults and reset state
+when they affect the result.
+
+Exercise a small edit that invalidates the relevant cached output, then undo,
+reopen and repeat. Inspect the actual producer selected by the edit; a flag named
+"force render" need not rebuild every primitive. For interaction artifacts, the
+corresponding check is an action followed by another action revealing hidden
+state. Compare success/error, outputs, unchanged sentinels, focus or selection,
+resource lifetime and ordering where relevant. Matching the first frame or return
+value is insufficient.
+
+Keep corpus case identities and the required denominator fixed during repair.
+An aggregate pass floor can stay green while previously passing cases regress.
+Report retained passes, newly passing cases, regressions, skips and untested cases
+separately; expected failures and unavailable prerequisites remain visible. These
+are review requirements, not capabilities supplied by the packet comparator.
+Choose the next experiment from the actual gap: legal state sequences for hidden
+state, interaction coverage for combinations, or small semantic boundary fixtures
+for numeric and ABI differences. Measure the complete investigation and replay
+cost before claiming that the new method is faster or cheaper.

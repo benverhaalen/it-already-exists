@@ -99,6 +99,30 @@ Use [Android's ABI contract](https://developer.android.com/ndk/guides/abis) and 
 
 To compare a reference decompile's native profile against a candidate's, run `scripts/apk_native_compare.py reference.json candidate.json --output comparison.json`. It classifies each matched library as `identical_bytes` (actual SHA256 match), `runtime_marker_match_bytes_differ` (same ISA/word-size/endianness only), `runtime_marker_mismatch`, `uncompared` (one or both sides uninspected), or `reference_only`/`candidate_only`. Shared Flutter engine builds, Dart snapshot formats and ISAs routinely produce `runtime_marker_match_bytes_differ` across unrelated applications; the report always sets `verdict.application_equivalence` to `not_evaluated_by_this_tool` and never declares two APKs the same application from runtime clues alone. Treat `identical_bytes` across every compared native library as partial evidence only — DEX, assets, manifest and signing identity still need their own comparison before claiming artifact equivalence.
 
+## Qualify compatibility semantics cheaply
+
+An available export is an entry point, not proof of the original contract.
+Maintain separate statuses for discovered, supplied, stubbed, behavior-tested and
+unobserved obligations. Preserve provider identity, ABI and inventory provenance;
+static counts cannot cover uncaptured dynamic calls. For each critical adapter,
+use a small fixture that distinguishes plausible implementations: return value,
+output mutation, error state and the next state transition. Unknown behavior must
+remain a gap rather than a success-returning default.
+
+Before relying on cross-language translation or recompilation, probe ties in
+rounding, signed overflow and division, width/sign extension, alignment, byte
+order and indirect control flow where the target uses them. Run discriminating
+fixtures under debug and optimized host builds; use sanitizers where applicable.
+Record compiler, flags and target runtime. State the analysis envelope and reject
+unsupported inputs or select another route. A host helper passing four scalar
+cases does not establish a complete translated program's correctness.
+
+Key reusable results by content, compiler/flags, target, runtime, reference
+version and relevant mode bits. Timestamp freshness alone does not establish
+semantic identity. Change one dependency and verify invalidation before relying
+on reuse. See [comparison](comparison.md#distinguish-preserved-output-from-reconstructed-behavior)
+for cached-presentation versus independent-render evidence.
+
 ## Compare execution routes by required contracts
 
 Qualify the observation runtime before investing in the app route: actual guest
