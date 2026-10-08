@@ -101,6 +101,25 @@ requests remain observable to the upstream service; neither read-only access
 nor removed telemetry guarantees invisibility. Qualify native SDK egress as
 well as the capture helper before claiming no runtime upstream traffic.
 
+Keep replay and capture as separate entry points. A persistent “allow refresh”
+preference must not enable network access during ordinary cache misses. Enforce
+the permitted endpoint, operation and data scope inside the method that creates
+the network task, as well as at the refresh control. Refresh one bounded batch;
+retain the previous snapshot if capture fails. A refresh must not grant future
+browsing access. Apply the same separation to catalog data and media.
+
+Verify the boundary with a counting mock transport: cached reads and misses make
+zero calls even with a stale enable preference; a permitted explicit capture
+makes the expected calls; direct attempts outside scope make none; subsequent
+browsing stays offline. These checks establish the tested transport boundary,
+not absence of all native SDK traffic or correctness of refreshed screens.
+
+When a preserved screen shows a generic service error, record a bounded local
+receipt at the actual adapter entry and completion. Keep contract field types,
+fixed failure stages and codes; omit scalar account values, credentials and
+headers. Distinguish wire rejection, missing local dependencies and business
+rule failures before loosening validation or changing the response schema.
+
 For an explicitly requested standalone, interactive test app, move synthetic
 identity, private records and permitted business calculations onto the target
 device. Keep the original client protocol, including token refresh, query
