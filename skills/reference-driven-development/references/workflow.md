@@ -96,3 +96,21 @@ reference image inputs, image-led exploration, font/density anchors, fresh-conte
 critique and comparison of the rendered complete journey. Non-UI tasks do not
 receive those defaults. The agent reads the module and verifies the real
 producing calls; a packet field alone is not evidence of execution.
+
+
+## Optional resumable research frontier
+
+For seeded adaptive discovery, task `research_frontier` is a list of leads with
+nonempty `id`, `seed` (existing evidence ID or source locator), `quality_cue`, `why`,
+`next_action`, `bound`, `counterlead` and `status` (`pending`, `inspected`, `deferred`
+or `blocked`). The agent creates these from inspected context; the user need not
+fill a form. Use existing journal records for captures and findings, and project
+notes for detailed iteration results. Both planning and compiled builder context
+carry the frontier, bounded individual-inspection guidance and scheduling limits.
+An empty frontier is valid for settled or small work.
+
+Queue changes alone do not invalidate adopted implementation decisions. If an
+inspection changes their factual conditions, update the affected unknowns, inputs
+or other decision-basis fields and append changed evidence/decisions as usual.
+Frontier validity establishes declared resumable context, not source quality,
+completed inspection, scheduler execution or research improvement.

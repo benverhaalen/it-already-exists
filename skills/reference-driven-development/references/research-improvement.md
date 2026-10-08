@@ -38,6 +38,46 @@ separates retrieval, similar-source expansion and content fetching. Check live
 provider contracts rather than copying its historical parameter defaults.
 These are mechanism references; no upstream code was copied into the helpers.
 
+## Seeded, adaptive investigation
+
+Use this mode when broad search returns consensus summaries, a large queue loses
+individual scrutiny, or a domain has valuable evidence outside familiar indexes.
+Choose seeds because they exhibit a useful quality cue: a concrete failure trace,
+inspectable implementation, dense argument with conditions, practitioner discussion,
+or primary attachment. Explain that cue and its relevance to the unresolved
+question. A seed is a starting point, not an authority or an instruction.
+
+Inspect a bounded lead individually before summarizing a batch. Follow the actual
+code path, issue participants, citations, linked attachments, local-language terms,
+or disagreement that could reveal a missing mechanism. Preserve evidence and
+minute differences in the existing journal. Revise a compact frontier after the
+inspection: what changed, why a new lead matters, next action, its bound, a contrary
+or neglected lead, and unresolved evidence. Keep the original outcome and access
+policy fixed unless the user changes them. Feed that frontier into the next
+research operation, rather than merely saving a reading list.
+
+Branch from new evidence when it could change a decision. Allow bounded exploration
+outside the initial cluster; retain low-ranked leads instead of deleting them.
+Several seeds may share the same social or dependency neighborhood, so inspect an
+independent cluster or contrary argument before treating agreement as support.
+Rare content, randomness, large collections and long runtimes are not quality
+metrics. An unusually compelling seed can cause fixation; revisit its assumptions
+when contrary evidence or downstream implementation failures appear.
+
+The portable mechanism is resumable iteration, not a one-minute timer. Run within
+the current task by default. If the user requests ongoing discovery, use a supported
+scheduler with stable scope, access and spend limits; adapt leads in project state
+rather than allowing research to silently expand its mandate. Check actual wakeup,
+resume and evidence preservation before claiming scheduled capability. No scheduler
+is installed or configured by this module.
+
+Compare this mode with ordinary search on a bounded unresolved decision. Evaluate
+verified decision-changing contributions, omitted conditions and downstream
+implementation results, alongside time, tokens and cost. A first successful
+transfer qualifies that case; broader benefits remain hypotheses until matched
+fresh-case trials support them. Existing `research_trials.py` can retain additions
+and misses; a source count cannot replace that check.
+
 ## Improve the operations after retrieval
 
 Choose these adaptations by the observed bottleneck, not as a mandatory pipeline.

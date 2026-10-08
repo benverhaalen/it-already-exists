@@ -96,6 +96,33 @@ class WorkflowTest(unittest.TestCase):
         self.assertEqual(len(refreshed['approach_review']['research_review']['targets'][0]['competing_explanations']), 3)
         self.assertEqual(len(target['competing_explanations']), 2)
 
+    def test_resumable_frontier_reaches_handoff_without_staling_decisions(self):
+        basis = workflow.decision_basis(self.task)
+        lead = dict(id='lead-a', seed='e', quality_cue='inspectable failure trace',
+                    why='distinguishes cached state from computation',
+                    next_action='inspect the upstream reset path', bound='one trace and its implementation',
+                    counterlead='independent implementation with fresh computation', status='pending')
+        self.task['research_frontier'] = [lead]
+        self.assertEqual(workflow.decision_basis(self.task), basis)
+        packet = self.compile()
+        self.assertTrue(packet['ready_for_handoff'])
+        for result in (workflow.investigate(workflow.task_spec(self.task), workflow.catalog()), packet):
+            self.assertEqual(result['approach_review']['research_review']['frontier'], [lead])
+        # A saved handoff remains a snapshot when the next iteration updates state.
+        lead['status'] = 'inspected'
+        lead['next_action'] = 'inspect the contrary implementation'
+        self.assertEqual(packet['approach_review']['research_review']['frontier'][0]['status'], 'pending')
+        self.assertEqual(self.compile()['approach_review']['research_review']['frontier'][0]['status'], 'inspected')
+        for field, bad in (('bound', ''), ('status', 'adopted')):
+            original = lead[field]
+            lead[field] = bad
+            with self.assertRaises(ValueError):
+                workflow.task_spec(self.task)
+            lead[field] = original
+        self.task['research_frontier'].append(dict(lead))
+        with self.assertRaises(ValueError):
+            workflow.task_spec(self.task)
+
     def test_apk_first_reference_reaches_actual_builder_without_ios_dependency(self):
         self.assertIsNone(self.compile()['apk_reconstruction_review'])
         self.task.update(surface='apk', operation='reconstruct')

@@ -112,6 +112,19 @@ def task_spec(value):
         if question['id'] in ids:
             raise ValueError('duplicate unknown id')
         ids.add(question['id'])
+    frontier = value.get('research_frontier', [])
+    if not isinstance(frontier, list):
+        raise ValueError('research_frontier must be a list')
+    frontier_ids = set()
+    for lead in frontier:
+        if not isinstance(lead, dict) or any(not isinstance(lead.get(k), str) or not lead[k].strip()
+                for k in ('id', 'seed', 'quality_cue', 'why', 'next_action', 'bound', 'counterlead')):
+            raise ValueError('research lead needs id/seed/quality_cue/why/next_action/bound/counterlead')
+        if lead.get('status') not in ('pending', 'inspected', 'deferred', 'blocked'):
+            raise ValueError('research lead needs pending/inspected/deferred/blocked status')
+        if lead['id'] in frontier_ids:
+            raise ValueError('duplicate research lead id')
+        frontier_ids.add(lead['id'])
     return value
 
 
@@ -240,6 +253,10 @@ def approach_review(task, repair=False):
                       'Which alternative route could remove work rather than optimize it?',
                       'What observation would favor an adaptation, a repair or changing the approach?'],
         'research_review': {'module': 'references/research-improvement.md',
+                            'frontier': json.loads(json.dumps(task.get('research_frontier', []))),
+                            'iteration': 'When discovery is uncertain or convergent, inspect one bounded lead deeply: explain the seed quality cue, follow concrete dependencies, practitioners, attachments or disagreements, preserve inspected evidence in the existing journal, then revise the next action and counterlead. Recompile the frontier before resuming; preserve the goal and access policy. Do not turn every queue item into shallow bulk enrichment.',
+                            'expansion': 'Choose an evidence-grounded neighboring lead and a bounded contrary or neglected branch when useful. Rarity, popularity and source counts do not establish quality. Stop branches that no longer change the decision; retain deferred leads and their reasons.',
+                            'scheduling': 'This helper carries resumable state; it schedules no work and edits no automations. Use continuous in-session iteration by default. Recurring execution requires user-authorized scheduling and an actual supported scheduler; keep the objective, permissions and budget stable.',
                             'targets': [{'id': q['id'], 'property': q['property'],
                                          'competing_explanations': list(q['alternatives']),
                                          'next_evidence': q['next_evidence'], 'bound': q['stop']}
