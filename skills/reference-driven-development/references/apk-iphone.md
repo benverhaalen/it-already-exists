@@ -63,6 +63,16 @@ and all product states remain independent qualifications. Its lifecycle tests
 cover failed and timed-out commands, failed trajectory startup, failed cleanup
 and refusal to mutate a shutdown device.
 
+Qualify signing and storage before diagnosing a service failure. Inspect the
+installed executable's actual entitlements, not just the project settings or a
+successful signature verification. Apple's
+[missing-entitlement guidance](https://developer.apple.com/documentation/security/errsecmissingentitlement)
+explains how Keychain access depends on the signed access groups. A host that
+renders correctly can still fail to save authentication state. Preserve the
+qualified simulator signing path; physical-device provisioning remains separate.
+After replacing a host, check launch, native storage and ordinary session reopen
+before attributing a generic sign-in error to the backend.
+
 For encoded artifacts such as QR codes, recover the actual payload-producing
 path. Compare decoded bytes, serialization, encoding/error-correction settings,
 geometry, colors, refresh/expiration timing, caching, background/return and
