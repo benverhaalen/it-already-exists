@@ -99,6 +99,10 @@ transfer qualifies that case; broader benefits remain hypotheses until matched
 fresh-case trials support them. Existing `research_trials.py` can retain additions
 and misses; a source count cannot replace that check.
 
+## Improve reconstruction execution and verification
+
+When repeated driving or checking dominates cost, load [adaptive verification](adaptive-verification.md). It follows inspected exploration, replay, caching, native automation and stateful-testing mechanisms to their first-principles conditions. Use its fixed-property paired receipts to compare whole-run speed/cost without hiding lost fidelity; research-trial contribution counts alone cannot establish this.
+
 ## Improve the operations after retrieval
 
 Choose these adaptations by the observed bottleneck, not as a mandatory pipeline.

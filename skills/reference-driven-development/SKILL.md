@@ -32,6 +32,7 @@ Default to adapting useful properties into a coherent original result. Faithful 
 | Independent multi-step editing, commands and resume | [Persistent coding loop](references/coding-loop.md) |
 | Hosted frontier inference with isolated command execution | [Hosted independent implementation](references/frontier-worker.md) |
 | Diagnose a material failure or proactively vet consequential failure paths | [Failure families](references/failure-families.md) |
+| Reduce repeated exploration and verification cost without losing fidelity | [Adaptive verification](references/adaptive-verification.md) |
 | Build, evaluate, and incorporate feedback | [Delivery](references/delivery.md) |
 | Preserve recorded transition timing and uncertainty | [Video timelines](references/video-timeline.md) |
 | Compare independent evidence and export reviewed counterexamples | [Comparison](references/comparison.md) |
