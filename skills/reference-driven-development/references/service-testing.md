@@ -128,6 +128,14 @@ running on the development computer does not establish standalone operation;
 loopback on a physical device refers to that device. Separate simulator ports
 from host fixtures when both share the same network namespace.
 
+Check every listener before launch, including listeners added after the original
+fixture setup. Keep bind ports and client URLs consistent. If startup fails,
+record the failed service and inspect its bind result before diagnosing later
+business logic. A test that never reaches the requested action provides no
+evidence about that action. Verify captured-data dependencies for the selected
+city, item and journey before replay; a catalog list can exist while its detail
+or quote records are absent.
+
 Inspect configuration as a behavioral dependency too. A public configuration
 can introduce production payment authority or an update gate that prevents an
 older reference from opening. Project those fields explicitly into the local
