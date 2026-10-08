@@ -109,6 +109,13 @@ running on the development computer does not establish standalone operation;
 loopback on a physical device refers to that device. Separate simulator ports
 from host fixtures when both share the same network namespace.
 
+Inspect configuration as a behavioral dependency too. A public configuration
+can introduce production payment authority or an update gate that prevents an
+older reference from opening. Project those fields explicitly into the local
+test policy when authorized; preserve the raw captured configuration and leave
+catalog values intact. Verify startup after the projection rather than treating
+a successful configuration fetch as successful initialization.
+
 Treat live public reads as a separate authorized mode from deterministic replay.
 Preserve the reference's actual query clauses: access rules may require filters,
 and a changed header or selected location does not prove that the returned
