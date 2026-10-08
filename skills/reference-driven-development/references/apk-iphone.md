@@ -179,6 +179,17 @@ Missing does not mean fatal: correlate names and timing with the actual failed
 journey, then inspect codec, method, state, error and service contracts. Leave
 unknown calls as explicit gaps. Keep tracing off for normal use.
 
+Before concluding that a target-platform feature is absent, compare the supplied
+release with current published releases and architecture variants. A newer foreign
+build may retain shared feature assets, channel names and serialized contracts
+that an older build lacks. Give those findings a specific job: reconstruct the
+channel contract and native counterpart, then test actual reachability. A label or
+string is a lead; it does not prove that the native extension, entitlement,
+certificate or backend authority is included. Keep source artifacts immutable,
+verify package/version/splits and signatures, and record release differences.
+Never carry binary patch offsets into a different release. Test a new snapshot's
+VM and ABI compatibility before replacing the demonstrated running baseline.
+
 Test VM loading before application execution. Match snapshot format, product
 flags, pointer compression and compiled platform ABI separately. The official
 [engine configuration](https://github.com/flutter/flutter/blob/78fc3012e45889657f72359b005af7beac47ba3d/engine/src/flutter/tools/gn)
