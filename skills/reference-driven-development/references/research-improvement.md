@@ -7,6 +7,27 @@ are optional mechanisms; more links and better-looking reports do not establish
 a better built result. Use the existing journal rather than a second provenance
 system. Separate source-assisted inspection from clean-room specification export.
 
+## Research toward a composition
+
+For a consequential approach, load [synthesis](synthesis.md) and give each useful
+resource a job in our own system. Resources may be code, OSS, concepts, product
+behavior, visual references or expert processes. Inspect the property actually
+being transferred; a repository name or a shared label is insufficient.
+
+Explain the assembly in existing contribution, decision and transfer records:
+what each piece supplies, what remains intact, the deliberate adaptation,
+connecting contracts, dependencies, conflicts and missing pieces. Preserve small
+differences before grouping. Separate licensed reuse from independent behavioral
+implementation and keep analyst source access outside strict implementer handoffs.
+
+Use a distinguishing case to compare original, adapted and combined behavior;
+probe important interactions and plausible substitutions. Pass the resulting
+composition into the producing assignment and inspect the integrated journey.
+Retain useful ideas that do not currently fit, with conditions and revisit triggers.
+Do not force every reference into the build or claim an untested blend is better.
+The executable research handoff carries this assignment, not an automatically
+derived or verified combination.
+
 ## Broaden along different mechanisms
 
 Choose lanes by the unresolved decision; do not run every lane for small tasks.

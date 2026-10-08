@@ -68,6 +68,22 @@ class WorkflowTest(unittest.TestCase):
         self.assertEqual(repair['approach_review']['stage'], 'diagnose-and-reconsider')
         self.assertEqual(repair['approach_review']['access'], 'strict-clean-room')
 
+    def test_composition_assignment_reaches_research_and_builder_with_selected_inputs(self):
+        for result in (workflow.investigate(workflow.task_spec(self.task), workflow.catalog()), self.compile()):
+            composition = result['approach_review']['research_review']['composition']
+            self.assertEqual(composition['objective'], self.task['goal'])
+            self.assertEqual(composition['journey'], self.task['journey'])
+            self.assertEqual(composition['contributions'], ['c'])
+            self.assertEqual(composition['transfers'], ['t'])
+            self.assertEqual(composition['module'], 'references/synthesis.md')
+            self.assertIn('strict clean-room boundary', composition['access'])
+            self.assertIn('combined', composition['probe'])
+            self.assertIn('not an inferred composition', composition['limits'])
+        self.task['contributions'].append('new-candidate')
+        self.task['journey']['outcome'] = 'changed outcome'
+        self.assertEqual(composition['contributions'], ['c'])
+        self.assertEqual(composition['journey']['outcome'], 'declared outcome')
+
     def test_ui_feedback_is_routed_without_imposing_it_on_other_domains(self):
         self.assertEqual(self.compile()['ui_review']['journey'], self.task['journey'])
         self.task['surface'] = 'document'

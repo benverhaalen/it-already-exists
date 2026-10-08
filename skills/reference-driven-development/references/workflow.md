@@ -91,6 +91,14 @@ bottlenecks, work-removing alternatives and discriminating tests before a
 consequential commitment. Repair context asks for diagnosis and reconsideration.
 It neither performs research nor certifies a selected approach.
 
+Its `research_review.composition` carries the goal, journey and selected
+contribution/transfer IDs into both investigation and builder context. It directs
+the agent to assign resources concrete jobs, preserve mechanisms and small
+differences, explain connecting contracts and conflicts, respect reuse/access
+boundaries, and probe original/adapted/combined behavior. The agent supplies and
+checks the actual composition using existing records; this packet does not infer
+compatibility or perform integration.
+
 UI surfaces or explicit UI/visual/design tags also receive `ui_review`: actual
 reference image inputs, image-led exploration, font/density anchors, fresh-context
 critique and comparison of the rendered complete journey. Non-UI tasks do not
