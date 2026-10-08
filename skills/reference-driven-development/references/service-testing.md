@@ -94,25 +94,37 @@ validation → redemption → restart. Include changed prices, cancellation,
 payment failure, timeouts, retries, expiration and duplicate redemption. Keep
 original and candidate on the same controlled service state during comparison.
 
-Routine comparison and QA should replay captured state locally. Keep any live
-catalog refresh in a separate, explicitly enabled producer, with cached assets
-and dated provenance. Do not refresh for every launch, retry or test case. Live
-requests remain observable to the upstream service; neither read-only access
-nor removed telemetry guarantees invisibility. Qualify native SDK egress as
-well as the capture helper before claiming no runtime upstream traffic.
+Separate displayed identity, public information retrieval, and transaction
+authority. A local test profile must not become upstream account credentials.
+When the reference supports guest browsing, inspect its actual authentication
+state, query filters, loading triggers, listeners and persistence. Preserve the
+observed behavior; do not assume guest means an anonymous authenticated account.
+Evidence collected with an emulator or removed attestation does not establish
+production client equivalence.
 
-Keep replay and capture as separate entry points. A persistent “allow refresh”
-preference must not enable network access during ordinary cache misses. Enforce
-the permitted endpoint, operation and data scope inside the method that creates
-the network task, as well as at the refresh control. Refresh one bounded batch;
-retain the previous snapshot if capture fails. A refresh must not grant future
-browsing access. Apply the same separation to catalog data and media.
+Choose retrieval policy for the intended journey. Deterministic comparisons
+replay frozen captures with network disabled. An authorized interactive test app
+can load public data automatically during normal browsing, independently of its
+local test identity. A special refresh screen is not required for this separation.
+Use caching, bounded concurrency and duplicate-request coalescing where suitable;
+qualify freshness and listener timing against the reference instead of treating
+an arbitrary cache duration as equivalent behavior. Keep retrieval provenance
+and dates. Public requests remain observable upstream.
 
-Verify the boundary with a counting mock transport: cached reads and misses make
-zero calls even with a stale enable preference; a permitted explicit capture
-makes the expected calls; direct attempts outside scope make none; subsequent
-browsing stays offline. These checks establish the tested transport boundary,
-not absence of all native SDK traffic or correctness of refreshed screens.
+Enforce endpoint, operation and data scope inside the method that creates the
+network task. Exclude private account paths, account credentials, cookies,
+analytics uploads and transaction authority from the public reader. Read-only
+queries can use POST: classify their semantics rather than only the HTTP verb.
+Validate exact supported query structure and deny redirects. Apply the boundary
+to media as well as catalog data. Do not spoof official-client identity or claim
+that unauthenticated access makes a reconstruction indistinguishable.
+
+Verify both policies with a counting mock transport. Frozen replay makes zero
+calls for hits and misses. Interactive public loading makes the expected calls
+for missing or stale data, reuses recent responses, and rejects credentialed or
+out-of-scope requests before transport. Editing a local profile must not alter
+public requests. Exercise failure and restart behavior. These checks establish
+the tested boundary, not whole-process isolation or refreshed-screen fidelity.
 
 When a preserved screen shows a generic service error, record a bounded local
 receipt at the actual adapter entry and completion. Keep contract field types,
