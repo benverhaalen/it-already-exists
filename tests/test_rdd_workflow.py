@@ -91,6 +91,39 @@ class WorkflowTest(unittest.TestCase):
         self.task['tags'] = ['visual']
         self.assertEqual(self.compile()['ui_review']['module'], 'references/ui-continuity.md')
 
+    def test_fidelity_investigation_reaches_reconstruction_plan_and_handoff(self):
+        self.assertIsNone(self.compile()['reconstruction_review'])
+        self.task['operation'] = 'reconstruct'
+        self.task['access'] = 'strict-clean-room'
+        self.task['unknowns'] = [dict(id='reset', property='hidden-state',
+                                     alternatives=['cold state', 'retained state'],
+                                     next_evidence='repeat uncached after reset', stop='four repetitions')]
+        for result in (workflow.investigate(workflow.task_spec(self.task), workflow.catalog()), self.compile()):
+            review = result['reconstruction_review']
+            self.assertEqual(review['goal'], self.task['goal'])
+            self.assertEqual(review['journey'], self.task['journey'])
+            self.assertEqual(review['access'], 'strict-clean-room')
+            self.assertEqual(review['targets'][0]['next_evidence'], 'repeat uncached after reset')
+            self.assertEqual(review['targets'][0]['bound'], 'four repetitions')
+            self.assertIn('independent oracle', review['contract'][0])
+            self.assertIn('holdout fixed', review['comparison'])
+            self.assertIn('not evidence', review['status'])
+        packet = self.compile()
+        self.assertFalse(packet['ready_for_handoff'])
+        self.assertIn('analyst-provenance', [b.get('code') for b in packet['blockers']])
+        self.task['unknowns'][0]['alternatives'].append('clock state')
+        self.task['journey']['reset'] = 'changed reset'
+        self.assertEqual(len(review['targets'][0]['alternatives']), 2)
+        self.assertEqual(review['journey']['reset'], 'declared reset')
+
+    def test_fidelity_review_is_conditional_and_does_not_certify_execution(self):
+        for operation, tags in [('repair', []), ('adapt', ['fidelity']), ('explore', ['reverse-engineering'])]:
+            self.task.update(operation=operation, tags=tags)
+            plan = workflow.investigate(workflow.task_spec(self.task), workflow.catalog())
+            self.assertIn('No probes', plan['reconstruction_review']['limits'])
+        self.task.update(operation='extend', tags=[])
+        self.assertIsNone(workflow.investigate(workflow.task_spec(self.task), workflow.catalog())['reconstruction_review'])
+
     def test_research_targets_survive_plan_and_builder_handoff(self):
         self.task['unknowns'] = [dict(id='response', property='hidden-state',
                                      alternatives=['cached state', 'fresh computation'],

@@ -101,6 +101,14 @@ and misses; a source count cannot replace that check.
 
 ## Improve reconstruction execution and verification
 
+For uncertain reconstruction behavior, load [fidelity bottlenecks](reconstruction-bottlenecks.md).
+Derive child seeds from each remedy's remaining assumptions; carry independent
+oracles, temporal contracts, mutation tracking, journey dependencies, numeric
+relations and ecosystem boundaries into the producing operation. Preserve
+conditional alternatives and test their combination, rather than extending a
+source catalog. `workflow.py` routes this review into reconstruction/repair plans
+and handoffs; it does not execute or certify the research.
+
 When repeated driving or checking dominates cost, load [adaptive verification](adaptive-verification.md). It follows inspected exploration, replay, caching, native automation and stateful-testing mechanisms to their first-principles conditions. Use its fixed-property paired receipts to compare whole-run speed/cost without hiding lost fidelity; research-trial contribution counts alone cannot establish this.
 
 ## Improve the operations after retrieval

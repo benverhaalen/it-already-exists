@@ -324,6 +324,38 @@ def apk_reconstruction_review(task):
         'limits': 'Missing service data or authority is not solved by a screenshot or client rewrite. Simulator equivalence does not qualify physical performance or universal APK coverage.'}
 
 
+def reconstruction_review(task):
+    """Carry fidelity investigation into execution; not an executed audit."""
+    if task['operation'] not in ('reconstruct', 'repair') and not {'reverse-engineering', 'fidelity'}.intersection(task.get('tags', [])):
+        return None
+    return {
+        'status': 'proposed; not evidence of executed research, fidelity or improvement',
+        'module': 'references/reconstruction-bottlenecks.md',
+        'goal': task['goal'], 'journey': json.loads(json.dumps(task['journey'])),
+        'access': task['access'],
+        'targets': [dict(id=q['id'], property=q['property'],
+                         alternatives=list(q['alternatives']),
+                         next_evidence=q['next_evidence'], bound=q['stop'])
+                    for q in task.get('unknowns', [])],
+        'operation': 'Select the relevant disputed contract and smallest discriminating probe; record its result, then derive individually bounded child seeds from remaining uncertainty. Preserve alternatives and stop convergent branches.',
+        'contract': ['declared observational relation and independent oracle',
+                     'reference/build/backend identity and actual observation path',
+                     'normal entry, default state, reset and relevant histories',
+                     'complete edit/action, durable output, cold reopen and recovery'],
+        'candidate_families': ['oracle-independence', 'temporal-state-lifetime',
+                               'cache-coherence-scale', 'journey-dependency-coverage',
+                               'numeric-representation', 'format-plugin-ecosystem',
+                               'input-presentation-lifecycle'],
+        'seed_record': ['parent evidence and unresolved mechanism',
+                        'competing explanations and primary source inspection',
+                        'preserved invariant, adaptation and interaction',
+                        'discriminating check, cost, result and child seeds',
+                        'stop reason, remaining limits and revisit condition'],
+        'comparison': 'Hold reference, accepted properties, environments and evaluation holdout fixed. Count discovery, fixture/oracle setup, execution, tokens/spend, integration, repair, validation, memory and input-to-correct-presentation latency. Report unmeasured costs and losing regimes.',
+        'access_boundary': 'Analyst source and provenance remain outside a strict clean-room implementer; export only independently reviewed behavioral contracts through the verified boundary.',
+        'limits': 'Choose relevant families, not a compulsory checklist. No probes, scheduling, reset qualification, semantic coverage or superiority are established by this packet.'}
+
+
 def failure_review(task, repair=False):
     """Conditional repair guidance; never evidence that an audit ran."""
     triggers = {'reliability', 'compatibility', 'crash', 'offline', 'performance', 'repeated-failure'}
@@ -363,6 +395,7 @@ def investigate(task, methods):
             'human_input': input_status(task), 'approach_review': approach_review(task),
             'ui_review': ui_review(task), 'failure_review': failure_review(task),
             'apk_reconstruction_review': apk_reconstruction_review(task),
+            'reconstruction_review': reconstruction_review(task),
             'stop_rule': 'Stop each probe at its stated evidence or bound; unknown is not recovered. Stop discovery when further search is unlikely to change the next decision; retain unresolved alternatives.',
             'limits': ['No tools installed or executed; capabilities are caller declarations, not verified receipts.',
                        'Method matches use exact surface/property labels, not semantic fit or optimal ranking.',
@@ -510,6 +543,7 @@ def compile_context(task, records, store, purpose='implement'):
               'approach_review': approach_review(task, repair=purpose == 'repair' or bool(required_reruns)),
               'ui_review': ui_review(task),
               'apk_reconstruction_review': apk_reconstruction_review(task),
+              'reconstruction_review': reconstruction_review(task),
               'failure_review': failure_review(task, repair=purpose == 'repair' or bool(required_reruns)),
               'blockers': blockers, 'records': closure(records, chosen), 'corrections': corrections,
               'checks': checks, 'retained_alternative_ids': [r['id'] for r in alternatives],

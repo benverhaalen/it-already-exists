@@ -108,6 +108,14 @@ producing calls; a packet field alone is not evidence of execution.
 
 ## Optional resumable research frontier
 
+Reconstruction and repair packets include `reconstruction_review`, also enabled
+by explicit `reverse-engineering` or `fidelity` tags. It preserves the actual
+goal, journey, access policy and unresolved competing explanations. Use its
+conditional families and linked fidelity-bottlenecks module to select a probe,
+derive bounded child seeds, and carry the resulting contract into the producing
+operation. It is proposed guidance; it neither runs probes nor changes readiness.
+Strict analyst context remains barred from implementer handoff.
+
 For seeded adaptive discovery, task `research_frontier` is a list of leads with
 nonempty `id`, `seed` (existing evidence ID or source locator), `quality_cue`, `why`,
 `next_action`, `bound`, `counterlead` and `status` (`pending`, `inspected`, `deferred`
