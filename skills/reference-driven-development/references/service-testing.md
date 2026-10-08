@@ -129,7 +129,14 @@ For a local quote, resolve the selected product, dated inventory and venue rathe
 than a copied display price. Preserve integer money units, quantity bounds and
 inclusive-tax semantics. Mark approximated fees and jurisdictions explicitly;
 a rendered total does not establish production price parity or a completed
-purchase. Exercise the original screen with changed quantity and missing data.
+purchase. Inspect component allocations before taxing a bundle: an advertised
+price can combine differently taxed services and goods, with a separate taxable
+base that does not scale with the headline price. Compare the reference receipt
+against the selected component metadata and rounding at multiple quantities;
+a location tax rate alone does not determine taxability or inclusion. Preserve
+per-product fixed/percentage fee settings and any separate default/extra-fee
+policy rather than extrapolating one observed fee to the whole catalog.
+Exercise the original screen with changed quantity and missing data.
 Then stop the development services and test an ordinary reopen with persisted
 identity, selected location, images and private state. Build success, a public
 HTTP response and a pure calculation test remain separate evidence from that
