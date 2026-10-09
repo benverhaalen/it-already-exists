@@ -352,6 +352,11 @@ def reconstruction_review(task):
                         'discriminating check, cost, result and child seeds',
                         'stop reason, remaining limits and revisit condition'],
         'comparison': 'Hold reference, accepted properties, environments and evaluation holdout fixed. Count discovery, fixture/oracle setup, execution, tokens/spend, integration, repair, validation, memory and input-to-correct-presentation latency. Report unmeasured costs and losing regimes.',
+        'evaluator_challenge': {
+            'operation': 'Before an acceptance evaluator carries a fidelity claim, have someone other than its author seed plausible defects from the stated contract alone, then run scripts/oracle_challenge.py over the control and every candidate.',
+            'command': 'python scripts/oracle_challenge.py run MANIFEST.json --root PRIVATE_TASK --output LEDGER.json',
+            'resolve': 'Close each survivor with a contract-derived case, or record why no independent reference observation can decide it and carry that as a claim limit. Rerun after any evaluator change.',
+            'limits': 'Not executed by this packet. Defects written by the evaluator author mostly restate cases it already has.'},
         'access_boundary': 'Analyst source and provenance remain outside a strict clean-room implementer; export only independently reviewed behavioral contracts through the verified boundary.',
         'limits': 'Choose relevant families, not a compulsory checklist. No probes, scheduling, reset qualification, semantic coverage or superiority are established by this packet.'}
 
