@@ -34,6 +34,7 @@ Default to adapting useful properties into a coherent original result. Faithful 
 | Diagnose a material failure or proactively vet consequential failure paths | [Failure families](references/failure-families.md) |
 | Investigate shared reconstruction bottlenecks through recursive seeds | [Fidelity bottlenecks](references/reconstruction-bottlenecks.md) |
 | Reduce repeated exploration and verification cost without losing fidelity | [Adaptive verification](references/adaptive-verification.md) |
+| Reuse immutable analysis and qualify ordered behavioral evidence | [Retained analysis and behavioral evidence](references/analysis-reuse.md) |
 | Build, evaluate, and incorporate feedback | [Delivery](references/delivery.md) |
 | Preserve recorded transition timing and uncertainty | [Video timelines](references/video-timeline.md) |
 | Compare independent evidence and export reviewed counterexamples | [Comparison](references/comparison.md) |
