@@ -213,6 +213,14 @@ inconclusive. Read-only class IDs and bounded callback offsets can locate the ne
 handoff without recording user payloads. Keep static labels separate from observed
 execution, and detach the debugger when the experiment ends.
 
+A reached emitter does not qualify every statically named UI callback. Establish
+the active route, mounted widget and listener for that instance; shared class IDs
+can belong to multiple instances. Use trace-local identity tokens when needed,
+without recording payloads. If initialization may precede attachment, capture
+that phase separately before interpreting missing constructor or subscription
+hits. Distinguish state storage, stream addition, listener delivery, widget
+construction and presentation; success at one boundary does not prove the next.
+
 For time-dependent catalogs, record the selected item and cache or fixture identity
 in the test receipt. A missing or expired reference can stop the journey before the
 suspected failure. Use a pinned clock and fixture for a fixed regression case, or
