@@ -160,6 +160,57 @@ and derived/unknown provenance produce exit 2 for review; they cannot silently
 qualify as captured behavior. Labels are supplied, so inspect source provenance
 and journey coverage separately. Keep manifests with private captures.
 
+When an observed parent-reference query contains useful historical records but
+the original client asks for a different collection/date query, use
+`scripts/firestore_query_scenario.py` to build a separate private diagnostic
+fixture. It accepts REST documents or runQuery rows and two parsed request
+manifests: `url`, `method: "POST"`, `body: {"structuredQuery": ...}`, and optional
+`responseFile` (a declared 64-hex cache basename). Only canonical HTTPS Firestore
+v1 runQuery endpoints in the same database are supported. The source must select
+one collection or collection group with a simple top-level reference `EQUAL`
+filter and optional bounded limit. The target must select one immediate
+collection with exactly a timestamp `GREATER_THAN_OR_EQUAL` AND boolean `EQUAL`.
+Simple field names may be backtick quoted. Other filters, field paths, ordering,
+cursors, projections and consistency selectors are refused.
+
+```sh
+python scripts/firestore_query_scenario.py --input /private/observed-rows.json \
+  --source-manifest /private/source.request --target-manifest /private/target.request \
+  --output /private/new-derived-scenario.json
+```
+
+The output wraps `response` with `provenance`; it never installs a cache entry.
+It preserves complete document fields, typed references and original timestamp
+spellings. Selection compares timestamp instants with fractional precision and
+known timezones, rejects duplicates and malformed relevant values, and excludes
+nested collection-group records from an immediate collection. Output is created
+with private permissions and must not exist. Source read-time observations stay
+in provenance; no target `readTime` is invented. The fixture has observed-subset
+coverage, unknown current state, and `complete` and `ready_for_fidelity` both
+false, including when every supplied row matches or the result is empty. A
+limited parent-reference query cannot establish completeness of a different
+collection/date query. The deterministic fixture ordering is not an observation
+of the target server's ordering.
+
+Manifest hashes identify the supplied manifest bytes. Parsed bodies and declared
+`responseFile` names cannot verify the original body-byte cache key. Recover the
+target's exact original request bytes independently before placing extracted
+`response` rows in a separately qualified adapter. Keep the envelope and label
+the readiness entry `derived-fixture`; the readiness audit remains review-only
+and exits 2. Then exercise the actual original action and return journey to test
+the diagnostic hypothesis. Neither helper establishes live availability, service
+equivalence or complete journey fidelity.
+
+The independently authored selection follows inspected Apache-2.0 Firestore SDK
+[path matching](https://github.com/firebase/firebase-js-sdk/blob/8a7e7fda925c7355f98cb3c4dca1bfaed73ab787/packages/firestore/src/core/query.ts)
+and [typed filter comparison](https://github.com/firebase/firebase-js-sdk/blob/8a7e7fda925c7355f98cb3c4dca1bfaed73ab787/packages/firestore/src/core/filter.ts),
+plus the Apache-2.0 Google API
+[Value union](https://github.com/googleapis/googleapis/blob/525d4c82dc1dd2fa3884198a8006a7bf5b48ac9d/google/firestore/v1/document.proto)
+and [source read-time contract](https://github.com/googleapis/googleapis/blob/525d4c82dc1dd2fa3884198a8006a7bf5b48ac9d/google/firestore/v1/firestore.proto).
+These source versions were inspected on 2026-10-09. No upstream code or new
+runtime dependency is bundled. This deliberately narrow projector is not a full
+Firestore evaluator or schema validator.
+
 Inspect configuration as a behavioral dependency too. A public configuration
 can introduce production payment authority or an update gate that prevents an
 older reference from opening. Project those fields explicitly into the local

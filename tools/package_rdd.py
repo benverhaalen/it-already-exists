@@ -138,6 +138,7 @@ REVIEWED_FILES = frozenset({
     'scripts/reference_provider.py',
     'scripts/repair.py',
     'scripts/replay_readiness.py',
+    'scripts/firestore_query_scenario.py',
     'scripts/requirements-comparison.txt',
     'scripts/requirements-native-profile.txt',
     'scripts/requirements-service-guard.txt',
