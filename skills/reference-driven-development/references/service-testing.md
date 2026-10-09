@@ -239,6 +239,26 @@ a location tax rate alone does not determine taxability or inclusion. Preserve
 per-product fixed/percentage fee settings and any separate default/extra-fee
 policy rather than extrapolating one observed fee to the whole catalog.
 Exercise the original screen with changed quantity and missing data.
+
+Preserve each identifier's role and full collection scope from the original
+request constructor through transport decoding and adapted validation. Resolve
+declared record relationships before comparing membership: a child reference's
+last segment can differ from the caller's owner ID. Independently author fixtures
+with distinct parent, child, product and dated-instance IDs, and equal last
+segments in different collections. Wrong-role and unrelated endpoints, malformed
+relationship paths and unresolved records must never qualify a join. The offline
+`check_relationship` function in
+`scripts/firestore_dependency_audit.py` can check a qualified captured-record
+join; declare each field, collection and encoding explicitly. A string path
+requires an explicit `relative_path` step. Accept only
+`result['status'] == 'matched'`; failed or unresolved results and `ValueError`
+must not become success. An empty step list checks endpoint identity alone.
+Derive the expected endpoint from independent caller evidence, not the traversed
+output. The checker neither discovers the correct relationship nor repairs the
+adapter, and does not validate every unrelated scalar field. Repeat the original
+client journey after changing the predicate; complete dependencies and a passing
+local fixture do not establish correct membership or service equivalence.
+
 Then stop the development services and test an ordinary reopen with persisted
 identity, selected location, images and private state. Build success, a public
 HTTP response and a pure calculation test remain separate evidence from that
