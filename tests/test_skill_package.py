@@ -30,6 +30,7 @@ class PackageTests(unittest.TestCase):
                 archive.extractall(work / 'installed')
             skill = work / 'installed' / package.NAME
             manifest = json.loads((skill / 'package-manifest.json').read_text())
+            self.assertEqual(manifest['inventory_version'], package.INVENTORY_VERSION)
             self.assertTrue((skill / 'LICENSE').is_file())
             for document in skill.rglob('*.md'):
                 for target in re.findall(r'\]\(([^)]+)\)', document.read_text()):

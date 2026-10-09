@@ -19,7 +19,7 @@ LIMIT = 10 * 1024 * 1024
 PSTACK_REVISION = 'ccb5507cec1546dc88135c1139c811e6c59115ba'
 
 # Positive public export membership. New modules need an explicit reviewed entry.
-REVIEWED_FILES = frozenset({
+INVENTORY_V1 = frozenset({
     'LICENSE',
     'SKILL.md',
     'agents/openai.yaml',
@@ -138,7 +138,6 @@ REVIEWED_FILES = frozenset({
     'scripts/reference_provider.py',
     'scripts/repair.py',
     'scripts/replay_readiness.py',
-    'scripts/firestore_query_scenario.py',
     'scripts/requirements-comparison.txt',
     'scripts/requirements-native-profile.txt',
     'scripts/requirements-service-guard.txt',
@@ -148,6 +147,37 @@ REVIEWED_FILES = frozenset({
     'scripts/video_timeline.py',
     'scripts/workflow.py',
 })
+
+# Retain complete historical memberships: a new export must not invalidate an
+# unchanged installed release. Add a new edition instead of editing prior sets.
+INVENTORY_VERSION = 2
+REVIEWED_INVENTORIES = {
+    1: INVENTORY_V1,
+    2: INVENTORY_V1 | {'scripts/firestore_query_scenario.py'},
+}
+REVIEWED_FILES = REVIEWED_INVENTORIES[INVENTORY_VERSION]
+
+
+def reviewed_inventory(manifest):
+    if not isinstance(manifest['files'], dict):
+        raise ValueError('invalid factory file inventory')
+    authored = {name for name in manifest['files'] if not name.startswith('upstream/pstack/')}
+    version = manifest.get('inventory_version')
+    if 'inventory_version' not in manifest:
+        # Early schema-1 capsules had no edition field. Infer only an exact,
+        # explicitly retained membership; self-listed subsets are insufficient.
+        matches = [key for key, files in REVIEWED_INVENTORIES.items() if authored == files]
+        if len(matches) != 1:
+            raise ValueError('unsupported legacy factory inventory')
+        version = matches[0]
+    if type(version) is not int or version not in REVIEWED_INVENTORIES:
+        raise ValueError('unsupported factory inventory version')
+    required = REVIEWED_INVENTORIES[version]
+    if authored != required:
+        missing, extra = required - authored, authored - required
+        raise ValueError('factory inventory mismatch: missing=' + ', '.join(sorted(missing))
+                         + '; extra=' + ', '.join(sorted(extra)))
+    return version, required
 
 
 def safe_relative(value):
@@ -213,10 +243,10 @@ def validate_upstream(files):
         raise ValueError('invalid upstream manifest: ' + str(exc)) from exc
 
 
-def allowed(path):
+def allowed(path, reviewed_files=REVIEWED_FILES):
     if len(path.parts) >= 3 and path.parts[:2] == ('upstream', 'pstack'):
         return True  # Its exact original-source inventory is checked separately.
-    return path.as_posix() in REVIEWED_FILES
+    return path.as_posix() in reviewed_files
 
 
 def collect_files(source):
@@ -259,7 +289,7 @@ def collect_files(source):
 def build(source, output):
     output = Path(output)
     files = collect_files(source)
-    manifest = {'schema_version': 1, 'package': NAME,
+    manifest = {'schema_version': 1, 'package': NAME, 'inventory_version': INVENTORY_VERSION,
                 'files': {name: {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
                           for name, data in sorted(files.items())},
                 'limits': 'Content hashes are not signatures, licensing or live harness qualification.'}

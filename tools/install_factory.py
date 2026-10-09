@@ -161,7 +161,7 @@ def save_state(store, state):
     atomic_file(Path(store) / 'installation.json', (json.dumps(state, indent=2, sort_keys=True) + '\n').encode())
 
 
-def archive_inventory(payload):
+def archive_inventory(payload, *, current_only=True):
     """Validate before extraction: positive paths, inventory, bytes and licenses."""
     files = {}
     if len(payload) > package.LIMIT:
@@ -187,20 +187,27 @@ def archive_inventory(payload):
         raise InstallError('invalid archive: ' + str(exc)) from exc
     try:
         manifest = json.loads(files['package-manifest.json'])
-        if manifest['schema_version'] != 1 or manifest['package'] != NAME:
+        if (type(manifest['schema_version']) is not int
+                or manifest['schema_version'] != 1 or manifest['package'] != NAME):
             raise InstallError('unsupported package manifest')
         listed = manifest['files']
+        inventory_version, reviewed_files = package.reviewed_inventory(manifest)
+        if current_only and inventory_version != package.INVENTORY_VERSION:
+            raise InstallError('archive requires current factory inventory version')
         if set(files) != set(listed) | {'package-manifest.json'}:
             raise InstallError('package inventory mismatch')
         for name, info in listed.items():
             package.safe_relative(name)
-            if not package.allowed(Path(name)):
+            if not package.allowed(Path(name), reviewed_files):
                 raise InstallError('unreviewed package path: ' + name)
+            if (not isinstance(info, dict) or type(info.get('bytes')) is not int
+                    or info['bytes'] < 0 or not isinstance(info.get('sha256'), str)
+                    or len(info['sha256']) != 64
+                    or any(char not in '0123456789abcdef' for char in info['sha256'])):
+                raise InstallError('invalid package file metadata: ' + name)
             data = files[name]
             if len(data) != info['bytes'] or digest(data) != info['sha256']:
                 raise InstallError('package digest mismatch: ' + name)
-        if not package.REVIEWED_FILES <= files.keys():
-            raise InstallError('incomplete factory closure: ' + ', '.join(sorted(package.REVIEWED_FILES - files.keys())))
         if 'scripts/factory_procedures.py' in files and 'upstream/pstack/manifest.json' not in files:
             raise InstallError('procedure selector lacks its original-source closure')
         package.validate_upstream(files)
@@ -252,7 +259,7 @@ def inspect_release(store, release):
     payload = (root / 'capsule.zip').read_bytes()
     if digest(payload) != release:
         raise InstallError('archive identity drift')
-    files, manifest = archive_inventory(payload)
+    files, manifest = archive_inventory(payload, current_only=False)
     skill = root / NAME
     if skill.is_symlink() or not skill.is_dir():
         raise InstallError('skill root redirected')
@@ -273,9 +280,16 @@ def inspect_release(store, release):
         raise InstallError('release content/discovery drift (added, changed or missing entries)')
     qualify_helpers(skill)
     receipt = json.loads((root / 'receipt.json').read_text())
-    if receipt.get('release') != release or receipt.get('files') != len(manifest['files']):
+    if (not isinstance(receipt, dict) or type(receipt.get('schema_version')) is not int
+            or receipt['schema_version'] != 1 or receipt.get('package') != NAME
+            or receipt.get('release') != release or type(receipt.get('files')) is not int
+            or receipt['files'] != len(manifest['files'])):
         raise InstallError('release receipt mismatch')
-    return receipt
+    inventory_version, _ = package.reviewed_inventory(manifest)
+    if 'inventory_version' in receipt and (type(receipt['inventory_version']) is not int
+                                          or receipt['inventory_version'] != inventory_version):
+        raise InstallError('release receipt inventory mismatch')
+    return {**receipt, 'inventory_version': inventory_version}
 
 
 def stage(store, source=None, archive=None):
@@ -303,6 +317,7 @@ def stage(store, source=None, archive=None):
             path.write_bytes(data)
         cold_cli = qualify_helpers(skill)
         receipt = {'schema_version': 1, 'package': NAME, 'release': release,
+                   'inventory_version': package.reviewed_inventory(manifest)[0],
                    'files': len(manifest['files']), 'staged_at': now(),
                    'cold_cli_imports': cold_cli,
                    'skill_root': str(final / NAME), 'source': str(Path(source).resolve()) if source and archive is None else None,
@@ -577,9 +592,10 @@ def doctor(home, store, release=None):
     selected = release or state['active_release']
     errors = []
     content = 'not_staged'
+    inventory_version = None
     if selected:
         try:
-            inspect_release(store, selected)
+            inventory_version = inspect_release(store, selected)['inventory_version']
             content = 'verified_complete_inventory'
         except (ValueError, OSError) as exc:
             errors.append(str(exc))
@@ -614,6 +630,7 @@ def doctor(home, store, release=None):
                        'applied': 'not_demonstrated', 'accepted_product': 'not_demonstrated'}
     return {'schema_version': 1, 'package': NAME, 'active_release': state['active_release'],
             'checked_release': selected, 'content': content, 'hosts': hosts, 'errors': errors,
+            'inventory_version': inventory_version, 'current_inventory_version': package.INVENTORY_VERSION,
             'cold_cli_imports': 'passed_current_python' if content == 'verified_complete_inventory' else 'not_qualified',
             'maintenance': 'pending_recovery' if state.get('pending') else 'idle',
             'platform': {'system': platform.system(), 'python': platform.python_version(),

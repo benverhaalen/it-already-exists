@@ -57,6 +57,121 @@ class InstallationTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.symlink_to(self.source)
 
+    def rewrite_archive(self, archive, omit=(), edition='unchanged', amend=None):
+        with zipfile.ZipFile(archive) as original:
+            files = {entry.filename: original.read(entry) for entry in original.infolist()}
+        prefix = factory.NAME + '/'
+        manifest_path = prefix + 'package-manifest.json'
+        manifest = json.loads(files[manifest_path])
+        for name in omit:
+            files.pop(prefix + name)
+            manifest['files'].pop(name)
+        if edition == 'legacy':
+            manifest.pop('inventory_version')
+        elif edition != 'unchanged':
+            manifest['inventory_version'] = edition
+        if amend:
+            amend(manifest)
+        files[manifest_path] = json.dumps(manifest).encode()
+        payload = io.BytesIO()
+        with zipfile.ZipFile(payload, 'w') as zipped:
+            for name, data in files.items():
+                zipped.writestr(name, data)
+        return payload.getvalue()
+
+    def test_legacy_inventory_survives_current_source_update_and_rollback(self):
+        archive = self.work / 'current.zip'
+        factory.package.build(self.source, archive)
+        legacy = self.work / 'legacy.zip'
+        legacy.write_bytes(self.rewrite_archive(
+            archive, omit=['scripts/firestore_query_scenario.py'], edition='legacy'))
+        with self.assertRaisesRegex(ValueError, 'requires current factory inventory'):
+            factory.stage(self.store, archive=legacy)
+        # Stage under the original admission edition, then inspect/update using
+        # today's edition. Retained inspection must not reset initial admission.
+        with mock.patch.object(factory.package, 'INVENTORY_VERSION', 1):
+            first = factory.stage(self.store, archive=legacy)['release']
+        receipt_path = self.store / 'releases' / first / 'receipt.json'
+        # Early receipts also predate the edition field; retain that input case.
+        receipt = json.loads(receipt_path.read_text())
+        receipt.pop('inventory_version')
+        os.chmod(receipt_path, 0o644)
+        receipt_path.write_text(json.dumps(receipt))
+        factory.activate(self.home, self.store, first, self.source)
+        observed = factory.doctor(self.home, self.store)
+        self.assertEqual(observed['errors'], [])
+        self.assertEqual(observed['content'], 'verified_complete_inventory')
+        self.assertEqual(observed['inventory_version'], 1)
+        self.assertEqual(observed['current_inventory_version'], 2)
+        second = self.stage()
+        factory.activate(self.home, self.store, second, self.source)
+        self.assertEqual(factory.doctor(self.home, self.store)['inventory_version'], 2)
+        factory.rollback(self.store)
+        self.assertEqual(factory.doctor(self.home, self.store)['active_release'], first)
+        self.assertEqual(factory.doctor(self.home, self.store)['errors'], [])
+        self.assertEqual(legacy.read_bytes(), (self.store / 'releases' / first / 'capsule.zip').read_bytes())
+        self.assertNotIn('inventory_version', json.loads(receipt_path.read_text()))
+
+    def test_editions_reject_self_consistent_incomplete_and_unknown_archives(self):
+        archive = self.work / 'current.zip'
+        factory.package.build(self.source, archive)
+        missing_helper = ['scripts/firestore_query_scenario.py']
+        cases = [
+            ([], 999), ([], True), ([], None), ([], 1),
+            (missing_helper, 2),
+            (missing_helper + ['scripts/fixtures/flutter_abi/TONIC-LICENSE'], 'legacy'),
+            (['scripts/workflow.py'], 'legacy'),
+        ]
+        for omit, edition in cases:
+            with self.subTest(omit=omit, edition=edition):
+                payload = self.rewrite_archive(archive, omit=omit, edition=edition)
+                with self.assertRaisesRegex(ValueError, 'inventory'):
+                    factory.archive_inventory(payload)
+        # The untagged complete current capsule is also a retained early input.
+        _, manifest = factory.archive_inventory(self.rewrite_archive(archive, edition='legacy'))
+        self.assertEqual(factory.package.reviewed_inventory(manifest)[0], 2)
+
+    def test_current_source_requires_current_helper_and_receipt_edition_agrees(self):
+        helper = self.source / 'scripts/firestore_query_scenario.py'
+        data = helper.read_bytes()
+        helper.unlink()
+        with self.assertRaisesRegex(ValueError, 'incomplete portable skill'):
+            self.stage()
+        helper.write_bytes(data)
+        release = self.stage()
+        receipt_path = self.store / 'releases' / release / 'receipt.json'
+        receipt = json.loads(receipt_path.read_text())
+        receipt['inventory_version'] = 1
+        os.chmod(receipt_path, 0o644)
+        receipt_path.write_text(json.dumps(receipt))
+        with self.assertRaisesRegex(ValueError, 'receipt inventory mismatch'):
+            factory.inspect_release(self.store, release)
+
+    def test_malformed_metadata_reports_drift_instead_of_crashing(self):
+        release = self.stage()
+        factory.activate(self.home, self.store, release, self.source)
+        receipt_path = self.store / 'releases' / release / 'receipt.json'
+        receipt = json.loads(receipt_path.read_text())
+        os.chmod(receipt_path, 0o644)
+        for invalid in (None, [], {**receipt, 'files': float(receipt['files'])},
+                        {**receipt, 'schema_version': True}):
+            with self.subTest(receipt=invalid):
+                receipt_path.write_text(json.dumps(invalid))
+                observed = factory.doctor(self.home, self.store)
+                self.assertEqual(observed['content'], 'drift_or_missing')
+                self.assertIn('release receipt mismatch', observed['errors'])
+                self.assertEqual(factory.load_state(self.store)['active_release'], release)
+        receipt_path.write_text(json.dumps(receipt))
+        archive = self.store / 'releases' / release / 'capsule.zip'
+        changes = (
+            lambda m: m.update(schema_version=True),
+            lambda m: m['files']['SKILL.md'].update(bytes=float(m['files']['SKILL.md']['bytes'])),
+            lambda m: m['files'].update({'SKILL.md': None}),
+        )
+        for amend in changes:
+            with self.assertRaises(ValueError):
+                factory.archive_inventory(self.rewrite_archive(archive, amend=amend))
+
     def test_staging_is_deterministic_complete_and_does_not_activate(self):
         first = self.stage()
         second = self.stage()

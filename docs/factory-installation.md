@@ -51,6 +51,14 @@ files are read-only by convention. Doctor compares the entire inventory,
 including added files or directories, missing resources and redirected links.
 It reports drift and does not repair it silently.
 
+Doctor checks the complete reviewed inventory for the installed release's edition,
+not the newest source edition. Adding a helper does not corrupt an older release.
+It reports both editions; a valid older release does not contain newer helpers.
+Untagged early capsules require an exact retained inventory. Source packaging
+still requires every current export, and unknown editions or incomplete closures
+are rejected. New archive staging requires the current edition; historical
+inspection does not relax initial admission.
+
 An absent discovery entry is safe to create. A symlink whose literal target is
 this checkout's exact canonical skill directory can be migrated; its original
 target is retained. Arbitrary symlinks, directories and files are collisions.
