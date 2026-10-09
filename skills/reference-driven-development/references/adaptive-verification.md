@@ -195,6 +195,15 @@ by separate contract-only authors survived; 6 were closed with contract-derived 
 and 9 lay where no independent reference observation existed. That is one authoring
 process and one model family, not a general rate.
 
+Measured limit: in a paired held-out comparison on three small single-module
+reconstruction tasks (three repeats per arm, one frontier model), implementers given
+this operation ran it on their own test suites in 7 of 9 runs. With no second author it
+could not qualify anything, held-out acceptance was 9 of 9 with and without it, and
+cost rose in 8 of 9 matched pairs (case means 1.2 to 1.4 times). The skill as a whole
+also cost more than no skill there without changing acceptance. Those tasks were at
+ceiling for the model, so this shows overhead, not absence of benefit on harder work.
+Use the challenge for evaluators that gate other work, with a separate seeding author.
+
 Continue seeded research from the actual failure: missing legal actions → driver and
 semantic-tree producers; stale replay → identity/precondition and cache contracts;
 false pass → oracle mutation and visual occlusion; expensive diagnosis → minimal state
