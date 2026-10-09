@@ -49,6 +49,14 @@ the original, then compare the reconstruction under the same inputs/time/service
 fixture. Normalize legitimate platform differences explicitly in the collector;
 never sort away event order or discard required state to obtain a pass.
 
+For each unresolved edge, retain the competing explanations, a probe that can
+distinguish them, and its entry condition. Qualify that the original reaches the
+subject using an independent positive control before interpreting zero hits.
+Escalate from static recovery to a focused runtime trace, then a bounded semantic
+comparison where needed. Use broader symbolic execution only when the focused
+route cannot answer the question and its additional cost is justified. Preserve
+unresolved targets and probe perturbations in the resulting evidence.
+
 `scripts/behavioral_evidence.py compare original.json candidate.json --output comparison.json`
 requires matching `case`, `environment` (shared controlled scenario identity),
 `inputs_sha256`, nonempty ordered `events` containing `boundary` and phase-entry
