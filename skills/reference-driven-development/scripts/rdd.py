@@ -21,6 +21,9 @@ REQUIRED = {
     "check": ("method", "outcome", "result", "limits"),
     "lesson": ("lesson", "scope", "validation", "revisit"),
     "change": ("reason", "scope", "revisit"),
+    # Factory receipts share this evidence journal; they are not another task store.
+    # The owned factory path validates event-specific semantics under its lock.
+    "factory_event": ("event", "root_task_id", "payload", "recorded_at"),
 }
 TARGETS = {
     "evidence": "reference", "contribution": "evidence",
@@ -71,6 +74,9 @@ def validate(record, previous, store, capture=False, verify_files=True):
             isinstance(value, str) and not value.strip()
         ):
             raise JournalError(f"{identifier}: missing or empty {field}")
+    if kind == 'factory_event':
+        if not isinstance(data['event'], str) or not data['event'].strip() or not isinstance(data['root_task_id'], str) or not data['root_task_id'].strip() or not isinstance(data['payload'], dict) or not isinstance(data['recorded_at'], str):
+            raise JournalError(f"{identifier}: invalid factory receipt envelope")
     if kind in ENUMS:
         field, choices = ENUMS[kind]
         if not isinstance(data[field], str) or data[field] not in choices:
@@ -162,6 +168,12 @@ def append(store, record, allow_drift=False):
         stream.write(payload.encode("utf-8"))
         stream.flush()
         os.fsync(stream.fileno())
+    # Persist a newly created journal's directory entry as well as its bytes.
+    directory = os.open(store.parent, os.O_RDONLY)
+    try:
+        os.fsync(directory)
+    finally:
+        os.close(directory)
     return record
 
 

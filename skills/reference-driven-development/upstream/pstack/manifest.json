@@ -1,0 +1,1520 @@
+{
+  "format_version": 1,
+  "source": {
+    "repository": "cursor/plugins",
+    "revision": "ccb5507cec1546dc88135c1139c811e6c59115ba",
+    "subtree": "pstack",
+    "version": "0.15.15",
+    "license": "MIT",
+    "url": "https://github.com/cursor/plugins/tree/ccb5507cec1546dc88135c1139c811e6c59115ba/pstack"
+  },
+  "source_files": [
+    {
+      "original_path": "pstack/.cursor-plugin/plugin.json",
+      "installed_path": "sources/pstack/.cursor-plugin/plugin.json",
+      "git_blob_sha1": "68cc4443afd6b6f4881ab572b779f39d47854d42",
+      "sha256": "7bc736c60985805f70465e044e5adc7028663f72a73deea7fa3e95e52d70dc8e",
+      "bytes": 722
+    },
+    {
+      "original_path": "pstack/LICENSE",
+      "installed_path": "sources/pstack/LICENSE",
+      "git_blob_sha1": "6b5400237fdf6545be0b8fae370d6f2fcff8fb25",
+      "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e",
+      "bytes": 1067
+    },
+    {
+      "original_path": "pstack/README.md",
+      "installed_path": "sources/pstack/README.md.source",
+      "git_blob_sha1": "7227da33bb709bf8744dbde5f3da38016a19350d",
+      "sha256": "7f39feae81103e18b567e1fa5075cba86425cf4697a01be66a7422ef93c2c855",
+      "bytes": 24538
+    },
+    {
+      "original_path": "pstack/agents/poteto-agent.md",
+      "installed_path": "sources/pstack/agents/poteto-agent.md.source",
+      "git_blob_sha1": "f9d79a75560520cbb2f939c587ce00fa7e33037a",
+      "sha256": "abe41c169ecbfe65641f1725f4188d568e046c0dec7fd2dc271abb594c299201",
+      "bytes": 686
+    },
+    {
+      "original_path": "pstack/skills/architect/SKILL.md",
+      "installed_path": "sources/pstack/skills/architect/SKILL.md.source",
+      "git_blob_sha1": "c9c0726f57556f4c26bd7e7df5314ba15b3f1ac9",
+      "sha256": "922238947195f2fb825e90688bb6cfa520b81a35a7bee12223c73a6cf96ae64b",
+      "bytes": 5661
+    },
+    {
+      "original_path": "pstack/skills/architect/references/design-red-flags.md",
+      "installed_path": "sources/pstack/skills/architect/references/design-red-flags.md.source",
+      "git_blob_sha1": "f8503c9595b289c607ff5088f82b21197edf94ec",
+      "sha256": "d0e639e4cc588ec865f930d3a4111faad60987ae36925917e319d7ceca7c69ce",
+      "bytes": 3009
+    },
+    {
+      "original_path": "pstack/skills/architect/references/rationale-template.md",
+      "installed_path": "sources/pstack/skills/architect/references/rationale-template.md.source",
+      "git_blob_sha1": "a10f77f59510c532cd909faaf3bfeee5ffbfd588",
+      "sha256": "0cedfccdc7b47fc881febd5a8293eecbc542c20f8df825639904a8102d2eb5d3",
+      "bytes": 3050
+    },
+    {
+      "original_path": "pstack/skills/architect/references/runner-prompt.md",
+      "installed_path": "sources/pstack/skills/architect/references/runner-prompt.md.source",
+      "git_blob_sha1": "b1ad21aef22e80d718c361787190b599eb359d6c",
+      "sha256": "21dd5314aab778c5007228027a4591d97693fbec6ab86524037772b63f40948e",
+      "bytes": 3092
+    },
+    {
+      "original_path": "pstack/skills/arena/SKILL.md",
+      "installed_path": "sources/pstack/skills/arena/SKILL.md.source",
+      "git_blob_sha1": "bd260a064d6e07a06073df6841e3d180d643372a",
+      "sha256": "6e17736b5228b661569c3af054f8302c55cf9bf1649447652d53705cce38bed6",
+      "bytes": 4937
+    },
+    {
+      "original_path": "pstack/skills/automate-me/SKILL.md",
+      "installed_path": "sources/pstack/skills/automate-me/SKILL.md.source",
+      "git_blob_sha1": "cd3636e9a53c7c782cf15254204dccfc854086b5",
+      "sha256": "1510979b0b71b54284427a19c09918f8b1fdfc168f9b7f9e30098793a5ec88ef",
+      "bytes": 7164
+    },
+    {
+      "original_path": "pstack/skills/benchmark-checklist/SKILL.md",
+      "installed_path": "sources/pstack/skills/benchmark-checklist/SKILL.md.source",
+      "git_blob_sha1": "c02adb78929d0c1218fba554a31c423d65deb24d",
+      "sha256": "6a767e788a60428fa14e645ee10fe2e49896e514ff654f668b1d824deb9038e8",
+      "bytes": 5409
+    },
+    {
+      "original_path": "pstack/skills/blast-radius/SKILL.md",
+      "installed_path": "sources/pstack/skills/blast-radius/SKILL.md.source",
+      "git_blob_sha1": "b296cce0d746260a53c16e3671cb05bacfe82daf",
+      "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
+      "bytes": 3856
+    },
+    {
+      "original_path": "pstack/skills/bro/SKILL.md",
+      "installed_path": "sources/pstack/skills/bro/SKILL.md.source",
+      "git_blob_sha1": "b1701b778639c08bfc306291d70170c525c66a68",
+      "sha256": "aa329d0ceeeecb6822a7174ad76bb07a7826a3c52ceb6a588dec4138815084bb",
+      "bytes": 267
+    },
+    {
+      "original_path": "pstack/skills/correct/SKILL.md",
+      "installed_path": "sources/pstack/skills/correct/SKILL.md.source",
+      "git_blob_sha1": "c09f486e32935a154dd98daa13aa8187856600fe",
+      "sha256": "bf482bacc972b3f124a4af8bf9364b4b3e280cb5845e44c326ea4f4565e5c904",
+      "bytes": 2445
+    },
+    {
+      "original_path": "pstack/skills/create-verification-skill/SKILL.md",
+      "installed_path": "sources/pstack/skills/create-verification-skill/SKILL.md.source",
+      "git_blob_sha1": "f869e26122991252373d5b8f6357e5b9ff195a00",
+      "sha256": "644f2551403c1bca01a2855b34611b6e7be0ce0dc5b204514c376c0f6a6e6ac4",
+      "bytes": 5879
+    },
+    {
+      "original_path": "pstack/skills/create-verification-skill/references/feature-map-example/README.md",
+      "installed_path": "sources/pstack/skills/create-verification-skill/references/feature-map-example/README.md.source",
+      "git_blob_sha1": "fb64570cfab3bbe672fe80925651933ebd57aa33",
+      "sha256": "cb7bd782cf89968a4ba3d58a5151db837430db92d19a6f52a906973b77b516ba",
+      "bytes": 2601
+    },
+    {
+      "original_path": "pstack/skills/create-verification-skill/references/feature-map-example/create-note.md",
+      "installed_path": "sources/pstack/skills/create-verification-skill/references/feature-map-example/create-note.md.source",
+      "git_blob_sha1": "21357566b69223a503d6780a04fb90ce540eae22",
+      "sha256": "644a44c74f35d38c2feb7cd05a0121fdebbb623e8dc376c185b565a581d1ccf7",
+      "bytes": 2926
+    },
+    {
+      "original_path": "pstack/skills/create-verification-skill/references/feature-map-example/search.md",
+      "installed_path": "sources/pstack/skills/create-verification-skill/references/feature-map-example/search.md.source",
+      "git_blob_sha1": "1f8e57d3aaf19cf27a9464d55fa72e46bcbc8b0f",
+      "sha256": "6e87b9e7f2791a7776ba1bb83f371cd285c306c67f19d245cc4dd6ca3015c823",
+      "bytes": 3478
+    },
+    {
+      "original_path": "pstack/skills/figure-it-out/SKILL.md",
+      "installed_path": "sources/pstack/skills/figure-it-out/SKILL.md.source",
+      "git_blob_sha1": "fbf3fb122cab127d71d3c41e84711e61cc5dec4c",
+      "sha256": "0eb9485f0e7d84fee56b5d0f0af0faf4635e3ca87c8cba3970c01293b76ecc19",
+      "bytes": 4059
+    },
+    {
+      "original_path": "pstack/skills/how/SKILL.md",
+      "installed_path": "sources/pstack/skills/how/SKILL.md.source",
+      "git_blob_sha1": "139cac5e4dce5d5889daaf77faa8d5f81dd87318",
+      "sha256": "7e0d902484a90eba73dcf518bff478dc5b962b456d23c3d0a188c2ce36b236d8",
+      "bytes": 3081
+    },
+    {
+      "original_path": "pstack/skills/how/references/explainer-prompt.md",
+      "installed_path": "sources/pstack/skills/how/references/explainer-prompt.md.source",
+      "git_blob_sha1": "3a36fb6736c5b74ac2774350841e332a019dec94",
+      "sha256": "ddb89cebefc24e2b54517a331aedfe045b6971e101f45c71b8cef4cccff45bff",
+      "bytes": 3085
+    },
+    {
+      "original_path": "pstack/skills/how/references/explorer-prompt.md",
+      "installed_path": "sources/pstack/skills/how/references/explorer-prompt.md.source",
+      "git_blob_sha1": "9b4b0594bfd779015616e9d280369aba939583b4",
+      "sha256": "a3b44a6e5bb16a6d4d1cac19db8ed5322ffd5f5f5d45baca4e73990ca096f8be",
+      "bytes": 2684
+    },
+    {
+      "original_path": "pstack/skills/interrogate/SKILL.md",
+      "installed_path": "sources/pstack/skills/interrogate/SKILL.md.source",
+      "git_blob_sha1": "bac0049e40b624343537d12fb8e13a974a5f376a",
+      "sha256": "2f7e570ec23791ed2e485a09c98ed0597c46035e2050b351b84d3dc760ddd71f",
+      "bytes": 4998
+    },
+    {
+      "original_path": "pstack/skills/interrogate/references/code-quality-review.md",
+      "installed_path": "sources/pstack/skills/interrogate/references/code-quality-review.md.source",
+      "git_blob_sha1": "16581250d81044c7e80fe234c4970a3f7b7fc98a",
+      "sha256": "79162fda183eafd40d51661fbb5e151c7ba250f89e506ba17f5bd135dcbd50a8",
+      "bytes": 5217
+    },
+    {
+      "original_path": "pstack/skills/interrogate/references/lead-judgment.md",
+      "installed_path": "sources/pstack/skills/interrogate/references/lead-judgment.md.source",
+      "git_blob_sha1": "5ce526097fdd3dfeaf4cd3b126a3f486c3ee36ae",
+      "sha256": "6e5bdf5670eb34017692e9b6c546f36ac7552e6bb9f3f2f3429164fcc46a9361",
+      "bytes": 3465
+    },
+    {
+      "original_path": "pstack/skills/interrogate/references/reviewer-prompt.md",
+      "installed_path": "sources/pstack/skills/interrogate/references/reviewer-prompt.md.source",
+      "git_blob_sha1": "13a252b2c3cd18522d4c8dc39a7030477037b249",
+      "sha256": "e0598e254792b56de39bb16b1e6db559b03a522fdc54b98f942d254090920ae6",
+      "bytes": 2491
+    },
+    {
+      "original_path": "pstack/skills/interrogate/references/rubric.md",
+      "installed_path": "sources/pstack/skills/interrogate/references/rubric.md.source",
+      "git_blob_sha1": "2d92f1b83e13be03fb10f20cba12639a1406a2da",
+      "sha256": "a85aa801abbaf14434f00579440abc0d8e2723227ba8bf57de7cca8d6e7d2f25",
+      "bytes": 5025
+    },
+    {
+      "original_path": "pstack/skills/maintain-verification-skill/SKILL.md",
+      "installed_path": "sources/pstack/skills/maintain-verification-skill/SKILL.md.source",
+      "git_blob_sha1": "a2680b91fead45a0b4963d8c367a854956bea59d",
+      "sha256": "515c0eaa054b3f6be1b1fb06f2c2f173c80fddb58bbcac57576f89c479bc68e8",
+      "bytes": 4922
+    },
+    {
+      "original_path": "pstack/skills/make-bot-ui/SKILL.md",
+      "installed_path": "sources/pstack/skills/make-bot-ui/SKILL.md.source",
+      "git_blob_sha1": "285df7569758a70e62e9f3596a1f829a5b6ba80e",
+      "sha256": "3624c8ef16cf2e48deb2a4049e72c6962a9431c8d6c6af90e7bd7ea0375224ec",
+      "bytes": 4649
+    },
+    {
+      "original_path": "pstack/skills/no-comments/SKILL.md",
+      "installed_path": "sources/pstack/skills/no-comments/SKILL.md.source",
+      "git_blob_sha1": "3b3e76295a7ad66806dcc683e4de92fb25690f8b",
+      "sha256": "5c5b0882297d704c3a9720c52b7a793c68b013eaf717989f0945624efdfe2b05",
+      "bytes": 2560
+    },
+    {
+      "original_path": "pstack/skills/poteto-help/SKILL.md",
+      "installed_path": "sources/pstack/skills/poteto-help/SKILL.md.source",
+      "git_blob_sha1": "a97ecddf8953b92bda7d8a8cc070faf1d68abc79",
+      "sha256": "ea71bcb15c023a5d9cc70686e4812144687ffe03bf80d85cc480af3e0b181d1e",
+      "bytes": 13433
+    },
+    {
+      "original_path": "pstack/skills/poteto-help/references/prompting.md",
+      "installed_path": "sources/pstack/skills/poteto-help/references/prompting.md.source",
+      "git_blob_sha1": "6b72b2e6081fdb78a3261bd77cf7334596d1ee20",
+      "sha256": "463f450c44a60afd001a2f69fdf8a5dea174351f339369b12ec3c41515e564d3",
+      "bytes": 3166
+    },
+    {
+      "original_path": "pstack/skills/poteto-help/references/recipes.md",
+      "installed_path": "sources/pstack/skills/poteto-help/references/recipes.md.source",
+      "git_blob_sha1": "73118e2a2d2d025938d7b53b541b37cb1fe9c449",
+      "sha256": "1872323419a3e5c7783b1933f7a180ca26c25a6e1f4ec83bd65e091ebbfb812b",
+      "bytes": 3287
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/SKILL.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/SKILL.md.source",
+      "git_blob_sha1": "de51c56164ff3da8f958437e207d14cec7d7fe99",
+      "sha256": "31cd02290360ce63564ef22b74d69fc6d90e62181d05a644cbed8f6c47cc9412",
+      "bytes": 20563
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/authoring-a-skill.md.source",
+      "git_blob_sha1": "8c5a55a44f5e95bba92f652da0ac87e941c49538",
+      "sha256": "f6a13a445c360b48d6cd72780ac01955f45b82826476efe0e67c7559329407aa",
+      "bytes": 831
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/autonomous-run.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/autonomous-run.md.source",
+      "git_blob_sha1": "12c3a7d84effcacf3550cb893be67498d7b28a4a",
+      "sha256": "15e54ad3ac92565613980772d8708de6e19cc4690bfd4bb3fb8836522407377b",
+      "bytes": 1878
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/autopilot-full.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/autopilot-full.md.source",
+      "git_blob_sha1": "d5a68c339e25ac016ffad9c51d858f0f6c37937a",
+      "sha256": "05ca30a16242c19d0c78ba1e88cca66f858d75252cb154fd740099fe292de802",
+      "bytes": 9431
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/autopilot-stack.md.source",
+      "git_blob_sha1": "750a7547235ae8eb340285684b9be7c36dff323a",
+      "sha256": "007c0a3b12011954a224f54773ef4ad7b75918be0a311914c1b51ad4e794c1e5",
+      "bytes": 5031
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/babysit.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/babysit.md.source",
+      "git_blob_sha1": "683cf0ba889789cbe2d880fce667c75349f9ed12",
+      "sha256": "a0346c37c2313f36a863b80f66ee7b98059c2242adf74fc7b3e48abdb9ec6f5a",
+      "bytes": 8289
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/bug-fix.md.source",
+      "git_blob_sha1": "eeebc42b7477d435d8ac61d631d84822f908f59c",
+      "sha256": "018bbc146ae19145caa6c7e70591fee081b64447dda1c1c4b681c9974d928b13",
+      "bytes": 2255
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/eval.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/eval.md.source",
+      "git_blob_sha1": "3dae34e2ef0cbdd9bafa5ab372da5ea143d48452",
+      "sha256": "b862bfa2fae2399abf047a8e80d3e3dddb64003af96fb1cebb625216131e36bb",
+      "bytes": 2524
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/feature.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/feature.md.source",
+      "git_blob_sha1": "79a6bbbe0ce61c3b5ef9af1ee8e3ccdb0557edc6",
+      "sha256": "3a62cc4a8cbcf144bb9dd05f05420a15be0d38b784d3b141bb730a5852f50a62",
+      "bytes": 2766
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/hillclimb.md.source",
+      "git_blob_sha1": "c6441b92d30a71489d88eae5bfa8dc457da55cb1",
+      "sha256": "244f289898fe67a458065e90fe8217c916c5acf61cdee8975ade3f9831a12e91",
+      "bytes": 4403
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/investigation.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/investigation.md.source",
+      "git_blob_sha1": "cd119f04f23e0b7acb3f8cc5ba13ce4ab7aa6c7d",
+      "sha256": "dc66bcf6af3a074fc7f67aa5e12b93ef571a4fb4d8e17f2f1af5ae5359f42e46",
+      "bytes": 928
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/multi-phase-plan.md.source",
+      "git_blob_sha1": "f8ed78a6533cc5d738d3a3ec106bf2577d3f98ca",
+      "sha256": "27d310e3fc3937a60b8fcbe1318f9d249a7477a722907bf85b3e4eb3dc436b11",
+      "bytes": 12977
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/opening-a-pr.md.source",
+      "git_blob_sha1": "4e25989729174580e48ce36e265f298231c6de7f",
+      "sha256": "ab40de7163c1c6e274f46ee559b2e53ef45673703f601f13f4931c199e6fb90f",
+      "bytes": 6142
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/orchestrate.md.source",
+      "git_blob_sha1": "d5b6d008026ff0177f52e22a6fb4b2edae5c87e2",
+      "sha256": "d42b4375f1bd4ce23da0b575a198571a2117df7eea10c3c9fc6d92ae1053f7be",
+      "bytes": 16779
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/pause-safely.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/pause-safely.md.source",
+      "git_blob_sha1": "9d1c5f8303976fff40de099f7f28185909430c11",
+      "sha256": "77968cfe5f4a71a8cd33e0ae8ffcdbd88dd693a212c240457773e6c40c96c21d",
+      "bytes": 1135
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/perf-issue.md.source",
+      "git_blob_sha1": "405c7a4362bedbd4194a5ef234553adf0dff78c9",
+      "sha256": "2b88ad0f880e4d4d755ac19fe52414d6631d6baa816d060f53cf0a7429d7e14a",
+      "bytes": 1446
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/prototype.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/prototype.md.source",
+      "git_blob_sha1": "18bedc7e9249d180f9198d5b4b13e3817d41d281",
+      "sha256": "7aa1f52c691c3d46d5afc527b23f90977fce869ce33573c73c81a4c7f0cde962",
+      "bytes": 2161
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/refactoring.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/refactoring.md.source",
+      "git_blob_sha1": "df2a863b531906c64f92b9f9d8feb62f8c7a8665",
+      "sha256": "50f4f7d3d301551f8b8a57c3303c99958c5ca630ae0d0051823b6987c0eb5b96",
+      "bytes": 3211
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/runtime-forensics.md.source",
+      "git_blob_sha1": "ba659bfe1c4c2f956f3285974bfdc941120f9948",
+      "sha256": "594f02c40c243a346e1f57b688ecf2ed5e882f21b3d24ed2204d1ac6f1c24a8a",
+      "bytes": 1210
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/session-pickup.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/session-pickup.md.source",
+      "git_blob_sha1": "9b2ed06e0ff8b01bf03b7a0d6a4cbb8ba3a46720",
+      "sha256": "1604fb463f7c7410d43fa024ca76c1c1824c166a01fd69d61f073d06fdca2a47",
+      "bytes": 1678
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/shipping.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/shipping.md.source",
+      "git_blob_sha1": "0f1d41f189222b991734015926a3b22607e1b92f",
+      "sha256": "19f3f6803a7bbe9ff04f624b03e3b55f07ac0a05e991aa00d5fe51239b920b2a",
+      "bytes": 5439
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/trace-forensics.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/trace-forensics.md.source",
+      "git_blob_sha1": "48ed6b2f690215027eda96a1897ed98212bbd07a",
+      "sha256": "137ce3984fb96e45971fdff4d3c79fa4ccc647c5b30ae4945783b9fb23f8cec7",
+      "bytes": 1865
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/visual-parity.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/visual-parity.md.source",
+      "git_blob_sha1": "248830ec74a593fc22143a842026388f92f1b9f4",
+      "sha256": "950ca51999a6454c98eee6bcbc3d1bbe501a4e3a5d5439b6f6ddc378991b256c",
+      "bytes": 1197
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/playbooks/worktree-cleanup.md.source",
+      "git_blob_sha1": "39c9ef9f368ac63b0e4245503302a4c174e846d6",
+      "sha256": "fc464dc4121926df1704f483c5feca83717c0a40b4651d3e11bd3aedd89441b6",
+      "bytes": 2932
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/references/bugbot-triage.md",
+      "installed_path": "sources/pstack/skills/poteto-mode/references/bugbot-triage.md.source",
+      "git_blob_sha1": "b2fc7d35712783707607cf2f39752885c8d5105c",
+      "sha256": "b2d146c770d8d3593e1ef3d77b668039b8e1f78093ea1a86f1d45d7f99614309",
+      "bytes": 9629
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/bootstrap.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/bootstrap.ts",
+      "git_blob_sha1": "d9c63e2007449a80000abe75ecaf7f2a0bd5826b",
+      "sha256": "ccd2ed08fd9da9d0d942e5f2491cfc74bb92d8a08fa51755e0da1ac8de287361",
+      "bytes": 1737
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/bun.lock",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/bun.lock",
+      "git_blob_sha1": "65f0c662f300a0f72b319ca93ea18f56219c2581",
+      "sha256": "667d9cf7222e9aae3fa42a4be383e657784216e9df115da02227fbc5ac7bbe46",
+      "bytes": 6679
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/check-plan.mjs",
+      "git_blob_sha1": "d242f28eb801e781ccc2f2ba93b700b263a77816",
+      "sha256": "4f9432d9989880b6afc2bdda503d5b12a9d07d357ecf31936b7ab5e83bc80523",
+      "bytes": 7594
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
+      "git_blob_sha1": "538775e37f3ac6fd2dd128883b7f7fe51c1316d5",
+      "sha256": "773153ac74de6eb15f58d2682f487f5f30672d7efe3ef1d24a131aa9129d279b",
+      "bytes": 18425
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/orch/orch.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/orch/orch.ts",
+      "git_blob_sha1": "219ac17bd8805b45140eca7c429834be9ded1b7d",
+      "sha256": "f091687df627a0b75fabd54af58945a9cd6c7039ef0622012ac9ed60cd8ec434",
+      "bytes": 15511
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/orch/store.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/orch/store.ts",
+      "git_blob_sha1": "5e6c602fb670a6b5598977f5bf85d717cf797ef7",
+      "sha256": "0eae7cf69282e827b1227166f2e32cee3560f2f3e65b3f1f2faf6fb83d3b4c5b",
+      "bytes": 42927
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/package.json",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/package.json",
+      "git_blob_sha1": "8a3dfe27c2d0221a786e1ce61963d51c55260725",
+      "sha256": "d1f815091209d49763775cc188e8e06ff32d5fec648bffd2272bc25a165e87c3",
+      "bytes": 352
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/cli.test.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/cli.test.ts",
+      "git_blob_sha1": "0656b413e6c180858ca42981105944c45caf9dca",
+      "sha256": "a35592b4c6da96caf8d47987e9cd503fab6c7774ab87d11a43f24b4b5df2a9d1",
+      "bytes": 6161
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/cli.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/cli.ts",
+      "git_blob_sha1": "ec8a2f27c5ac24866b699e6395e7d1f32e595068",
+      "sha256": "89c08863089181a232be782c4b2ed90a1552f44aeecb0dcb7aac2c623620e680",
+      "bytes": 6983
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
+      "git_blob_sha1": "2312522cd7399334115a5f39fd6438aab7fc5aa5",
+      "sha256": "e53e31b7f03068063f53a99a3591b052aaed66e4e2b196b3a364980f60324ab1",
+      "bytes": 2944
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
+      "git_blob_sha1": "87f4048f08a63a54975c4ef2de8065375e751683",
+      "sha256": "0cbce011050522938523e36bb42a260e92b812dcd2076930fa681672ad316b24",
+      "bytes": 9059
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
+      "git_blob_sha1": "79bc06fb682c5d99de7d48338b0a6ecd27a518da",
+      "sha256": "d1bbbafbe8e2c703c84da2029de7f2c4011412512f8cf65a42100f46bcb92c8a",
+      "bytes": 24072
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
+      "git_blob_sha1": "0620ddedde46da8e763ab2a55ebceaad2aa6d0a7",
+      "sha256": "a9fedb25feefd1f57ef6a662f80c99018690170a3a8070773a08eaf694d1d3d9",
+      "bytes": 12397
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
+      "git_blob_sha1": "4665be37e8f9afff1c9e1f5dd60d98e0d70c8c6c",
+      "sha256": "68d240505852cf23c9b2dea463342e9e61243f486b3cc86c735d140f9ee7be49",
+      "bytes": 25132
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/render.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/render.ts",
+      "git_blob_sha1": "0e935839357335f24ab1bbc193d761495646ea99",
+      "sha256": "2b709e86628d5b8fdb61f860e60ababc342b0626c67576305442cf548283a604",
+      "bytes": 7083
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/tsconfig.json",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/tsconfig.json",
+      "git_blob_sha1": "477af90b05cbd24fcf974fd73cf331d5ac7379cc",
+      "sha256": "1ecccc72320b086c63ce3f73c959896fd747363e63553b3b1136296ea4069e45",
+      "bytes": 270
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/types.compile.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/types.compile.ts",
+      "git_blob_sha1": "1b53279c7f3e5da55703ed17d6ad0616254c5751",
+      "sha256": "621af4c9a664fbf699a9737efccdc248abb416df8819c9dc5f824beae2b9b1d6",
+      "bytes": 2258
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
+      "git_blob_sha1": "b67144e0d757e0b61ff079f981ced0a98555ea9d",
+      "sha256": "64ba6221e3bfe61bbb292337d199cdec6309455477280efb060203dba34e0e91",
+      "bytes": 12359
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/watch-pr/watch-pr",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/watch-pr/watch-pr",
+      "git_blob_sha1": "99807d577c3b006cfe6ee9e149cf2914bfd4afd6",
+      "sha256": "d955603be6cc0e8b8ffcec722f635192b2261410b1f2929abea94480e47eb5d4",
+      "bytes": 211
+    },
+    {
+      "original_path": "pstack/skills/poteto-mode/scripts/worktree-audit.sh",
+      "installed_path": "sources/pstack/skills/poteto-mode/scripts/worktree-audit.sh",
+      "git_blob_sha1": "b9af08160032aeb17143248f2a3648e98f5a75b3",
+      "sha256": "95b8530f3c0ccada8cabc4b0727c052fbc85c141531375aaace65c427af8aecc",
+      "bytes": 3984
+    },
+    {
+      "original_path": "pstack/skills/principle-attack-the-premise/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-attack-the-premise/SKILL.md.source",
+      "git_blob_sha1": "f9785ff9fdcf37d1c689e4468da7d611f3b76d4b",
+      "sha256": "c87bd7536f772f8a403ad8155535ee17a1bbec9a353156693eb3bb1520c87ae3",
+      "bytes": 1941
+    },
+    {
+      "original_path": "pstack/skills/principle-boundary-discipline/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-boundary-discipline/SKILL.md.source",
+      "git_blob_sha1": "dfe9a6fb0e5acd6ae43a41437ee0951adfe839cb",
+      "sha256": "62ac2862c2caa22dd14531f51c9c6bb445ceb198ca98a687e25b4d47c1f10a28",
+      "bytes": 1883
+    },
+    {
+      "original_path": "pstack/skills/principle-build-the-lever/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-build-the-lever/SKILL.md.source",
+      "git_blob_sha1": "277189a10b00fddc7cbb63fcf2323c7341abb0df",
+      "sha256": "458b269eab8e95a1573276955312f7d2a13ae8599879a9efc748248f6bc34b56",
+      "bytes": 2458
+    },
+    {
+      "original_path": "pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-encode-lessons-in-structure/SKILL.md.source",
+      "git_blob_sha1": "df9cd5ff2fb3c18267349cc6aecd8121848ef834",
+      "sha256": "77044c83a9ac6df78fc643887ea5f1f11f082adaf14b717c060cdaed03cce863",
+      "bytes": 2211
+    },
+    {
+      "original_path": "pstack/skills/principle-exhaust-the-design-space/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-exhaust-the-design-space/SKILL.md.source",
+      "git_blob_sha1": "85dd16f1312f3427e2dddcfc8e7deb89e2555bb3",
+      "sha256": "8583310d7297b7823d75494faa57b003564d436807febecdecbd8321abe5cf6e",
+      "bytes": 1152
+    },
+    {
+      "original_path": "pstack/skills/principle-experience-first/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-experience-first/SKILL.md.source",
+      "git_blob_sha1": "5ea51741302cf3af4cc0b90ec70815bd3208dbf2",
+      "sha256": "58903529d733b1c1a7c9ccf127d45ef3c7d0d9f0b81164a4dc6b80efe6f2912b",
+      "bytes": 1184
+    },
+    {
+      "original_path": "pstack/skills/principle-explain-the-number/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-explain-the-number/SKILL.md.source",
+      "git_blob_sha1": "9c22351d1fbe1ffcf277e61aef9fdb7816306fa7",
+      "sha256": "5aac99e7ce0bb1b37e2579acf4fe88c32a1456d9d46afd4a57cfe1df9092e89c",
+      "bytes": 2109
+    },
+    {
+      "original_path": "pstack/skills/principle-fix-root-causes/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-fix-root-causes/SKILL.md.source",
+      "git_blob_sha1": "7e5a419aeec97b4076fa517865013677428a9fa3",
+      "sha256": "ba4cd38da1dcc8fe5432feb64457cba95594736a9b21b2ebf8f8c52aee068707",
+      "bytes": 1246
+    },
+    {
+      "original_path": "pstack/skills/principle-foundational-thinking/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-foundational-thinking/SKILL.md.source",
+      "git_blob_sha1": "19cc6c0eaa6fcbc2863fb73d1d25ca196c6a46e0",
+      "sha256": "864b827e8199d946ce58beca0f89c4ed4099ed6e426fb698a3aaa45de2a9eea2",
+      "bytes": 1530
+    },
+    {
+      "original_path": "pstack/skills/principle-guard-the-context-window/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-guard-the-context-window/SKILL.md.source",
+      "git_blob_sha1": "c4db544909b26981c45eed9caa6591d32885f841",
+      "sha256": "d2cef147862576e3d709b7afc149d85196245e8338b9c7eef337c95fba412b3e",
+      "bytes": 939
+    },
+    {
+      "original_path": "pstack/skills/principle-laziness-protocol/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-laziness-protocol/SKILL.md.source",
+      "git_blob_sha1": "e5bc77e62aa96ae13e482a84df61b3c711c5d828",
+      "sha256": "9006579e9e3f33955d17569733db688ae65f22577dc3b21803d219a5a8445aff",
+      "bytes": 1371
+    },
+    {
+      "original_path": "pstack/skills/principle-make-operations-idempotent/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-make-operations-idempotent/SKILL.md.source",
+      "git_blob_sha1": "a0834247ca99b09c11441747717a8034d4c22d7c",
+      "sha256": "540738217c3da7bf513b9886924ad6a2bc77e58be867f5bd2e1831c74bf2ce70",
+      "bytes": 1390
+    },
+    {
+      "original_path": "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md.source",
+      "git_blob_sha1": "06c7cfd87becc62d614d0af075b792f8ec6eb21d",
+      "sha256": "09978915a4a11990cf0a9a02d9c08cc59e0b7a04c5c24b83aa560fbe4146f75b",
+      "bytes": 1146
+    },
+    {
+      "original_path": "pstack/skills/principle-minimize-reader-load/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-minimize-reader-load/SKILL.md.source",
+      "git_blob_sha1": "64541d963123e344078d82fd3977e857e76129df",
+      "sha256": "42551c5dc74cd578163c148da552db3ff67d29b78600ef216bfd311fb828fe69",
+      "bytes": 2095
+    },
+    {
+      "original_path": "pstack/skills/principle-model-the-domain/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-model-the-domain/SKILL.md.source",
+      "git_blob_sha1": "e1d664a19243c90a84e5e7a816e9e05146c88720",
+      "sha256": "bbadbb9a723fac3f76e782ae45665eb94058ec10993e4bae36d4dc6b0e4eac07",
+      "bytes": 2082
+    },
+    {
+      "original_path": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-never-block-on-the-human/SKILL.md.source",
+      "git_blob_sha1": "11f08b6ef1fd93a3b3e47c57eb84716dc9acbff9",
+      "sha256": "f2764bb9338cbfc788c903cf4b9cd0a5f4042d3a04dd6d59cbd525d9beaadd0a",
+      "bytes": 1172
+    },
+    {
+      "original_path": "pstack/skills/principle-outcome-oriented-execution/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-outcome-oriented-execution/SKILL.md.source",
+      "git_blob_sha1": "c49be0bc74783f0dee013101365ae09b2abb48a2",
+      "sha256": "10eb91633aa570355ba4bb37088fcade2b22e498df7a58edc749e65bc5a78e2d",
+      "bytes": 1078
+    },
+    {
+      "original_path": "pstack/skills/principle-prove-it-works/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-prove-it-works/SKILL.md.source",
+      "git_blob_sha1": "5dc14a3b06f9d579e5c17cd8a7242f432ddb3125",
+      "sha256": "ec79a15025bac8d33d62011c54f3b612733fd2a024e623b531b3637aa75070e2",
+      "bytes": 1371
+    },
+    {
+      "original_path": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-redesign-from-first-principles/SKILL.md.source",
+      "git_blob_sha1": "090a4325f43a96080cce3895f0e932b62c39146a",
+      "sha256": "a1c7fd0a96b40e12a74bceb0e6bb20a9666dd844dcabfb624acb27da23b929fe",
+      "bytes": 844
+    },
+    {
+      "original_path": "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md.source",
+      "git_blob_sha1": "ff93b4a2032c08e2232992a9a24f2891ee14e58f",
+      "sha256": "05294b40448e927c5da1c7b6f5c6b9fed3744637e3833d2d948b9154a9dd00bb",
+      "bytes": 1565
+    },
+    {
+      "original_path": "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-sequence-verifiable-units/SKILL.md.source",
+      "git_blob_sha1": "986371260ebccd9a5a6818c9561e88c1d270d0ee",
+      "sha256": "2ccbbacc56ace5afdfb8670cef19d7bd009fb2a0033b9a741cbdf2b6baf72187",
+      "bytes": 1705
+    },
+    {
+      "original_path": "pstack/skills/principle-subtract-before-you-add/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-subtract-before-you-add/SKILL.md.source",
+      "git_blob_sha1": "d28770cf47a5798d0250a25ad494aedfecad154e",
+      "sha256": "a983a50e732c1ed315eba7aaf47a61329e31c4794eb1ab9d25d9945265b31e03",
+      "bytes": 1094
+    },
+    {
+      "original_path": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-test-behavior-not-implementation/SKILL.md.source",
+      "git_blob_sha1": "42de6f8f7cab01b9f67aa28bd59b128f7574fbab",
+      "sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e",
+      "bytes": 2575
+    },
+    {
+      "original_path": "pstack/skills/principle-type-system-discipline/SKILL.md",
+      "installed_path": "sources/pstack/skills/principle-type-system-discipline/SKILL.md.source",
+      "git_blob_sha1": "6030f171bee0d1902cf7ca91f06225e09f0f5433",
+      "sha256": "c83da8031ffb4c86410030d3e261f659598fca2b7d8158fd9dc269d70a3a025e",
+      "bytes": 4922
+    },
+    {
+      "original_path": "pstack/skills/recall/SKILL.md",
+      "installed_path": "sources/pstack/skills/recall/SKILL.md.source",
+      "git_blob_sha1": "a70062a3f89a8d68b3391bc71fc4c6cc2dfcf6a4",
+      "sha256": "d265b0e5b6dc5b89c0407f3387d24462c988e1990a37d5359735137908128c5a",
+      "bytes": 5212
+    },
+    {
+      "original_path": "pstack/skills/reflect/SKILL.md",
+      "installed_path": "sources/pstack/skills/reflect/SKILL.md.source",
+      "git_blob_sha1": "5ac697a2cc4cd4d066772b76855848a49a8b33c6",
+      "sha256": "31b8fb866ebe084e7fb7f16dc0ea46ab84ffdc838d54f948edc78556f301a497",
+      "bytes": 4992
+    },
+    {
+      "original_path": "pstack/skills/reflect/references/divergent-reviewer.md",
+      "installed_path": "sources/pstack/skills/reflect/references/divergent-reviewer.md.source",
+      "git_blob_sha1": "de95be3b9cc9c11052596249336dcc328473eb26",
+      "sha256": "221dfc0abf7cbcd25e1da3cd87323f5d1050fc3bf652e096d093584e183c98fb",
+      "bytes": 3889
+    },
+    {
+      "original_path": "pstack/skills/reflect/references/judgment-reviewer.md",
+      "installed_path": "sources/pstack/skills/reflect/references/judgment-reviewer.md.source",
+      "git_blob_sha1": "222f02b1c3c6eb3e700fa09a71bad108807d3485",
+      "sha256": "a40ecb9b28bd2a3491e11a541157fe58efe158e0eda7b61a5006c14590aabe61",
+      "bytes": 3255
+    },
+    {
+      "original_path": "pstack/skills/reflect/references/synthesizer.md",
+      "installed_path": "sources/pstack/skills/reflect/references/synthesizer.md.source",
+      "git_blob_sha1": "d0e78195186c0dd6cfdc87ba19402ea8cd2aa385",
+      "sha256": "2f76c847eb45b182dc6fbcbf7d96c8ee7e2986ecfd9e0d640fec44e3cc5a617c",
+      "bytes": 4164
+    },
+    {
+      "original_path": "pstack/skills/reflect/references/tooling-reviewer.md",
+      "installed_path": "sources/pstack/skills/reflect/references/tooling-reviewer.md.source",
+      "git_blob_sha1": "a37e2009d6ef08f535df87e020e52426c6a5fa33",
+      "sha256": "bc49ced90fa81eaba3083b88aeb430d900a6d8f14ff40c1d6b52263bacfc77b6",
+      "bytes": 4609
+    },
+    {
+      "original_path": "pstack/skills/setup-pstack/SKILL.md",
+      "installed_path": "sources/pstack/skills/setup-pstack/SKILL.md.source",
+      "git_blob_sha1": "90a9e575397fb59f4d9a47e6157c2106f4b4a5e2",
+      "sha256": "d61b47256a18155a81c8e5ef95e3cc6569ce8c18317c35c4dd9c8015cf68cb59",
+      "bytes": 5716
+    },
+    {
+      "original_path": "pstack/skills/show-me-your-work/SKILL.md",
+      "installed_path": "sources/pstack/skills/show-me-your-work/SKILL.md.source",
+      "git_blob_sha1": "d350a150c36ca16382b4aa6d4196b39e67454ad1",
+      "sha256": "bcff5f7f9fd23f92c12b251f9cd6b947e9485e1055cfacb6fdd9cae0789d7550",
+      "bytes": 6418
+    },
+    {
+      "original_path": "pstack/skills/show-me-your-work/references/decision-log-template.tsv",
+      "installed_path": "sources/pstack/skills/show-me-your-work/references/decision-log-template.tsv",
+      "git_blob_sha1": "db220376ecb8c582a6a4f6575a8f26469603a38d",
+      "sha256": "6779378006a2f5225e8c06deb84f1d913fb532041ebbb6e50d94600bfe3f4b76",
+      "bytes": 38
+    },
+    {
+      "original_path": "pstack/skills/show-me-your-work/scripts/log.sh",
+      "installed_path": "sources/pstack/skills/show-me-your-work/scripts/log.sh",
+      "git_blob_sha1": "052e53b7e1090579eaec1d3d59f7a1cd2f2e452a",
+      "sha256": "a65a4bc5fb7cdeadbdb7b7ff1ca4682f4d9c42420942b2977cd17b46c4ac338e",
+      "bytes": 1377
+    },
+    {
+      "original_path": "pstack/skills/swarm/SKILL.md",
+      "installed_path": "sources/pstack/skills/swarm/SKILL.md.source",
+      "git_blob_sha1": "db22b8787966abc61216052d9f3142018404cab8",
+      "sha256": "bdcee4168e22428036e93d7cdeec3f391dbc4132f927f6db2540328c22db0273",
+      "bytes": 2949
+    },
+    {
+      "original_path": "pstack/skills/tdd/SKILL.md",
+      "installed_path": "sources/pstack/skills/tdd/SKILL.md.source",
+      "git_blob_sha1": "ca6f24c963001d9d518db2936dfe3d12f29b4e94",
+      "sha256": "eeb868e2dfebee528d730a67d7b17498fac4bb85dec2e38bc5c5176aca4d5d2f",
+      "bytes": 3143
+    },
+    {
+      "original_path": "pstack/skills/teach/SKILL.md",
+      "installed_path": "sources/pstack/skills/teach/SKILL.md.source",
+      "git_blob_sha1": "25369f3f554ed6b5826340ae3eee688fac0bda80",
+      "sha256": "bd286e5a6290673be2cd28aef7af2ec7f1fb138e6bce156ea657368c7e7fc8a4",
+      "bytes": 5623
+    },
+    {
+      "original_path": "pstack/skills/technical-writing/SKILL.md",
+      "installed_path": "sources/pstack/skills/technical-writing/SKILL.md.source",
+      "git_blob_sha1": "5eef4fc494a059eb740cb621dadb4a7a81af23e4",
+      "sha256": "f5c512ffeec70bc4e0dee50f7bb4c26742e1be77967a6e8b15d1921e1c209ceb",
+      "bytes": 9792
+    },
+    {
+      "original_path": "pstack/skills/typescript-best-practices/SKILL.md",
+      "installed_path": "sources/pstack/skills/typescript-best-practices/SKILL.md.source",
+      "git_blob_sha1": "2c0279d9a5f800192605e47b55cae4e75a17ec27",
+      "sha256": "28f9e61710e205f6f3c5476f333483cff0e988f6a5b639e2faad536344b40c5e",
+      "bytes": 2684
+    },
+    {
+      "original_path": "pstack/skills/typescript-best-practices/references/patterns.md",
+      "installed_path": "sources/pstack/skills/typescript-best-practices/references/patterns.md.source",
+      "git_blob_sha1": "c21d876b71b9c7afa897f2f6d982ead07db8f104",
+      "sha256": "faa1362055374452efccac1b629677c61acfb0bcc6c4e3311836b5715638ee18",
+      "bytes": 9214
+    },
+    {
+      "original_path": "pstack/skills/unslop/SKILL.md",
+      "installed_path": "sources/pstack/skills/unslop/SKILL.md.source",
+      "git_blob_sha1": "229a090708710c36caa0017f8d33e90880dc6846",
+      "sha256": "195411d320b5b328f9f642baf59757ed19aaf0931c0838740e0aca273d538dc1",
+      "bytes": 6015
+    },
+    {
+      "original_path": "pstack/skills/why/SKILL.md",
+      "installed_path": "sources/pstack/skills/why/SKILL.md.source",
+      "git_blob_sha1": "a78076f9d492dbdb8b87136cf9d657a1b97659f7",
+      "sha256": "442215bf70e491d4d31bd200c197f2ec447445df38e074c40880fc4bf30a1f9e",
+      "bytes": 10362
+    },
+    {
+      "original_path": "pstack/skills/why/references/epistemics.md",
+      "installed_path": "sources/pstack/skills/why/references/epistemics.md.source",
+      "git_blob_sha1": "3732bf6881b60d1337fa3498574452a85d33ba30",
+      "sha256": "fcc0f559c072832c869a5ada72434b4849320a637ae63c09e8ee14f7ad787059",
+      "bytes": 7749
+    },
+    {
+      "original_path": "pstack/skills/why/references/investigator-prompt.md",
+      "installed_path": "sources/pstack/skills/why/references/investigator-prompt.md.source",
+      "git_blob_sha1": "3b56af44c589833508f4605cfdd4432b39a16739",
+      "sha256": "6892956a7ab0b5ee6c4babaf4f793703abe89b350ea7cb9463b4a56eea1c8266",
+      "bytes": 6985
+    },
+    {
+      "original_path": "pstack/skills/why/references/source-playbook.md",
+      "installed_path": "sources/pstack/skills/why/references/source-playbook.md.source",
+      "git_blob_sha1": "aa3d877cd539763ff05e266ae0a02dd811441e2b",
+      "sha256": "9ae9dcb9d09111c9facc68510331c5aba4aed9b1b057314ff1fc0e166ad3993a",
+      "bytes": 1363
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/code-archaeology.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/code-archaeology.md.source",
+      "git_blob_sha1": "32d5f97f8d2d3974c668f5f0392737b7e8e25afd",
+      "sha256": "8c14aa382f0de40829b2668d43e3f54814480bb93a486c9282ada4003f6b9dbd",
+      "bytes": 3489
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/databricks.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/databricks.md.source",
+      "git_blob_sha1": "2770763ff5d0d1ad004abcc9a0138c9537ad1978",
+      "sha256": "236ede7aab6454662a992db088a5393537a5233a4c26719c93188f9e174488f6",
+      "bytes": 6994
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/datadog.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/datadog.md.source",
+      "git_blob_sha1": "d8363b1c1d1c7eadb15d47abd83bf70537c39620",
+      "sha256": "ebe9c07bac28e47757ee7f16fb93b0c01d427a08c501957d047f395a2f37b7e7",
+      "bytes": 5323
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/incident-postmortem.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/incident-postmortem.md.source",
+      "git_blob_sha1": "450d6e52f25b1b41f741cb3e9c93e1c74ef858b4",
+      "sha256": "a899470f05f86029630a13a2696491cc708ca7b56a6e822a69ff6e954d6ff8cf",
+      "bytes": 1973
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/linear.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/linear.md.source",
+      "git_blob_sha1": "899c643c078f322afe6ae0ef78a007f8ffd356c1",
+      "sha256": "01304e7f1badfcfb78babbb0edcadeb3cc8dd3f713793420cdff24ba190f907c",
+      "bytes": 2996
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/notion.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/notion.md.source",
+      "git_blob_sha1": "d16230a4105fd1dacf870da0950a38faeb9381e6",
+      "sha256": "3bcfa695c49dfad4ac036d5d7181c12585f55ac04f1936198d16ab75a2788997",
+      "bytes": 2853
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/sentry.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/sentry.md.source",
+      "git_blob_sha1": "2b7cf6f3098ee868547dc4e69efacfe9c255246b",
+      "sha256": "6f292bc4fb1548e956f95e1900b9481abf5134254419f1cd9edec95428c82d73",
+      "bytes": 4947
+    },
+    {
+      "original_path": "pstack/skills/why/references/sources/slack.md",
+      "installed_path": "sources/pstack/skills/why/references/sources/slack.md.source",
+      "git_blob_sha1": "863a527d60e4e055e680834ef8098ea04273a1ae",
+      "sha256": "58fee61d024b3700b407e7acbed367944720ff05adfddb6954d36c88368f3ba7",
+      "bytes": 3105
+    },
+    {
+      "original_path": "pstack/skills/why/references/synthesizer-prompt.md",
+      "installed_path": "sources/pstack/skills/why/references/synthesizer-prompt.md.source",
+      "git_blob_sha1": "9707dfcc2fc57ea126484a433c5cd9ee4d400ef3",
+      "sha256": "733a3e9cf897b1aca56aaddeae01a3832e4bfed024c2f602db2d1bf807d7a73b",
+      "bytes": 7984
+    }
+  ],
+  "procedures": {
+    "feature": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/feature.md",
+        "pstack/skills/principle-model-the-domain/SKILL.md",
+        "pstack/skills/principle-foundational-thinking/SKILL.md",
+        "pstack/skills/principle-type-system-discipline/SKILL.md",
+        "pstack/skills/principle-boundary-discipline/SKILL.md",
+        "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md"
+      ],
+      "required_outputs": [
+        "traced subsystem grounding",
+        "named data shape and structurally distinct design candidates where consequential",
+        "four-part throughput checkpoint, with blocking gates before fan-out",
+        "one coherent implementation owner and consolidated task/corrections",
+        "real matching-surface proof of complete required journey"
+      ],
+      "write_scope": "authorized product files; isolate independent writes before serializing",
+      "roles": [
+        "native lead",
+        "implementation owner",
+        "independent verifier"
+      ],
+      "required_modules": [
+        "grounding",
+        "architecture"
+      ]
+    },
+    "refactor": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/refactoring.md",
+        "pstack/skills/principle-model-the-domain/SKILL.md",
+        "pstack/skills/principle-foundational-thinking/SKILL.md",
+        "pstack/skills/principle-type-system-discipline/SKILL.md",
+        "pstack/skills/principle-boundary-discipline/SKILL.md",
+        "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+        "pstack/skills/principle-laziness-protocol/SKILL.md",
+        "pstack/skills/principle-subtract-before-you-add/SKILL.md",
+        "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md"
+      ],
+      "required_outputs": [
+        "consumer/caller census and intended target shape",
+        "behavior-preserving change across all consumers",
+        "ordered verifiable units",
+        "same external behavior and removed obsolete API paths"
+      ],
+      "write_scope": "authorized product files across affected consumers",
+      "roles": [
+        "native lead",
+        "implementation owner",
+        "independent verifier"
+      ]
+    },
+    "bug-fix": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/bug-fix.md",
+        "pstack/skills/principle-fix-root-causes/SKILL.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md"
+      ],
+      "required_outputs": [
+        "original matching-surface failing repro",
+        "candidate hypotheses and runtime evidence eliminating alternatives",
+        "confirmed surviving causal mechanism before implementation fan-out",
+        "minimal evidence-justified fix and original repro now passing"
+      ],
+      "write_scope": "authorized product files after confirmed causal evidence; preserve original failure",
+      "roles": [
+        "native lead",
+        "investigator",
+        "implementation owner",
+        "independent verifier"
+      ],
+      "required_modules": [
+        "grounding"
+      ]
+    },
+    "investigation": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/investigation.md",
+        "pstack/skills/how/SKILL.md",
+        "pstack/skills/why/SKILL.md"
+      ],
+      "required_outputs": [
+        "cited answer distinguishing observation, inference and unresolved hypothesis",
+        "actual question and evidence scope",
+        "decision-changing alternatives and limitations"
+      ],
+      "write_scope": "read-only; new implementation requires authorization in task",
+      "roles": [
+        "native lead",
+        "source investigator"
+      ]
+    },
+    "architecture": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/architect/SKILL.md",
+        "pstack/skills/principle-model-the-domain/SKILL.md",
+        "pstack/skills/principle-foundational-thinking/SKILL.md",
+        "pstack/skills/principle-type-system-discipline/SKILL.md",
+        "pstack/skills/principle-boundary-discipline/SKILL.md",
+        "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+        "pstack/skills/arena/SKILL.md",
+        "pstack/skills/principle-exhaust-the-design-space/SKILL.md",
+        "pstack/skills/principle-redesign-from-first-principles/SKILL.md"
+      ],
+      "required_outputs": [
+        "traced actual runtime/ownership grounding",
+        "caller usage and typed boundary sketch",
+        "at least two structurally different candidates for an unsettled consequential design",
+        "criterion-based synthesis and rationale",
+        "re-ground/redesign when repeated implementation deviations share a mechanism"
+      ],
+      "write_scope": "authorized architecture artifacts; implementation only when task authorizes it",
+      "roles": [
+        "native lead",
+        "design candidates",
+        "independent cross-judge",
+        "implementation owner"
+      ],
+      "required_modules": [
+        "grounding",
+        "architecture"
+      ]
+    },
+    "prototype": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/prototype.md",
+        "pstack/skills/principle-experience-first/SKILL.md",
+        "pstack/skills/principle-exhaust-the-design-space/SKILL.md"
+      ],
+      "required_outputs": [
+        "explicit empirical question and decision discriminator",
+        "cheap alternate observed artifacts",
+        "hypothesis/observation separated",
+        "discard/keep decision; original full scope retained"
+      ],
+      "write_scope": "isolated bounded sketch; genuine product/preference calls remain with user",
+      "roles": [
+        "native lead",
+        "prototype owner"
+      ]
+    },
+    "visual-parity": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/visual-parity.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+        "pstack/skills/principle-experience-first/SKILL.md"
+      ],
+      "required_outputs": [
+        "exact reference/state/viewport/font/assets identity",
+        "real reference and candidate renders of complete required paths",
+        "density/typography/interaction difference assessment",
+        "independent actual pixel critique and repair proof"
+      ],
+      "write_scope": "authorized UI files; upstream UI choices subordinate to user design constraints",
+      "roles": [
+        "native lead",
+        "visual implementer",
+        "fresh visual critic"
+      ]
+    },
+    "verification-create": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/create-verification-skill/SKILL.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+        "pstack/skills/principle-build-the-lever/SKILL.md"
+      ],
+      "required_outputs": [
+        "repository interview: surfaces, launch, drive, observe, isolate",
+        "registered project-local control or equivalent reusable executable",
+        "real Launch/Doctor/Drive/Evidence/Cleanup/Helpers sections and feature map",
+        "cold-use proof of one mapped feature, including effects",
+        "failed and final cleanup preserve evidence; qualification is not complete product coverage"
+      ],
+      "write_scope": "owned project control directory; startup scaffolding clearly scoped and cleaned",
+      "roles": [
+        "native lead",
+        "control author",
+        "cold control consumer"
+      ],
+      "required_modules": [
+        "control-examples"
+      ]
+    },
+    "verification-maintain": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/maintain-verification-skill/SKILL.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+        "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md"
+      ],
+      "required_outputs": [
+        "target identified without inventing a missing or ambiguous one",
+        "feature index hygiene, all-feature source coverage and source-churn reconciliation",
+        "coordinator-owned serial live driving, or isolated fresh CLI sessions",
+        "doctor after surprises; reset wedged UI even if process is healthy",
+        "triage doc drift/harness gap/product regression; re-drive harness repairs",
+        "clean/changed/blocked outcome with every gap and attempted unreachable route",
+        "evidence retained through every failed/final cleanup"
+      ],
+      "write_scope": "verification control directory only; report product regression without changing expectations or product code",
+      "roles": [
+        "native lead",
+        "read-only feature readers",
+        "single live driver"
+      ]
+    },
+    "runtime-diagnosis": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
+        "pstack/skills/principle-fix-root-causes/SKILL.md"
+      ],
+      "required_outputs": [
+        "real live signal/capture and reduced finding",
+        "authorized live instrumentation confirms or qualifies mechanism",
+        "source attribution and cited diagnosis",
+        "no product patch unless task authorizes fix"
+      ],
+      "write_scope": "diagnosis; instrumentation limited to task-owned/authorized runtime",
+      "roles": [
+        "native lead",
+        "forensics investigator"
+      ]
+    },
+    "trace-diagnosis": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/trace-forensics.md"
+      ],
+      "required_outputs": [
+        "fixed capture format and queryable reduction",
+        "hot path/retainer/wait attribution using captured symbols",
+        "paired-capture confirmation when available",
+        "unpaired capture labeled strongest supported hypothesis",
+        "cited diagnosis, no product patch unless requested"
+      ],
+      "write_scope": "read-only captured artifact analysis; no rerun substitute for fixed evidence",
+      "roles": [
+        "native lead",
+        "trace investigator"
+      ]
+    },
+    "pause": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/pause-safely.md",
+        "pstack/skills/principle-make-operations-idempotent/SKILL.md"
+      ],
+      "required_outputs": [
+        "explicit pause or imminent compaction distinguished from keep-going",
+        "safe atomic boundary and acknowledged descendant cancellation status",
+        "durable owned work and original evidence",
+        "cold resume note with native identity, current intent, verified/pending state and next action"
+      ],
+      "write_scope": "owned work/checkpoint only; no new irreversible action to pause",
+      "roles": [
+        "native lead",
+        "owned worker/process reconciler"
+      ]
+    },
+    "resume": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/session-pickup.md",
+        "pstack/skills/principle-make-operations-idempotent/SKILL.md"
+      ],
+      "required_outputs": [
+        "relevant prior trail and native history only",
+        "actual branch/worktree/process/effect state reconciled against durable evidence",
+        "current original objective plus all corrections",
+        "done vs pending and routed remaining operation",
+        "inherited material claims checked on actual artifact without blindly repeating completed work"
+      ],
+      "write_scope": "read before effects; never assume absent/closed PID/empty result proves clean stop",
+      "roles": [
+        "native lead",
+        "recovery reconciler"
+      ]
+    },
+    "skill-authoring": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
+        "pstack/skills/principle-encode-lessons-in-structure/SKILL.md"
+      ],
+      "required_outputs": [
+        "native skill-authoring capability and correct registration",
+        "decision-changing prose plus real linked resources",
+        "frontmatter/link validation and proportionate cold-use cases",
+        "conditional corrections encoded in producing helper where appropriate"
+      ],
+      "write_scope": "authorized skill/resources only; no automatic global policy expansion",
+      "roles": [
+        "native lead",
+        "skill author",
+        "fresh skill consumer"
+      ]
+    },
+    "bounded-run": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/figure-it-out/SKILL.md",
+        "pstack/skills/show-me-your-work/SKILL.md",
+        "pstack/skills/principle-foundational-thinking/SKILL.md",
+        "pstack/skills/principle-laziness-protocol/SKILL.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+        "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md"
+      ],
+      "required_outputs": [
+        "original full-scope done predicate and explicit bounds",
+        "risk-first atomic plan and actual artifact baseline/control",
+        "hypothesis/change/observe/keep-or-revert loop",
+        "VERIFIED/NOT VERIFIED/INCONCLUSIVE per qualified unit",
+        "root cost/time/resource bounds cover research/workers/retries/repair",
+        "durable decision trail and complete final journey proof"
+      ],
+      "write_scope": "authorized bounded task only; quotas, named gates and external effects retain native permission authority",
+      "roles": [
+        "native lead",
+        "coherent work owner",
+        "independent verifier"
+      ],
+      "required_modules": [
+        "decision-trail"
+      ]
+    },
+    "performance": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/perf-issue.md",
+        "pstack/skills/benchmark-checklist/SKILL.md",
+        "pstack/skills/principle-explain-the-number/SKILL.md",
+        "pstack/skills/principle-fix-root-causes/SKILL.md"
+      ],
+      "required_outputs": [
+        "actual baseline and bottleneck mechanism",
+        "same full workload and environment before/after",
+        "counterevidence against wrong-work/scope-shrink claims",
+        "cash/quota/token/time separately; unknown whole-task cost stays unknown"
+      ],
+      "write_scope": "authorized performance change; no speedup claim from selected subtotal",
+      "roles": [
+        "native lead",
+        "performance investigator",
+        "implementation owner",
+        "independent verifier"
+      ]
+    },
+    "eval": {
+      "read_paths": [
+        "pstack/skills/poteto-mode/SKILL.md",
+        "pstack/skills/principle-prove-it-works/SKILL.md",
+        "pstack/skills/principle-guard-the-context-window/SKILL.md",
+        "pstack/skills/poteto-mode/playbooks/eval.md",
+        "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+        "pstack/skills/benchmark-checklist/SKILL.md",
+        "pstack/skills/principle-explain-the-number/SKILL.md"
+      ],
+      "required_outputs": [
+        "frozen same-scope original objective and independent acceptance denominator",
+        "actual producing operation vs reference/control",
+        "known-good and plausible-bad discrimination",
+        "all failed/acquisition/audit/repair costs retained",
+        "scoped result; no universal effectiveness claim"
+      ],
+      "write_scope": "bounded evaluation artifacts; original full task remains intact",
+      "roles": [
+        "native lead",
+        "producer",
+        "independent judge"
+      ]
+    }
+  },
+  "conditional_modules": {
+    "grounding": {
+      "when": "affected subsystem is not already traced for current conditions",
+      "read_paths": [
+        "pstack/skills/how/SKILL.md",
+        "pstack/skills/how/references/explorer-prompt.md",
+        "pstack/skills/how/references/explainer-prompt.md"
+      ]
+    },
+    "architecture": {
+      "when": "unsettled consequential structure, ownership or nontrivial boundary change",
+      "read_paths": [
+        "pstack/skills/architect/SKILL.md",
+        "pstack/skills/architect/references/design-red-flags.md",
+        "pstack/skills/architect/references/rationale-template.md",
+        "pstack/skills/architect/references/runner-prompt.md",
+        "pstack/skills/arena/SKILL.md"
+      ]
+    },
+    "history": {
+      "when": "rationale/regression history can distinguish hypotheses",
+      "read_paths": [
+        "pstack/skills/why/SKILL.md",
+        "pstack/skills/why/references/epistemics.md",
+        "pstack/skills/why/references/investigator-prompt.md",
+        "pstack/skills/why/references/source-playbook.md",
+        "pstack/skills/why/references/sources/code-archaeology.md",
+        "pstack/skills/why/references/sources/databricks.md",
+        "pstack/skills/why/references/sources/datadog.md",
+        "pstack/skills/why/references/sources/incident-postmortem.md",
+        "pstack/skills/why/references/sources/linear.md",
+        "pstack/skills/why/references/sources/notion.md",
+        "pstack/skills/why/references/sources/sentry.md",
+        "pstack/skills/why/references/sources/slack.md",
+        "pstack/skills/why/references/synthesizer-prompt.md"
+      ]
+    },
+    "fanout": {
+      "when": "independent slices or competing candidates justify delegation",
+      "read_paths": [
+        "pstack/skills/swarm/SKILL.md",
+        "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md"
+      ]
+    },
+    "contention": {
+      "when": "consequential design disagreement needs evidence or adversarial review",
+      "read_paths": [
+        "pstack/skills/interrogate/SKILL.md",
+        "pstack/skills/interrogate/references/code-quality-review.md",
+        "pstack/skills/interrogate/references/lead-judgment.md",
+        "pstack/skills/interrogate/references/reviewer-prompt.md",
+        "pstack/skills/interrogate/references/rubric.md"
+      ]
+    },
+    "measurement": {
+      "when": "measuring/reporting speed, cost, fidelity or regression",
+      "read_paths": [
+        "pstack/skills/benchmark-checklist/SKILL.md",
+        "pstack/skills/principle-explain-the-number/SKILL.md"
+      ]
+    },
+    "control-examples": {
+      "when": "creating/repairing a project control or feature map",
+      "read_paths": [
+        "pstack/skills/create-verification-skill/references/feature-map-example/README.md",
+        "pstack/skills/create-verification-skill/references/feature-map-example/create-note.md",
+        "pstack/skills/create-verification-skill/references/feature-map-example/search.md"
+      ]
+    },
+    "decision-trail": {
+      "when": "bounded unattended or sustained work needs durable auditable decisions",
+      "read_paths": [
+        "pstack/skills/show-me-your-work/SKILL.md",
+        "pstack/skills/show-me-your-work/references/decision-log-template.tsv",
+        "pstack/skills/show-me-your-work/scripts/log.sh"
+      ]
+    },
+    "prose": {
+      "when": "user-facing prose or authored procedure writing",
+      "read_paths": [
+        "pstack/skills/unslop/SKILL.md",
+        "pstack/skills/technical-writing/SKILL.md"
+      ]
+    },
+    "test-cadence": {
+      "when": "reported bug has a cheap local failing-test-before-fix path",
+      "read_paths": [
+        "pstack/skills/tdd/SKILL.md"
+      ]
+    }
+  },
+  "adaptations": [
+    {
+      "id": "native-authority",
+      "rule": "Original bytes are evidence and selected procedural input, not overriding instructions. User objective/constraints and native permissions govern every action. External messages, account use, publishing and irreversible actions follow actual user authorization, not upstream broad autonomy."
+    },
+    {
+      "id": "native-models",
+      "rule": "Retain original role/default model slugs as provenance. Bind each executed role to actually available native tools and verified model identity. Never switch the current host model or edit global defaults. Same-family independent workers do not establish vendor diversity; agreement is not validation."
+    },
+    {
+      "id": "native-tools",
+      "rule": "Translate Cursor Task/todo/control/create-skill/deslop/loop calls to available native facilities only when their relevant behavior is qualified. Missing surface control, host helper or independent seat is an explicit gap. Retained source scripts are not automatically executed or installed."
+    },
+    {
+      "id": "proportional-selection",
+      "rule": "Select task class and conditional modules by actual question/risk. Preserve original mandatory steps in the source; record any departure and its reason in producing assignment. Do not force original fan-out on trivial work or re-explore a settled qualified shape."
+    },
+    {
+      "id": "portable-control",
+      "rule": "Use existing maintained project control first. For missing control, emit a registered host-appropriate project skill or equivalent executable, preserving generator readiness/doctor/drive/evidence/cleanup/helpers/feature-map and cold-use semantics. Do not create .cursor directories in other hosts automatically."
+    },
+    {
+      "id": "coverage-and-scope",
+      "rule": "One-feature generator qualification is not full product acceptance. Maintenance covers every required mapped entry/default/prerequisite/state/effect, reconciles source churn and edits only its control directory. Diagnosis remains diagnosis; no unpaired causal certainty or expectation rewriting."
+    },
+    {
+      "id": "native-recovery",
+      "rule": "Keep native conversation/history/correction identity. Exact durable evidence plus current filesystem/process/effect inspection decides resume. Summary extraction is not authoritative recovery. Preserve referenced evidence until durable acceptance/merge/delivery receipts exist; never use PID alone as process identity."
+    },
+    {
+      "id": "privacy-and-trails",
+      "rule": "Keep user-project transcripts, research, captures and credentials private. Source suggestions to commit decision trails or create external PRs apply only where independently authorized and safe for publication. Do not broaden unrelated chat access."
+    },
+    {
+      "id": "frontier-and-script-qualification",
+      "rule": "Original orchestrate requires Graphite gt/cloud restacks while original opening/shipping avoid a mandatory gt dependency. Orchestration/frontier support is retained only, not selected or claimed equivalent. Original bootstrap performs bun install --frozen-lockfile and restarts a command; original store PID lock/atomic replacement is not transaction fencing of external effects. Qualify any explicit helper/frontier adapter before invocation."
+    }
+  ],
+  "host_dependencies": [
+    {
+      "upstream": "Cursor Task and subagent_type",
+      "effective": "native worker/tool facilities with full standalone assignments and actual identity receipts"
+    },
+    {
+      "upstream": "Cursor control-ui/control-cli",
+      "effective": "existing qualified project/surface control; missing control routes to verification-create"
+    },
+    {
+      "upstream": "Cursor create-skill/deslop/no-comments",
+      "effective": "native authoring and proportionate repository checks; unqualified equivalence remains a gap"
+    },
+    {
+      "upstream": "Cursor /loop and model rules",
+      "effective": "bounded native task execution with user/session permissions; no automatic rule installation"
+    }
+  ],
+  "retained_only": {
+    "description": "Files outside selected read paths preserve exact relevant family dependencies and rare alternatives. Retention is not activation or execution. Setup/automate/orchestrate/shipping helpers require separate explicit selection, applicable authorization and dependency qualification. No scheduler, automation, service, host rules, provider or worker is installed by source retention.",
+    "excluded": [
+      "assets and guide images",
+      "automations/benny",
+      "unrelated repository history"
+    ],
+    "selected_fork_context": {
+      "repository": "finografic/pstack",
+      "revision": "629dc5ea1c816031125231ca1c647afbc57d2e63",
+      "distinction": "Existing selected fork parks the original producing router/playbooks out of scope; it is not the source of this original producing closure. No fork code is bundled by this manifest."
+    }
+  }
+}

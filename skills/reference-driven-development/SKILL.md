@@ -17,6 +17,9 @@ Default to adapting useful properties into a coherent original result. Faithful 
 
 | Decision | Supporting module |
 | --- | --- |
+| Carry a substantial task through the installed factory, correction and resume | [Factory execution](references/factory.md) |
+| Select pinned producing, verification, maintenance or diagnostic procedures | [Source-backed procedures](references/factory-procedures.md) |
+| Establish usable project controls, feature coverage and cold verification | [Project controls](references/project-controls.md) |
 | Find references or reframe an idea | [Discovery](references/discovery.md) |
 | Improve discovery, investigation, synthesis or research reuse | [Research improvement](references/research-improvement.md) |
 | Resolve a named Android app to a reference archive | [APK acquisition](references/apk-acquisition.md) |
@@ -46,6 +49,8 @@ Default to adapting useful properties into a coherent original result. Faithful 
 | Investigate the method's OSS influences or upgrades | [Lineage](references/lineage.md) |
 
 Read relevant modules before consequential operations; do not load the entire library for a small task. Use the host's available domain tools and skills. Transfer useful thinking into the current task before promoting it to reusable instructions; skill creation is conditional, not the objective of every investigation. No particular model, browser, service, or orchestrator is required.
+
+For substantial implementation or reconstruction, use the installed factory module to carry the current objective into the actual producing operation and recover corrections, research and acceptance. Select only the relevant pinned procedures and domain modules. Native dialogue, history, permissions and model choice remain with the host. Ordinary edits and discussion stay proportionate to their scope.
 
 ## The working loop
 
