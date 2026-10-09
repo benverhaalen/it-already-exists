@@ -203,6 +203,22 @@ Missing does not mean fatal: correlate names and timing with the actual failed
 journey, then inspect codec, method, state, error and service contracts. Leave
 unknown calls as explicit gaps. Keep tracing off for normal use.
 
+For a blank screen, trace the full handoff: response received, JSON decoded,
+model returned, state created, emitter entered, subscriber invoked, widget built,
+and frame rendered. A successful reply or model conversion proves only that
+stage. Verify runtime instruction bytes against the selected binary before using
+breakpoints. Record process identity and resume success; qualify a new request or
+another reached control in that same run. Zero hits without a reached control are
+inconclusive. Read-only class IDs and bounded callback offsets can locate the next
+handoff without recording user payloads. Keep static labels separate from observed
+execution, and detach the debugger when the experiment ends.
+
+For time-dependent catalogs, record the selected item and cache or fixture identity
+in the test receipt. A missing or expired reference can stop the journey before the
+suspected failure. Use a pinned clock and fixture for a fixed regression case, or
+record the currently displayed item for a discovery test. Do not silently compare
+different cases or use a test that never reached its target to diagnose that target.
+
 Before concluding that a target-platform feature is absent, compare the supplied
 release with current published releases and architecture variants. A newer foreign
 build may retain shared feature assets, channel names and serialized contracts
