@@ -20,6 +20,11 @@ Use discriminating probes: history changes, delayed response, failure, retry, du
 
 Narrow static and runtime investigation around unresolved behavior. Combine them when each resolves the other's blind spots. Record truncation, inaccessible paths, timing distortion, and compatibility substitutions. Cached observations need validity conditions; environment changes can invalidate them.
 
+When repeating immutable analyzer queries or comparing execution boundaries, use
+[retained analysis and behavioral evidence](analysis-reuse.md). Reuse requires
+artifact, provider and query qualification; a static graph's unresolved edges
+remain questions for targeted execution, not evidence that a path is absent.
+
 For adaptation, preserve the useful mechanism under the target brief. For reconstruction, define the comparison surface, permitted tolerances, reference version, and unobserved cases explicitly. Appearance, behavior, state, performance, and timing can disagree; measure them separately. Never infer perfect fidelity from build success or a few matched screens.
 
 The bundled scripts/apk_intake.py supports bounded static APK metadata; [observation sessions](observation-sessions.md) supports explicitly selected task-owned installed Android apps. Provisioning, installation and specialized recovery need separately qualified domain tools. In it-already-exists, the legacy Android recorder and runtime-observation documents offer additional optional acquisition support. The skill alone neither controls all reference surfaces nor recovers inaccessible behavior.

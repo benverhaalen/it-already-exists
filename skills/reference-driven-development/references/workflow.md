@@ -17,6 +17,14 @@ python3 /path/to/skill/scripts/workflow.py seed /private/records.jsonl
 
 Perform chosen investigation through available host tools. Record the actual input/version, observation environment, actions, results, coverage/truncation, and uncertainty. A static recovery is not runtime behavior. Ask a different question or change channel when evidence stops distinguishing alternatives. Follow observation.md for readiness, timing, reset and observer limits.
 
+For repeated immutable analysis, follow [analysis reuse](analysis-reuse.md) and
+link the retained parent ID and qualified view in evidence records. For behavioral
+closure, attach its comparison and case-bound closure receipts to the relevant
+check's actual evidence. Neither helper automatically appends to this journal or
+changes workflow readiness; inspect the execution, record remaining cases, and
+run the normal assessment. In strict clean-room mode, keep analysis parents on
+the analyst side and transfer only the permitted behavioral specification.
+
 Append evidence and contributions using `rdd.py append`. For each chosen contribution, append an adopted `decision` with exact `task_scope` and `context_sha256` from `workflow.py basis --task task.json`; its conditions/reason/revisit explain why it applies here. Add a `transfer` with the same scope, contribution links, invariant, adaptation, actual implementation artifact/operation and discriminating check plan. Pin the current adopted decision IDs in transfer `depends_on`; a later decision requires revisiting and replacing affected transfers. Use `depends_on` for explicit decision, evidence, shared-component record and lesson dependencies beyond provenance links. Several references may contribute to one transfer, but each invariant and permitted adaptation must remain identifiable. Use separate transfers where bundling conceals interference.
 
 ```sh
