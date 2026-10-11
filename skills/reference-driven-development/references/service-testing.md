@@ -132,6 +132,21 @@ fixed failure stages and codes; omit scalar account values, credentials and
 headers. Distinguish wire rejection, missing local dependencies and business
 rule failures before loosening validation or changing the response schema.
 
+For suspected shared endpoint drift, use `scripts/service_authority.py --input
+/private/sanitized-trace.json --output /private/new-authority-check.json` offline.
+Version 1 declares `expected_authority: {scheme, host, port}`, ordered `phases:
+[{name, identity_state}]` (`fresh`, `stored`, `none`, `unknown`) and `observations`.
+Each observation has a declared `phase`, `kind` (`configuration` or `request`)
+and `authority: {scheme, host, port}`. Requests may include `guard` (`allowed`,
+`denied`, `unknown`) and `transport` (`succeeded`, `failed`, `not_attempted`,
+`unknown`). Keep URLs, paths, queries, headers, bodies, tokens and errors out;
+unknown fields and contradictions are refused. Missing facts or phase coverage
+remain unresolved; each phase needs request facts. Exit 0 matches; exit 2 needs review;
+exit 1 means invalid evidence or file failure. A denied-before-transport receipt
+differs from an observed transport failure; unknown guard facts stay unresolved.
+Trace ordinary reopens with stored identity as well as startup. These supplied
+observations do not prove capture completeness, containment, equivalence or cause.
+
 For an explicitly requested standalone, interactive test app, move synthetic
 identity, private records and permitted business calculations onto the target
 device. Keep the original client protocol, including token refresh, query

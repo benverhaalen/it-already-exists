@@ -84,7 +84,8 @@ class InstallationTests(unittest.TestCase):
         factory.package.build(self.source, archive)
         legacy = self.work / 'legacy.zip'
         legacy.write_bytes(self.rewrite_archive(
-            archive, omit=['scripts/firestore_query_scenario.py'], edition='legacy'))
+            archive, omit=sorted(factory.package.REVIEWED_FILES - factory.package.INVENTORY_V1),
+            edition='legacy'))
         with self.assertRaisesRegex(ValueError, 'requires current factory inventory'):
             factory.stage(self.store, archive=legacy)
         # Stage under the original admission edition, then inspect/update using
@@ -102,15 +103,38 @@ class InstallationTests(unittest.TestCase):
         self.assertEqual(observed['errors'], [])
         self.assertEqual(observed['content'], 'verified_complete_inventory')
         self.assertEqual(observed['inventory_version'], 1)
-        self.assertEqual(observed['current_inventory_version'], 2)
+        self.assertEqual(observed['current_inventory_version'], factory.package.INVENTORY_VERSION)
         second = self.stage()
         factory.activate(self.home, self.store, second, self.source)
-        self.assertEqual(factory.doctor(self.home, self.store)['inventory_version'], 2)
+        self.assertEqual(factory.doctor(self.home, self.store)['inventory_version'], factory.package.INVENTORY_VERSION)
         factory.rollback(self.store)
         self.assertEqual(factory.doctor(self.home, self.store)['active_release'], first)
         self.assertEqual(factory.doctor(self.home, self.store)['errors'], [])
         self.assertEqual(legacy.read_bytes(), (self.store / 'releases' / first / 'capsule.zip').read_bytes())
         self.assertNotIn('inventory_version', json.loads(receipt_path.read_text()))
+
+    def test_inventory_two_remains_valid_after_new_helper_admission(self):
+        archive = self.work / 'current.zip'
+        factory.package.build(self.source, archive)
+        previous = self.work / 'inventory-two.zip'
+        previous.write_bytes(self.rewrite_archive(
+            archive, omit=sorted(factory.package.REVIEWED_FILES - factory.package.REVIEWED_INVENTORIES[2]),
+            edition=2))
+        with self.assertRaisesRegex(ValueError, 'requires current factory inventory'):
+            factory.stage(self.store, archive=previous)
+        with mock.patch.object(factory.package, 'INVENTORY_VERSION', 2):
+            first = factory.stage(self.store, archive=previous)['release']
+        factory.activate(self.home, self.store, first, self.source)
+        observed = factory.doctor(self.home, self.store)
+        self.assertEqual(observed['errors'], [])
+        self.assertEqual(observed['inventory_version'], 2)
+        self.assertEqual(observed['current_inventory_version'], factory.package.INVENTORY_VERSION)
+        current = self.stage()
+        factory.activate(self.home, self.store, current, self.source)
+        factory.rollback(self.store)
+        self.assertEqual(factory.doctor(self.home, self.store)['active_release'], first)
+        self.assertEqual(factory.doctor(self.home, self.store)['errors'], [])
+        self.assertEqual(previous.read_bytes(), (self.store / 'releases' / first / 'capsule.zip').read_bytes())
 
     def test_editions_reject_self_consistent_incomplete_and_unknown_archives(self):
         archive = self.work / 'current.zip'
@@ -129,7 +153,7 @@ class InstallationTests(unittest.TestCase):
                     factory.archive_inventory(payload)
         # The untagged complete current capsule is also a retained early input.
         _, manifest = factory.archive_inventory(self.rewrite_archive(archive, edition='legacy'))
-        self.assertEqual(factory.package.reviewed_inventory(manifest)[0], 2)
+        self.assertEqual(factory.package.reviewed_inventory(manifest)[0], factory.package.INVENTORY_VERSION)
 
     def test_current_source_requires_current_helper_and_receipt_edition_agrees(self):
         helper = self.source / 'scripts/firestore_query_scenario.py'

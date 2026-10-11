@@ -150,10 +150,11 @@ INVENTORY_V1 = frozenset({
 
 # Retain complete historical memberships: a new export must not invalidate an
 # unchanged installed release. Add a new edition instead of editing prior sets.
-INVENTORY_VERSION = 2
+INVENTORY_VERSION = 3
 REVIEWED_INVENTORIES = {
     1: INVENTORY_V1,
     2: INVENTORY_V1 | {'scripts/firestore_query_scenario.py'},
+    3: INVENTORY_V1 | {'scripts/firestore_query_scenario.py', 'scripts/service_authority.py'},
 }
 REVIEWED_FILES = REVIEWED_INVENTORIES[INVENTORY_VERSION]
 
