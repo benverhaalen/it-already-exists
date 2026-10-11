@@ -147,6 +147,19 @@ differs from an observed transport failure; unknown guard facts stay unresolved.
 Trace ordinary reopens with stored identity as well as startup. These supplied
 observations do not prove capture completeness, containment, equivalence or cause.
 
+Check an ordinary saved-session launch without fixture sign-in or reset. Inspect
+the SDK's current identity as well as the original profile and durable test
+records; a rendered account can come from local documents while SDK Auth is
+absent. A cached token can also keep screens working without any request.
+When local refresh is part of the requested behavior, call the SDK's actual
+forced-refresh method once, after confirming the synthetic project, account and
+local-only boundary. Retain only endpoint/guard facts, fixed route labels and
+completion booleans or bounded error codes. Never dump tokens, claims, Keychain
+entries or request contents. Let asynchronous work and its main-thread callback
+finish before detaching the diagnostic; configuration alone is not a request.
+A correlated local request and successful parsed SDK result qualify that refresh,
+not production authentication, unrelated traffic or whole-app equivalence.
+
 For an explicitly requested standalone, interactive test app, move synthetic
 identity, private records and permitted business calculations onto the target
 device. Keep the original client protocol, including token refresh, query
