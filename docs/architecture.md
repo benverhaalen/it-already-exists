@@ -6,6 +6,14 @@ The host agent performs research and construction. External tools and execution
 boundaries need separate qualification. The design below includes ambitions
 beyond those implemented helpers.
 
+The [factory evolution proposal](factory-evolution.md) builds on the installed
+factory with image-led UI production, scoped intent recovery, consequential
+research, dependable early use and continued full-scope completion. Its
+[design evidence](factory-design-evidence.md) identifies the inspected mechanisms
+and their limits. These proposed connections are not installed runtime guarantees.
+The [project walkthrough](factory-walkthrough.md) explains the intended end-to-end
+experience in ordinary terms.
+
 ## Recommended delivery model
 
 Use one portable core and small integrations for the host coding agents.
