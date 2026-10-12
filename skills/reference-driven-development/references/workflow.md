@@ -99,6 +99,14 @@ bottlenecks, work-removing alternatives and discriminating tests before a
 consequential commitment. Repair context asks for diagnosis and reconsideration.
 It neither performs research nor certifies a selected approach.
 
+The assignment also asks which relations the current representation hides and
+whether another representation, observation or reasoning instrument would expose
+them. Discover the problem before treating exact catalog labels as its definition.
+Use existing unknowns and decisions for competing frames and discriminators;
+revise affected task conditions and dependencies when evidence changes them.
+Supplying and consuming a revised frontier is the agent's responsibility, not an
+automatic consequence of compiling a packet.
+
 Its `research_review.composition` carries the goal, journey and selected
 contribution/transfer IDs into both investigation and builder context. It directs
 the agent to assign resources concrete jobs, preserve mechanisms and small

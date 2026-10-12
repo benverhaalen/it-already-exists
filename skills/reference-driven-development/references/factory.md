@@ -82,6 +82,14 @@ counterlead, smallest useful discriminator and consuming operation. Inspect
 primary GitHub/source mechanisms and failure behavior, not only descriptions.
 Preserve distinct properties before grouping overlapping references.
 
+When the current framing hides a consequential distinction, use
+[representation and instrument discovery](research-improvement.md#representation-and-instrument-discovery)
+before selecting a catalog method. An episode can construct a probe or reasoning
+instrument as well as inspect sources. Carry its consequences into affected task
+unknowns, decisions and transfer dependencies. Explicitly revise and supply the
+task's research frontier before recompiling: closing an episode does not
+automatically derive the next question or update that frontier.
+
 Reserve every child, retry, acquisition, audit and repair from the same root
 allocation. Resume does not replenish it; unknown expenditure remains reserved
 until reconciled. Where the native host is outside the owned runtime, the bound

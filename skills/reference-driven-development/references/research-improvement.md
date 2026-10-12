@@ -59,6 +59,49 @@ separates retrieval, similar-source expansion and content fetching. Check live
 provider contracts rather than copying its historical parameter defaults.
 These are mechanism references; no upstream code was copied into the helpers.
 
+## Representation and instrument discovery
+
+Start from the intended outcome and observed difficulty. Distinguish a failure of
+the current implementation from a failure to expose the right information,
+relationships or actions. Describe the causal structure without assuming the
+domain's familiar artifact or the proposed solution is the right unit of thought.
+An explanation of why an agent missed something remains a hypothesis until
+evidence distinguishes it from missing access, ambiguous intent or a bad evaluator.
+
+When the distinction could change the next decision, generate a few competing
+representations cheaply. Ask what each makes visible, manipulable or executable,
+which useful distinctions it hides, and what observation would separate them.
+Images, concrete examples, traces, dependency graphs, partial programs and
+constraints are possible reasoning material. Preserve their originals and
+correlated detail; a summary or formal encoding need not replace them. Ordinary
+settled work does not need this exploration.
+
+Research mechanisms that support the missing operation, including distant domains.
+Borrow useful invariants, interfaces and feedback behavior with their conditions,
+not just names or surface similarity. Construct a bounded probe when action can
+produce evidence that another search cannot: an observation, reversible prototype,
+shared primitive, alternative implementation or reasoning instrument. Test the
+consequence on the intended journey, with counterevidence and an independent
+check when consequential. A useful instrument should help the agent construct or
+revise the result, not merely produce another report about it.
+
+For an agent-capability proposal, select the carrier after identifying the missing
+operation. Existing prompts and rich context, familiar tools, interactive external
+representations, executable environments and language semantics are alternatives
+or complementary parts. State what the agent actually sees, does and receives
+back, what existing tools remain usable, and whether any benefit requires training.
+An inference-time interface does not retrain a model. A new language may be an
+internal representation or a narrow executable boundary; agents need not write
+applications in it. Compare against a capable existing-tool baseline, counting
+setup, integration, model calls, retries, user corrections and final quality.
+Test whether the mechanism still contributes as models improve.
+
+Retain the working representation, discriminator and consequences in existing
+notes, unknowns, decisions and transfer records. Evidence may change which
+question deserves attention next. Update affected conditions and dependencies,
+then revise and supply the frontier to the next actual operation. This module
+does not infer those changes or require a universal representation schema.
+
 ## Seeded, adaptive investigation
 
 Use this mode when broad search returns consensus summaries, a large queue loses
@@ -76,6 +119,12 @@ inspection: what changed, why a new lead matters, next action, its bound, a cont
 or neglected lead, and unresolved evidence. Keep the original outcome and access
 policy fixed unless the user changes them. Feed that frontier into the next
 research operation, rather than merely saving a reading list.
+
+Distinguish alternative solutions within one framing from alternative
+understandings of the problem. Follow an inspected finding's remaining assumption
+into a child seed when resolving it could change the representation, mechanism or
+next action. Recursive depth alone is not progress; each useful iteration must
+produce evidence or alter a consequential decision.
 
 Branch from new evidence when it could change a decision. Allow bounded exploration
 outside the initial cluster; retain low-ranked leads instead of deleting them.

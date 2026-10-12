@@ -26,6 +26,24 @@ For each consequential adoption, create a transfer contract:
 
 For expert-process contributions, preserve situation cues, exceptions, evidence-seeking actions, and completion criteria in the actual assignment or retrieved guidance. Decide the carrier separately from the contribution: prompt, reference, skill, executable tool, or feedback workflow. Use [expert-process transfer](expert-processes.md) for that decision and its checks.
 
+For a proposed agent-capability layer, first name the operation made easier:
+perceiving a relationship, exploring alternatives, constructing a partial result,
+executing a constraint, or revising affected work. Consider rich examples/images,
+an existing tool interface, an interactive representation, an executable
+environment or narrow language semantics as carriers. The application can remain
+in ordinary languages. Inspect what the agent actually sees and manipulates;
+syntax alone is not a capability. Distinguish benefits available with current
+models from those requiring training or adaptation.
+
+Compose mechanisms through explicit boundaries: preserve each component's
+assumptions, ordering, errors, cancellation and external effects. Computational
+dependency tracking does not discover omitted semantic dependencies; a constraint
+solver cannot establish an unencoded intent. Keep exact executable rules distinct
+from uncertain judgments and sensory examples. Prefer a small compatible adapter
+when it preserves the mechanism; consider new semantics when that boundary is
+itself the demonstrated limitation. Compare separate and combined variants on
+complete journeys and meaningful fresh cases, including setup and repair cost.
+
 Compare original, adapted, and combined mechanisms on representative cases when practical. Test strategically important interactions and challenger substitutions; exhaustive powersets are rarely feasible. A combination is an improvement hypothesis until evidence supports it.
 
 Trace contracts into actual files, outputs, and complete journeys. If a correction changes the objective or operating conditions, reopen affected decisions and checks, including dependencies. Keep inactive useful ideas accessible rather than silently forgetting them at handoff.

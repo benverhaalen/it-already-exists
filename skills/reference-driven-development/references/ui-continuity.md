@@ -75,6 +75,14 @@ each may reveal useful ideas, but only the interface concept specifies a screen
 to implement. Compare different moments in the same user journey when a single
 screen hides an unresolved product decision.
 
+Use these studies upstream to discover relationships among hierarchy, density,
+type, navigation and interaction before freezing the design system. Keep actual
+images and contrasting examples alongside any extracted rules; tokens alone can
+lose the relationships that make a reference work. Try a new moment in the journey
+to see whether the proposed system carries its character and usefulness beyond
+the initial screen. Treat that transfer as evidence for a conditional design
+grammar, not permission to lock every visual choice into a universal template.
+
 Keep discovered features as proposals. Invented counts, quotes, previews,
 source attributions and interaction states are not facts or functioning
 capabilities. Evaluate whether a useful proposal fits the intended product,
