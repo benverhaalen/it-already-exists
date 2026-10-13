@@ -152,6 +152,58 @@ qualify that bookkeeping; neither receipts nor evidence links are independently 
 The helper cannot detect omitted attempts or establish complete fidelity, significance
 or an automatic winning strategy.
 
+## Challenge the evaluator before it carries a claim
+
+An evaluator's author tends to seed the defects its cases already cover. Have a
+different author, given only the stated contract and a correct candidate, write
+plausible wrong implementations; withhold the evaluator and its case list. Then run
+`scripts/oracle_challenge.py`, which executes the evaluator on the control and on
+every candidate and keeps each outcome:
+
+```json
+{"evaluator":{"command":["python3","evaluate.py","{candidate}","{ledger}"],"author":"builder","files":["evaluate.py"]},
+ "control":"reference","minimum_independent":3,
+ "candidates":[{"id":"m1","path":"mutants/m1","author":"seeder","intent":"drops the upper bound"}]}
+```
+
+The evaluator writes `{"cases": {id: "pass"|"fail"|"error"|"timeout"|"skipped"}}` to
+`{ledger}`. Run `python scripts/oracle_challenge.py run MANIFEST.json --root PRIVATE_TASK
+--output LEDGER.json`. A candidate is `killed` with named witness cases (`precise`
+is false when only errors or timeouts caught it), `survived`, `invalid` when identical
+to the control, or `evaluator_error` when no usable ledger appeared. A candidate that
+changes the compared case set blocks qualification even if something failed. Results
+are reported separately for candidates by the evaluator's author and by others; the
+first stratum never qualifies an evaluator alone.
+
+Resolve each survivor one of two ways. Add a case whose expected value follows from
+the contract or an independent reference observation, and rerun. Or, when nothing
+independent can decide the behavior, declare
+`"disposition":{"state":"unverifiable","reason":…,"claim_limit":…}`; the result becomes
+`qualified_with_limits` and the limits belong in the delivered claim. Do not derive the
+missing expectation from the candidate under test or from the reference implementation
+written by the evaluator's author. `"state":"equivalent"` with evidence removes a
+candidate from the denominator. A disposition never relabels a killed candidate.
+
+`check LEDGER.json --root PRIVATE_TASK` recomputes totals from rows and reports `stale`
+when the evaluator files or control changed, so a repaired evaluator has to be
+challenged again. Exit 1 means unqualified or stale; 2 means malformed input.
+
+The helper cannot verify that an author was independent, that defects are realistic
+or that a disposition is true. In one private study of six small reconstruction
+evaluators, all 35 author-written defects were detected while 15 of 36 defects written
+by separate contract-only authors survived; 6 were closed with contract-derived cases
+and 9 lay where no independent reference observation existed. That is one authoring
+process and one model family, not a general rate.
+
+Measured limit: in a paired held-out comparison on three small single-module
+reconstruction tasks (three repeats per arm, one frontier model), implementers given
+this operation ran it on their own test suites in 7 of 9 runs. With no second author it
+could not qualify anything, held-out acceptance was 9 of 9 with and without it, and
+cost rose in 8 of 9 matched pairs (case means 1.2 to 1.4 times). The skill as a whole
+also cost more than no skill there without changing acceptance. Those tasks were at
+ceiling for the model, so this shows overhead, not absence of benefit on harder work.
+Use the challenge for evaluators that gate other work, with a separate seeding author.
+
 Continue seeded research from the actual failure: missing legal actions → driver and
 semantic-tree producers; stale replay → identity/precondition and cache contracts;
 false pass → oracle mutation and visual occlusion; expensive diagnosis → minimal state

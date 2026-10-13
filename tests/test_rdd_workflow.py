@@ -121,6 +121,9 @@ class WorkflowTest(unittest.TestCase):
             self.task.update(operation=operation, tags=tags)
             plan = workflow.investigate(workflow.task_spec(self.task), workflow.catalog())
             self.assertIn('No probes', plan['reconstruction_review']['limits'])
+            challenge = plan['reconstruction_review']['evaluator_challenge']
+            self.assertIn('scripts/oracle_challenge.py run', challenge['command'])
+            self.assertIn('Not executed', challenge['limits'])
         self.task.update(operation='extend', tags=[])
         self.assertIsNone(workflow.investigate(workflow.task_spec(self.task), workflow.catalog())['reconstruction_review'])
 

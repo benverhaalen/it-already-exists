@@ -18,6 +18,20 @@ Record observable coverage, tolerances, access tests, implementer inputs, and re
 
 Public skill packages and demonstrations contain reusable instructions and synthetic fixtures. Keep target-specific restricted evidence and source archives outside them.
 
+## Host-sandboxed agent implementers
+
+When an agent CLI runs on the analyst's host under an OS sandbox instead of a
+container, deny what the host shares by default, not just the answer directories:
+the system temp directories (give each run its own `TMPDIR`), the parent of all run
+workspaces (siblings created after a run starts are otherwise readable), harness
+memory/session stores and inherited settings. Allow network egress to the model
+endpoint only. Verify from inside the boundary with a planted canary in each denied
+root, a write to the shared temp path and one ordinary tool call; a run with no
+successful tool call is invalid, not a failed attempt. Afterwards scan each transcript
+for paths outside the run's own workspace. In one study both the sibling-workspace
+and shared-temp paths were open until a transcript review found them; neither showed up
+as a failed run.
+
 ## Early offline Docker adapter
 
 For hosted frontier inference, use the separately qualified
